@@ -3,7 +3,7 @@ version: '3.9'
 services:
   postgres:
     image: postgres:17-alpine
-    container_name: ari_pari
+    container_name: ari_pari_db
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -17,22 +17,46 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - aripari-net
 
   migrate:
     image: migrate/migrate:latest
+    container_name: ari_pari_migrator
     depends_on:
       postgres:
         condition: service_healthy
     volumes:
       - ./migrations:/migrations
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-      POSTGRES_DB: ${POSTGRES_DB:-ari_pari_db}
+    networks:
+      - aripari-net
     command: 
       - "-path=/migrations"
       - "-database=postgres://${POSTGRES_USER:-user}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-ari_pari_db}?sslmode=disable"
       - "up"
 
+  backend:
+    build: .
+    container_name: ari_pari_app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      - POSTGRES_HOST=postgres 
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - aripari-net
+    # ports:
+      # - "8080:8080" # Раскомментируй, когда добавишь HTTP сервер
+
 volumes:
   postgres_data:
+
+networks:
+  aripari-net:
+    driver: bridge

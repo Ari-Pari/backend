@@ -4,60 +4,66 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 
-	"github.com/Ari-Pari/backend/internal/storage"
+	"github.com/Ari-Pari/backend/internal/clients/filestorage"
 )
 
 func main() {
-	// 1. Конфигурация (в идеале грузить из .env)
-	cfg := struct {
-		Endpoint  string
-		AccessKey string
-		SecretKey string
-		Bucket    string
-	}{
-		Endpoint:  "127.0.0.1:9000",
-		AccessKey: "minioadmin",
-		SecretKey: "minioadmin",
-		Bucket:    "user-photos",
-	}
+	endpoint := "127.0.0.1:9000"
+	accessKey := "minioadmin"
+	secretKey := "minioadmin"
+	bucket := "user-photos"
 
-	// 2. Инициализируем хранилище
-	store, err := storage.NewMinioStorage(cfg.Endpoint, cfg.AccessKey, cfg.SecretKey, cfg.Bucket, false)
+	var store filestorage.FileStorage
+	var err error
+
+	store, err = filestorage.NewMinioStorage(endpoint, accessKey, secretKey, bucket, false)
 	if err != nil {
-		log.Fatalf("Ошибка инициализации хранилища: %v", err)
+		log.Fatalf("Ошибка инициализации: %v", err)
 	}
 
 	ctx := context.Background()
+	localPath := "testImage/test.jpeg"
 
-	// --- ТЕСТОВЫЙ СЛУЧАЙ: Загрузка файла ---
-	testFileName := "testImage/test.png"
-	file, err := os.Open("testImage/test.png") // Убедитесь, что файл существует
+	// Открываем файл и готовим данные
+	file, err := os.Open(localPath)
 	if err != nil {
-		log.Printf("Предупреждение: файл test.png не найден для теста")
-	} else {
-		defer file.Close()
-		fileStat, _ := file.Stat()
+		log.Fatalf("Файл не найден: %v", err)
+	}
+	defer file.Close()
 
-		err = store.UploadImage(ctx, testFileName, file, fileStat.Size(), "image/png")
-		if err != nil {
-			log.Fatalf("Не удалось загрузить: %v", err)
-		}
-		fmt.Println("✅ Файл успешно загружен")
+	fileStat, _ := file.Stat()
+	fileName := filepath.Base(file.Name())
+
+	// Определяем MIME тип (image/png, image/jpeg и т.д.)
+	buffer := make([]byte, 512)
+	file.Read(buffer)
+	contentType := http.DetectContentType(buffer)
+	file.Seek(0, 0)
+
+	// 4. ТЕСТ: Загрузка
+	fmt.Printf("🚀 Загрузка файла %s...\n", fileName)
+	fileKey, err := store.UploadImage(ctx, fileName, file, fileStat.Size(), contentType)
+	if err != nil {
+		log.Fatalf("Загрузка провалена: %v", err)
+	}
+	fmt.Printf("✅ Файл загружен с ключом: %s\n", fileKey)
+
+	// 5. ТЕСТ: Получение оригинального имени
+	origName, err := store.GetOriginalName(ctx, fileKey)
+	if err == nil {
+		fmt.Printf("📄 Оригинальное имя в метаданных: %s\n", origName)
 	}
 
-	// --- ТЕСТОВЫЙ СЛУЧАЙ: Получение ссылки ---
-	url, err := store.GetFileURL(ctx, testFileName, time.Hour*24)
+	// 6. ТЕСТ: Ссылка на фото (просмотр)
+	url, err := store.GetFileURL(ctx, fileKey, 10*time.Minute)
 	if err != nil {
-		log.Fatalf("Не удалось получить ссылку: %v", err)
+		log.Fatalf("Ошибка ссылки: %v", err)
 	}
-	fmt.Printf("🔗 Ссылка на файл (24ч): %s\n", url)
 
-	//--- ТЕСТОВЫЙ СЛУЧАЙ: Удаление ---
-	//err = store.DeleteFile(ctx, testFileName)
-	//if err != nil {
-	//	log.Printf("Ошибка удаления: %v", err)
-	//}
+	fmt.Printf("\n🔗 Ссылка для ПРОСМОТРА (inline):\n%s\n", url)
 }

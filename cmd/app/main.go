@@ -2,68 +2,47 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
-	"net/http"
-	"os"
-	"path/filepath"
-	"time"
 
-	"github.com/Ari-Pari/backend/internal/clients/filestorage"
+	"github.com/joho/godotenv"
+
+	"github.com/Ari-Pari/backend/internal/clients/dbstorage"
+	"github.com/Ari-Pari/backend/internal/clients/filestorage" // Твой новый импорт
+	"github.com/Ari-Pari/backend/internal/config"
 )
 
 func main() {
-	endpoint := "127.0.0.1:9000"
-	accessKey := "minioadmin"
-	secretKey := "minioadmin"
-	bucket := "user-photos"
+	_ = godotenv.Load()
 
-	var store filestorage.FileStorage
-	var err error
-
-	store, err = filestorage.NewMinioStorage(endpoint, accessKey, secretKey, bucket, false)
+	cfg, err := config.Load()
 	if err != nil {
-		log.Fatalf("Ошибка инициализации: %v", err)
+		log.Fatalf("Failed to load config: %v", err)
 	}
 
 	ctx := context.Background()
-	localPath := "testImage/test.jpeg"
 
-	// Открываем файл и готовим данные
-	file, err := os.Open(localPath)
+	// Инициализация БД
+	storage, err := dbstorage.New(ctx, cfg.DSN)
 	if err != nil {
-		log.Fatalf("Файл не найден: %v", err)
+		log.Fatalf("Failed to initialize storage: %v", err)
 	}
-	defer file.Close()
+	defer storage.Close()
+	log.Println("✅ Successfully connected to the database!")
 
-	fileStat, _ := file.Stat()
-	fileName := filepath.Base(file.Name())
-
-	// Определяем MIME тип (image/png, image/jpeg и т.д.)
-	buffer := make([]byte, 512)
-	file.Read(buffer)
-	contentType := http.DetectContentType(buffer)
-	file.Seek(0, 0)
-
-	// 4. ТЕСТ: Загрузка
-	fmt.Printf("🚀 Загрузка файла %s...\n", fileName)
-	fileKey, err := store.UploadImage(ctx, fileName, file, fileStat.Size(), contentType)
+	// Инициализация MinIO
+	fileStore, err := filestorage.NewMinioStorage(
+		cfg.MinioEndpoint,
+		cfg.MinioAccessKey,
+		cfg.MinioSecretKey,
+		cfg.MinioBucket,
+		false,
+	)
 	if err != nil {
-		log.Fatalf("Загрузка провалена: %v", err)
-	}
-	fmt.Printf("✅ Файл загружен с ключом: %s\n", fileKey)
-
-	// 5. ТЕСТ: Получение оригинального имени
-	origName, err := store.GetOriginalName(ctx, fileKey)
-	if err == nil {
-		fmt.Printf("📄 Оригинальное имя в метаданных: %s\n", origName)
+		log.Printf("Warning: Failed to initialize file storage: %v", err)
+	} else {
+		log.Println("✅ Successfully connected to MinIO!")
+		_ = fileStore
 	}
 
-	// 6. ТЕСТ: Ссылка на фото (просмотр)
-	url, err := store.GetFileURL(ctx, fileKey, 10*time.Minute)
-	if err != nil {
-		log.Fatalf("Ошибка ссылки: %v", err)
-	}
-
-	fmt.Printf("\n🔗 Ссылка для ПРОСМОТРА (inline):\n%s\n", url)
+	select {}
 }

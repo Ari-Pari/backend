@@ -1,0 +1,520 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AriPari",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "/api/v1",
+      "description": "AriPari description"
+    }
+  ],
+  "paths": {
+    "/dances/{id}": {
+      "get": {
+        "tags": [
+          "Dance"
+        ],
+        "summary": "Получить танец",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор танца",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "Язык",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DanceFullResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dances/search": {
+      "post": {
+        "tags": [
+          "Dance"
+        ],
+        "summary": "Поиск танцев",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "Язык",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Номер страницы",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Размер страницы",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Тело запроса на поиск танцев",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DanceSearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DanceSearchResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/genres": {
+      "get": {
+        "tags": [
+          "Genre"
+        ],
+        "summary": "Получить список жанров",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "Язык",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenreListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/handshakes": {
+      "get": {
+        "tags": [
+          "Handshake"
+        ],
+        "summary": "Получить список рукопожатий",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "Язык",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HandshakeListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/regions": {
+      "get": {
+        "tags": [
+          "Region"
+        ],
+        "summary": "Получить список регионов",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "Язык",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HandshakeListResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/HandshakeResponse"
+        }
+      },
+      "RegionListResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/RegionResponse"
+        }
+      },
+      "GenreListResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/GenreResponse"
+        }
+      },
+      "DanceSearchResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/DanceShortResponse"
+        }
+      },
+      "DanceShortResponse": {
+        "required": [
+          "danceId",
+          "name",
+          "complexity",
+          "photo_link",
+          "gender",
+          "paces",
+          "regions",
+          "genres",
+          "handshakes"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "complexity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "photo_link": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female",
+              "multi"
+            ]
+          },
+          "paces": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3
+            }
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RegionResponse"
+            }
+          },
+          "genres": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GenreResponse"
+            }
+          },
+          "handshakes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HandshakeResponse"
+            }
+          }
+        }
+      },
+      "DanceFullResponse": {
+        "required": [
+          "danceId",
+          "name",
+          "complexity",
+          "photo_link",
+          "gender",
+          "paces",
+          "regions",
+          "genres",
+          "handshakes",
+          "songs"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "complexity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "photo_link": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female",
+              "multi"
+            ]
+          },
+          "paces": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3
+            }
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RegionResponse"
+            }
+          },
+          "genres": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GenreResponse"
+            }
+          },
+          "handshakes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HandshakeResponse"
+            }
+          },
+          "songs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SongResponse"
+            }
+          },
+          "sourceVideos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoResponse"
+            }
+          },
+          "lessonVideos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoResponse"
+            }
+          },
+          "performanceVideos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoResponse"
+            }
+          }
+        }
+      },
+      "DanceSearchRequest": {
+        "type": "object",
+        "properties": {
+          "searchText": {
+            "type": "string"
+          },
+          "genres": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "complexities": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            }
+          },
+          "genders": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "male",
+                "female",
+                "multi"
+              ]
+            }
+          },
+          "paces": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3
+            }
+          },
+          "handshakes": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "sortedBy": {
+            "type": "string",
+            "enum": [
+              "createdBy",
+              "popularity"
+            ]
+          },
+          "sortType": {
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          }
+        }
+      },
+      "GenreResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "HandshakeResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "RegionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "SongResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "link": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          }
+        }
+      },
+      "VideoResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "link": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

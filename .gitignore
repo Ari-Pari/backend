@@ -39,3 +39,6 @@ go.work.sum
 # Editor/IDE
  .idea/
  .vscode/
+
+# Macos служебные файлы
+.DS_Store

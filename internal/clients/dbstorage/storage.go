@@ -3,8 +3,8 @@ package dbstorage
 import (
 	"context"
 
+	internalPgx "github.com/Ari-Pari/backend/internal/db/pgx"
 	"github.com/jackc/pgx/v5/pgxpool"
-	internalPgx "github.com/Ari-Pari/backend/internal/db/pgx" 
 )
 
 type Storage struct {

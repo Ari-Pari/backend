@@ -1,8 +1,9 @@
 # Default ignored files
 /shelf/
+/.idea/
 /workspace.xml
 # Editor-based HTTP Client requests
-/httpRequests/
+ /httpRequests/
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
@@ -27,7 +28,7 @@ coverage.*
 profile.cov
 
 # Dependency directories (remove the comment below to include it)
- vendor/
+vendor/
 
 # Go workspace file
 go.work
@@ -37,8 +38,8 @@ go.work.sum
 .env
 
 # Editor/IDE
- .idea/
- .vscode/
+.idea/
+.vscode/
 
 # Macos служебные файлы
 .DS_Store

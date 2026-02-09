@@ -111,37 +111,6 @@
         }
       }
     },
-    "/genres": {
-      "get": {
-        "tags": [
-          "Genre"
-        ],
-        "summary": "Получить список жанров",
-        "parameters": [
-          {
-            "name": "lang",
-            "in": "query",
-            "description": "Язык",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GenreListResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/regions": {
       "get": {
         "tags": [
@@ -180,12 +149,6 @@
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/RegionResponse"
-        }
-      },
-      "GenreListResponse": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/GenreResponse"
         }
       },
       "DanceSearchResponse": {
@@ -247,24 +210,13 @@
           "genres": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/GenreResponse"
+              "type": "integer"
             }
           },
           "handshakes": {
             "type": "array",
             "items": {
-              "type": "string",
-              "enum": [
-                "FREE",
-                "LITTLE_FINGER",
-                "PALM",
-                "CROSSED",
-                "BACK",
-                "BELT",
-                "SHOULDER",
-                "DAGGER",
-                "WHIP"
-              ]
+              "type": "integer"
             }
           }
         }
@@ -323,13 +275,13 @@
           "genres": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/GenreResponse"
+              "type": "integer"
             }
           },
           "handshakes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Handshake"
+              "type": "integer"
             }
           },
           "songs": {
@@ -417,7 +369,7 @@
           "handshakes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Handshake"
+              "type": "integer"
             }
           },
           "sortedBy": {
@@ -530,20 +482,6 @@
             "type": "string"
           }
         }
-      },
-      "Handshake": {
-        "type": "string",
-        "enum": [
-          "FREE",
-          "LITTLE_FINGER",
-          "PALM",
-          "CROSSED",
-          "BACK",
-          "BELT",
-          "SHOULDER",
-          "DAGGER",
-          "WHIP"
-        ]
       }
     }
   }

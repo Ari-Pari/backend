@@ -12,6 +12,7 @@ import (
 
 	"github.com/Ari-Pari/backend/internal/api"
 	"github.com/Ari-Pari/backend/internal/clients/dbstorage"
+	"github.com/Ari-Pari/backend/internal/clients/filestorage" // Твой новый импорт
 	"github.com/Ari-Pari/backend/internal/config"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -28,13 +29,28 @@ func main() {
 
 	ctx := context.Background()
 
+	// Инициализация БД
 	storage, err := dbstorage.New(ctx, cfg.DSN)
 	if err != nil {
 		log.Fatalf("Failed to initialize storage: %v", err)
 	}
 	defer storage.Close()
+	log.Println("✅ Successfully connected to the database!")
 
-	log.Println("Successfully connected to the database!")
+	// Инициализация MinIO
+	fileStore, err := filestorage.NewMinioStorage(
+		cfg.MinioEndpoint,
+		cfg.MinioAccessKey,
+		cfg.MinioSecretKey,
+		cfg.MinioBucket,
+		false,
+	)
+	if err != nil {
+		log.Printf("Warning: Failed to initialize file storage: %v", err)
+	} else {
+		log.Println("✅ Successfully connected to MinIO!")
+		_ = fileStore
+	}
 
 	logger := log.New(os.Stdout, "API: ", log.LstdFlags|log.Lshortfile)
 

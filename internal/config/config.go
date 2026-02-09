@@ -5,51 +5,111 @@ import (
 	"os"
 )
 
+type PostgresConfig struct {
+	DSN string
+}
+
+type MinioConfig struct {
+	Endpoint  string
+	AccessKey string
+	SecretKey string
+	Bucket    string
+	UseSSL    bool
+}
+
 type Config struct {
-	DSN            string
-	MinioEndpoint  string
-	MinioAccessKey string
-	MinioSecretKey string
-	MinioBucket    string
-	MinioUseSSL    bool
+	Postgres PostgresConfig
+	Minio    MinioConfig
 }
 
 func Load() (*Config, error) {
-	// --- Данные для PostgreSQL ---
-	user := os.Getenv("POSTGRES_USER")
-	password := os.Getenv("POSTGRES_PASSWORD")
-	dbName := os.Getenv("POSTGRES_DB")
-	host := os.Getenv("POSTGRES_HOST")
-	port := os.Getenv("POSTGRES_PORT")
+	pgConfig, err := loadPostgresConfig()
+	if err != nil {
+		return nil, err
+	}
 
-	if user == "" || password == "" || host == "" || port == "" || dbName == "" {
-		return nil, fmt.Errorf("one or more environment variables (POSTGRES_*) are missing")
+	minioConfig, err := loadMinioConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	return &Config{
+		Postgres: *pgConfig,
+		Minio:    *minioConfig,
+	}, nil
+}
+
+func loadPostgresConfig() (*PostgresConfig, error) {
+	user, err := getEnv("POSTGRES_USER")
+	if err != nil {
+		return nil, err
+	}
+
+	password, err := getEnv("POSTGRES_PASSWORD")
+	if err != nil {
+		return nil, err
+	}
+
+	host, err := getEnv("POSTGRES_HOST")
+	if err != nil {
+		return nil, err
+	}
+
+	port, err := getEnv("POSTGRES_PORT")
+	if err != nil {
+		return nil, err
+	}
+
+	dbName, err := getEnv("POSTGRES_DB")
+	if err != nil {
+		return nil, err
 	}
 
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		user, password, host, port, dbName,
 	)
 
-	// --- Данные для MinIO ---
-	minioEndpoint := os.Getenv("MINIO_ENDPOINT")
-	minioAccessKey := os.Getenv("MINIO_ACCESS_KEY")
-	minioSecretKey := os.Getenv("MINIO_SECRET_KEY")
-	minioBucket := os.Getenv("MINIO_BUCKET")
-	minioUseSSLStr := os.Getenv("MINIO_USE_SSL")
+	return &PostgresConfig{
+		DSN: dsn,
+	}, nil
+}
 
-	if minioEndpoint == "" || minioAccessKey == "" || minioSecretKey == "" || minioBucket == "" {
-		return nil, fmt.Errorf("one or more environment variables (MINIO_*) are missing")
+func loadMinioConfig() (*MinioConfig, error) {
+	endpoint, err := getEnv("MINIO_ENDPOINT")
+	if err != nil {
+		return nil, err
 	}
 
-	// Конвертируем строку в bool (если в .env написано "true", будет true)
-	useSSL := minioUseSSLStr == "true"
+	accessKey, err := getEnv("MINIO_ACCESS_KEY")
+	if err != nil {
+		return nil, err
+	}
 
-	return &Config{
-		DSN:            dsn,
-		MinioEndpoint:  minioEndpoint,
-		MinioAccessKey: minioAccessKey,
-		MinioSecretKey: minioSecretKey,
-		MinioBucket:    minioBucket,
-		MinioUseSSL:    useSSL,
+	secretKey, err := getEnv("MINIO_SECRET_KEY")
+	if err != nil {
+		return nil, err
+	}
+
+	bucket, err := getEnv("MINIO_BUCKET")
+	if err != nil {
+		return nil, err
+	}
+
+	useSSL := os.Getenv("MINIO_USE_SSL") == "true"
+
+	return &MinioConfig{
+		Endpoint:  endpoint,
+		AccessKey: accessKey,
+		SecretKey: secretKey,
+		Bucket:    bucket,
+		UseSSL:    useSSL,
 	}, nil
+}
+
+func getEnv(key string) (string, error) {
+	val := os.Getenv(key)
+	if val == "" {
+		return "", fmt.Errorf("environment variable %s is not set", key)
+	}
+	return val, nil
 }

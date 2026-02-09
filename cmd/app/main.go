@@ -12,7 +12,7 @@ import (
 
 	"github.com/Ari-Pari/backend/internal/api"
 	"github.com/Ari-Pari/backend/internal/clients/dbstorage"
-	"github.com/Ari-Pari/backend/internal/clients/filestorage" // Твой новый импорт
+	"github.com/Ari-Pari/backend/internal/clients/filestorage"
 	"github.com/Ari-Pari/backend/internal/config"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -29,28 +29,9 @@ func main() {
 
 	ctx := context.Background()
 
-	// Инициализация БД
-	storage, err := dbstorage.New(ctx, cfg.DSN)
-	if err != nil {
-		log.Fatalf("Failed to initialize storage: %v", err)
-	}
-	defer storage.Close()
-	log.Println("✅ Successfully connected to the database!")
+	setupDbStorage(ctx, cfg)
 
-	// Инициализация MinIO
-	fileStore, err := filestorage.NewMinioStorage(
-		cfg.MinioEndpoint,
-		cfg.MinioAccessKey,
-		cfg.MinioSecretKey,
-		cfg.MinioBucket,
-		false,
-	)
-	if err != nil {
-		log.Printf("Warning: Failed to initialize file storage: %v", err)
-	} else {
-		log.Println("✅ Successfully connected to MinIO!")
-		_ = fileStore
-	}
+	setupMinioStorage(cfg)
 
 	logger := log.New(os.Stdout, "API: ", log.LstdFlags|log.Lshortfile)
 
@@ -112,4 +93,29 @@ func startServer(handler http.Handler, addr string, logger *log.Logger) {
 	}
 
 	logger.Println("Server stopped")
+}
+
+func setupDbStorage(ctx context.Context, cfg *config.Config) {
+	storage, err := dbstorage.New(ctx, cfg.Postgres.DSN)
+	if err != nil {
+		log.Fatalf("Failed to initialize storage: %v", err)
+	}
+	defer storage.Close()
+	log.Println("Successfully connected to the database!")
+}
+
+func setupMinioStorage(cfg *config.Config) {
+	fileStore, err := filestorage.NewMinioStorage(
+		cfg.Minio.Endpoint,
+		cfg.Minio.AccessKey,
+		cfg.Minio.SecretKey,
+		cfg.Minio.Bucket,
+		false,
+	)
+	if err != nil {
+		log.Printf("Warning: Failed to initialize file storage: %v", err)
+	} else {
+		log.Println("Successfully connected to MinIO!")
+		_ = fileStore
+	}
 }

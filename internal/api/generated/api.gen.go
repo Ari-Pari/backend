@@ -44,38 +44,12 @@ const (
 	Multi  DanceShortResponseGender = "multi"
 )
 
-// Defines values for DanceShortResponseHandshakes.
-const (
-	DanceShortResponseHandshakesBACK         DanceShortResponseHandshakes = "BACK"
-	DanceShortResponseHandshakesBELT         DanceShortResponseHandshakes = "BELT"
-	DanceShortResponseHandshakesCROSSED      DanceShortResponseHandshakes = "CROSSED"
-	DanceShortResponseHandshakesDAGGER       DanceShortResponseHandshakes = "DAGGER"
-	DanceShortResponseHandshakesFREE         DanceShortResponseHandshakes = "FREE"
-	DanceShortResponseHandshakesLITTLEFINGER DanceShortResponseHandshakes = "LITTLE_FINGER"
-	DanceShortResponseHandshakesPALM         DanceShortResponseHandshakes = "PALM"
-	DanceShortResponseHandshakesSHOULDER     DanceShortResponseHandshakes = "SHOULDER"
-	DanceShortResponseHandshakesWHIP         DanceShortResponseHandshakes = "WHIP"
-)
-
-// Defines values for Handshake.
-const (
-	HandshakeBACK         Handshake = "BACK"
-	HandshakeBELT         Handshake = "BELT"
-	HandshakeCROSSED      Handshake = "CROSSED"
-	HandshakeDAGGER       Handshake = "DAGGER"
-	HandshakeFREE         Handshake = "FREE"
-	HandshakeLITTLEFINGER Handshake = "LITTLE_FINGER"
-	HandshakePALM         Handshake = "PALM"
-	HandshakeSHOULDER     Handshake = "SHOULDER"
-	HandshakeWHIP         Handshake = "WHIP"
-)
-
 // DanceFullResponse defines model for DanceFullResponse.
 type DanceFullResponse struct {
 	Complexity        int                     `json:"complexity"`
 	Gender            DanceFullResponseGender `json:"gender"`
-	Genres            []GenreResponse         `json:"genres"`
-	Handshakes        []Handshake             `json:"handshakes"`
+	Genres            []int                   `json:"genres"`
+	Handshakes        []int                   `json:"handshakes"`
 	Id                *int                    `json:"id,omitempty"`
 	LessonVideos      *[]VideoResponse        `json:"lessonVideos,omitempty"`
 	Name              string                  `json:"name"`
@@ -95,7 +69,7 @@ type DanceSearchRequest struct {
 	Complexities []int                       `json:"complexities"`
 	Genders      []DanceSearchRequestGenders `json:"genders"`
 	Genres       []int                       `json:"genres"`
-	Handshakes   []Handshake                 `json:"handshakes"`
+	Handshakes   []int                       `json:"handshakes"`
 	Paces        []int                       `json:"paces"`
 	Regions      []int                       `json:"regions"`
 	SearchText   string                      `json:"searchText"`
@@ -117,22 +91,19 @@ type DanceSearchResponse = []DanceShortResponse
 
 // DanceShortResponse defines model for DanceShortResponse.
 type DanceShortResponse struct {
-	Complexity int                            `json:"complexity"`
-	Gender     DanceShortResponseGender       `json:"gender"`
-	Genres     []GenreResponse                `json:"genres"`
-	Handshakes []DanceShortResponseHandshakes `json:"handshakes"`
-	Id         *int                           `json:"id,omitempty"`
-	Name       string                         `json:"name"`
-	Paces      []int                          `json:"paces"`
-	PhotoLink  string                         `json:"photo_link"`
-	Regions    []RegionResponse               `json:"regions"`
+	Complexity int                      `json:"complexity"`
+	Gender     DanceShortResponseGender `json:"gender"`
+	Genres     []int                    `json:"genres"`
+	Handshakes []int                    `json:"handshakes"`
+	Id         *int                     `json:"id,omitempty"`
+	Name       string                   `json:"name"`
+	Paces      []int                    `json:"paces"`
+	PhotoLink  string                   `json:"photo_link"`
+	Regions    []RegionResponse         `json:"regions"`
 }
 
 // DanceShortResponseGender defines model for DanceShortResponse.Gender.
 type DanceShortResponseGender string
-
-// DanceShortResponseHandshakes defines model for DanceShortResponse.Handshakes.
-type DanceShortResponseHandshakes string
 
 // EnsembleResponse defines model for EnsembleResponse.
 type EnsembleResponse struct {
@@ -140,18 +111,6 @@ type EnsembleResponse struct {
 	Link string `json:"link"`
 	Name string `json:"name"`
 }
-
-// GenreListResponse defines model for GenreListResponse.
-type GenreListResponse = []GenreResponse
-
-// GenreResponse defines model for GenreResponse.
-type GenreResponse struct {
-	Id   int    `json:"id"`
-	Name string `json:"name"`
-}
-
-// Handshake defines model for Handshake.
-type Handshake string
 
 // RegionListResponse defines model for RegionListResponse.
 type RegionListResponse = []RegionResponse
@@ -195,12 +154,6 @@ type GetDancesIdParams struct {
 	Lang *string `form:"lang,omitempty" json:"lang,omitempty"`
 }
 
-// GetGenresParams defines parameters for GetGenres.
-type GetGenresParams struct {
-	// Lang Язык
-	Lang *string `form:"lang,omitempty" json:"lang,omitempty"`
-}
-
 // GetRegionsParams defines parameters for GetRegions.
 type GetRegionsParams struct {
 	// Lang Язык
@@ -218,9 +171,6 @@ type ServerInterface interface {
 	// Получить танец
 	// (GET /dances/{id})
 	GetDancesId(w http.ResponseWriter, r *http.Request, id int, params GetDancesIdParams)
-	// Получить список жанров
-	// (GET /genres)
-	GetGenres(w http.ResponseWriter, r *http.Request, params GetGenresParams)
 	// Получить список регионов
 	// (GET /regions)
 	GetRegions(w http.ResponseWriter, r *http.Request, params GetRegionsParams)
@@ -239,12 +189,6 @@ func (_ Unimplemented) PostDancesSearch(w http.ResponseWriter, r *http.Request, 
 // Получить танец
 // (GET /dances/{id})
 func (_ Unimplemented) GetDancesId(w http.ResponseWriter, r *http.Request, id int, params GetDancesIdParams) {
-	w.WriteHeader(http.StatusNotImplemented)
-}
-
-// Получить список жанров
-// (GET /genres)
-func (_ Unimplemented) GetGenres(w http.ResponseWriter, r *http.Request, params GetGenresParams) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
@@ -333,33 +277,6 @@ func (siw *ServerInterfaceWrapper) GetDancesId(w http.ResponseWriter, r *http.Re
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.GetDancesId(w, r, id, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// GetGenres operation middleware
-func (siw *ServerInterfaceWrapper) GetGenres(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params GetGenresParams
-
-	// ------------- Optional query parameter "lang" -------------
-
-	err = runtime.BindQueryParameter("form", true, false, "lang", r.URL.Query(), &params.Lang)
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "lang", Err: err})
-		return
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetGenres(w, r, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -514,9 +431,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/dances/{id}", wrapper.GetDancesId)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/genres", wrapper.GetGenres)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/regions", wrapper.GetRegions)

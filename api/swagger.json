@@ -1,5 +1,5 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.1",
   "info": {
     "title": "AriPari",
     "version": "v1"
@@ -111,68 +111,6 @@
         }
       }
     },
-    "/genres": {
-      "get": {
-        "tags": [
-          "Genre"
-        ],
-        "summary": "Получить список жанров",
-        "parameters": [
-          {
-            "name": "lang",
-            "in": "query",
-            "description": "Язык",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GenreListResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/handshakes": {
-      "get": {
-        "tags": [
-          "Handshake"
-        ],
-        "summary": "Получить список рукопожатий",
-        "parameters": [
-          {
-            "name": "lang",
-            "in": "query",
-            "description": "Язык",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HandshakeListResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/regions": {
       "get": {
         "tags": [
@@ -207,22 +145,10 @@
   },
   "components": {
     "schemas": {
-      "HandshakeListResponse": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/HandshakeResponse"
-        }
-      },
       "RegionListResponse": {
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/RegionResponse"
-        }
-      },
-      "GenreListResponse": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/GenreResponse"
         }
       },
       "DanceSearchResponse": {
@@ -284,13 +210,13 @@
           "genres": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/GenreResponse"
+              "$ref": "#/components/schemas/Genre"
             }
           },
           "handshakes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/HandshakeResponse"
+              "$ref": "#/components/schemas/Handshake"
             }
           }
         }
@@ -347,15 +273,12 @@
             }
           },
           "genres": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GenreResponse"
-            }
+            "$ref": "#/components/schemas/Genre"
           },
           "handshakes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/HandshakeResponse"
+              "$ref": "#/components/schemas/Handshake"
             }
           },
           "songs": {
@@ -386,15 +309,23 @@
       },
       "DanceSearchRequest": {
         "type": "object",
+        "required": [
+          "searchText",
+          "genres",
+          "regions",
+          "complexities",
+          "genders",
+          "paces",
+          "handshakes",
+          "sortedBy",
+          "sortType"
+        ],
         "properties": {
           "searchText": {
             "type": "string"
           },
           "genres": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "$ref": "#/components/schemas/Genre"
           },
           "regions": {
             "type": "array",
@@ -432,7 +363,7 @@
           "handshakes": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "$ref": "#/components/schemas/Handshake"
             }
           },
           "sortedBy": {
@@ -451,30 +382,12 @@
           }
         }
       },
-      "GenreResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "HandshakeResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
       "RegionResponse": {
         "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
         "properties": {
           "id": {
             "type": "integer"
@@ -486,6 +399,13 @@
       },
       "SongResponse": {
         "type": "object",
+        "required": [
+          "id",
+          "name",
+          "link",
+          "name",
+          "ensembles"
+        ],
         "properties": {
           "id": {
             "type": "integer"
@@ -496,13 +416,21 @@
           "name": {
             "type": "string"
           },
-          "author": {
-            "type": "string"
+          "ensembles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EnsembleResponse"
+            }
           }
         }
       },
       "VideoResponse": {
         "type": "object",
+        "required": [
+          "id",
+          "link",
+          "name"
+        ],
         "properties": {
           "id": {
             "type": "integer"
@@ -514,6 +442,61 @@
             "type": "string"
           }
         }
+      },
+      "EnsembleResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "link"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string"
+          }
+        }
+      },
+      "Genre": {
+        "type": "string",
+        "enum": [
+          "WAR",
+          "ROAD",
+          "CULT",
+          "LYRICAL",
+          "REVERSE",
+          "RITUAL",
+          "COMMUNITY",
+          "HUNTING",
+          "PILGRIMAGE",
+          "MEMORABLE",
+          "MEMORIAL",
+          "FUNERAL",
+          "FESTIVE",
+          "WEDDING",
+          "MATCHMAKERS",
+          "LABOR",
+          "AMULET"
+        ]
+      },
+      "Handshake": {
+        "type": "string",
+        "enum": [
+          "FREE",
+          "LITTLE_FINGER",
+          "PALM",
+          "CROSSED",
+          "BACK",
+          "BELT",
+          "SHOULDER",
+          "DAGGER",
+          "WHIP"
+        ]
       }
     }
   }

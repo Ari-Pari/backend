@@ -1,7 +1,12 @@
-.PHONY: up down build logs logs-db ps status tables restart sqlc help
+.PHONY: up down build logs logs-db ps status tables restart sqlc help generate
 
 include .env
 export
+
+# Variables
+SWAGGER_FILE=api/swagger.json
+GENERATED_DIR=internal/api/generated
+GENERATED_FILE=$(GENERATED_DIR)/api.gen.go
 
 up:
 	docker-compose up -d
@@ -44,3 +49,10 @@ help:
 	@echo "  make tables    - Показать таблицы в БД"
 	@echo "  make restart   - Перезапустить сервисы"
 	@echo "  make sqlc   	- Сгенерировать go код для CRUD запросов"
+
+generate:
+	go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest \
+			-generate types,chi-server \
+			-package api \
+			-o $(GENERATED_FILE) \
+			$(SWAGGER_FILE)

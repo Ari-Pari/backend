@@ -1,0 +1,7 @@
+# api/oapi-config.yaml
+package: api
+generate:
+  types: true
+  chi-server: true
+output: internal/api/generated/api.gen.go
+input-file: api/swagger.json

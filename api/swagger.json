@@ -210,13 +210,13 @@
           "genres": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "$ref": "#/components/schemas/Genre"
             }
           },
           "handshakes": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "$ref": "#/components/schemas/Handshake"
             }
           }
         }
@@ -273,15 +273,12 @@
             }
           },
           "genres": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "$ref": "#/components/schemas/Genre"
           },
           "handshakes": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "$ref": "#/components/schemas/Handshake"
             }
           },
           "songs": {
@@ -328,10 +325,7 @@
             "type": "string"
           },
           "genres": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "$ref": "#/components/schemas/Genre"
           },
           "regions": {
             "type": "array",
@@ -369,7 +363,7 @@
           "handshakes": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "$ref": "#/components/schemas/Handshake"
             }
           },
           "sortedBy": {
@@ -385,21 +379,6 @@
               "ASC",
               "DESC"
             ]
-          }
-        }
-      },
-      "GenreResponse": {
-        "type": "object",
-        "required": [
-          "id",
-          "name"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
           }
         }
       },
@@ -482,6 +461,42 @@
             "type": "string"
           }
         }
+      },
+      "Genre": {
+        "type": "string",
+        "enum": [
+          "WAR",
+          "ROAD",
+          "CULT",
+          "LYRICAL",
+          "REVERSE",
+          "RITUAL",
+          "COMMUNITY",
+          "HUNTING",
+          "PILGRIMAGE",
+          "MEMORABLE",
+          "MEMORIAL",
+          "FUNERAL",
+          "FESTIVE",
+          "WEDDING",
+          "MATCHMAKERS",
+          "LABOR",
+          "AMULET"
+        ]
+      },
+      "Handshake": {
+        "type": "string",
+        "enum": [
+          "FREE",
+          "LITTLE_FINGER",
+          "PALM",
+          "CROSSED",
+          "BACK",
+          "BELT",
+          "SHOULDER",
+          "DAGGER",
+          "WHIP"
+        ]
       }
     }
   }

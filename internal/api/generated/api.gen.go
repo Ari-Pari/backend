@@ -44,12 +44,46 @@ const (
 	Multi  DanceShortResponseGender = "multi"
 )
 
+// Defines values for Genre.
+const (
+	AMULET      Genre = "AMULET"
+	COMMUNITY   Genre = "COMMUNITY"
+	CULT        Genre = "CULT"
+	FESTIVE     Genre = "FESTIVE"
+	FUNERAL     Genre = "FUNERAL"
+	HUNTING     Genre = "HUNTING"
+	LABOR       Genre = "LABOR"
+	LYRICAL     Genre = "LYRICAL"
+	MATCHMAKERS Genre = "MATCHMAKERS"
+	MEMORABLE   Genre = "MEMORABLE"
+	MEMORIAL    Genre = "MEMORIAL"
+	PILGRIMAGE  Genre = "PILGRIMAGE"
+	REVERSE     Genre = "REVERSE"
+	RITUAL      Genre = "RITUAL"
+	ROAD        Genre = "ROAD"
+	WAR         Genre = "WAR"
+	WEDDING     Genre = "WEDDING"
+)
+
+// Defines values for Handshake.
+const (
+	BACK         Handshake = "BACK"
+	BELT         Handshake = "BELT"
+	CROSSED      Handshake = "CROSSED"
+	DAGGER       Handshake = "DAGGER"
+	FREE         Handshake = "FREE"
+	LITTLEFINGER Handshake = "LITTLE_FINGER"
+	PALM         Handshake = "PALM"
+	SHOULDER     Handshake = "SHOULDER"
+	WHIP         Handshake = "WHIP"
+)
+
 // DanceFullResponse defines model for DanceFullResponse.
 type DanceFullResponse struct {
 	Complexity        int                     `json:"complexity"`
 	Gender            DanceFullResponseGender `json:"gender"`
-	Genres            []int                   `json:"genres"`
-	Handshakes        []int                   `json:"handshakes"`
+	Genres            Genre                   `json:"genres"`
+	Handshakes        []Handshake             `json:"handshakes"`
 	Id                *int                    `json:"id,omitempty"`
 	LessonVideos      *[]VideoResponse        `json:"lessonVideos,omitempty"`
 	Name              string                  `json:"name"`
@@ -68,8 +102,8 @@ type DanceFullResponseGender string
 type DanceSearchRequest struct {
 	Complexities []int                       `json:"complexities"`
 	Genders      []DanceSearchRequestGenders `json:"genders"`
-	Genres       []int                       `json:"genres"`
-	Handshakes   []int                       `json:"handshakes"`
+	Genres       Genre                       `json:"genres"`
+	Handshakes   []Handshake                 `json:"handshakes"`
 	Paces        []int                       `json:"paces"`
 	Regions      []int                       `json:"regions"`
 	SearchText   string                      `json:"searchText"`
@@ -93,8 +127,8 @@ type DanceSearchResponse = []DanceShortResponse
 type DanceShortResponse struct {
 	Complexity int                      `json:"complexity"`
 	Gender     DanceShortResponseGender `json:"gender"`
-	Genres     []int                    `json:"genres"`
-	Handshakes []int                    `json:"handshakes"`
+	Genres     []Genre                  `json:"genres"`
+	Handshakes []Handshake              `json:"handshakes"`
 	Id         *int                     `json:"id,omitempty"`
 	Name       string                   `json:"name"`
 	Paces      []int                    `json:"paces"`
@@ -111,6 +145,12 @@ type EnsembleResponse struct {
 	Link string `json:"link"`
 	Name string `json:"name"`
 }
+
+// Genre defines model for Genre.
+type Genre string
+
+// Handshake defines model for Handshake.
+type Handshake string
 
 // RegionListResponse defines model for RegionListResponse.
 type RegionListResponse = []RegionResponse

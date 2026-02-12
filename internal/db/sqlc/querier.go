@@ -9,7 +9,7 @@ import (
 )
 
 type Querier interface {
-	GetUser(ctx context.Context, email string) (TestUser, error)
+	Placeholder(ctx context.Context) (Translation, error)
 }
 
 var _ Querier = (*Queries)(nil)

@@ -1,0 +1,5 @@
+package autouploaddata
+
+func main() {
+
+}

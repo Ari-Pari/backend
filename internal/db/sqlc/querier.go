@@ -9,7 +9,8 @@ import (
 )
 
 type Querier interface {
+	CreateTranslations(ctx context.Context, arg []CreateTranslationsParams) (int64, error)
 	Placeholder(ctx context.Context) (Translation, error)
 }
 
-var _ Querier = (*Queries)(nil)
+var MyQuerier Querier = (*Queries)(nil)

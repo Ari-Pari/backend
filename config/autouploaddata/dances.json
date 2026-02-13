@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Hello",
+    "complexity": 4,
+    "photoFileName": "multi",
+    "gender": "multi",
+    "paces": [1, 2, 3],
+    "genres": ["hiphop", "pop"],
+    "handshakes": ["left", "right"],
+    "videos": ["Video 1"],
+    "songs": ["Song 1"],
+    "regions": ["Region 1"]
+  }
+]

@@ -22,11 +22,6 @@ func (s Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, para
 	panic("implement me")
 }
 
-func (s Server) GetGenres(w http.ResponseWriter, r *http.Request, params api.GetGenresParams) {
-	//TODO implement me
-	panic("implement me")
-}
-
 func (s Server) GetRegions(w http.ResponseWriter, r *http.Request, params api.GetRegionsParams) {
 	//TODO implement me
 	panic("implement me")

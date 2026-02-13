@@ -44,3 +44,6 @@ go.work.sum
 
 # Macos служебные файлы
 .DS_Store
+
+# Minio
+minio_data/

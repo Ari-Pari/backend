@@ -24,18 +24,31 @@ type Dance struct {
 	Handshakes    []string           `json:"handshakes"`
 	CreatedAt     time.Time          `json:"created_at"`
 	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`
+	DeletedAt     pgtype.Timestamptz `json:"deleted_at"`
 }
 
 type DanceRegion struct {
-	ID       int64 `json:"id"`
-	DanceID  int64 `json:"dance_id"`
-	RegionID int64 `json:"region_id"`
+	ID        int64              `json:"id"`
+	DanceID   int64              `json:"dance_id"`
+	RegionID  int64              `json:"region_id"`
+	CreatedAt time.Time          `json:"created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
 }
 
 type DanceSong struct {
-	ID      int64 `json:"id"`
-	DanceID int64 `json:"dance_id"`
-	SongID  int64 `json:"song_id"`
+	ID        int64              `json:"id"`
+	DanceID   int64              `json:"dance_id"`
+	SongID    int64              `json:"song_id"`
+	CreatedAt time.Time          `json:"created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
+}
+
+type DanceVideo struct {
+	ID        int64              `json:"id"`
+	DanceID   int64              `json:"dance_id"`
+	VideoID   int64              `json:"video_id"`
+	CreatedAt time.Time          `json:"created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
 }
 
 type Ensemble struct {
@@ -65,9 +78,11 @@ type Song struct {
 }
 
 type SongEnsemble struct {
-	ID         int64 `json:"id"`
-	SongID     int64 `json:"song_id"`
-	EnsembleID int64 `json:"ensemble_id"`
+	ID         int64              `json:"id"`
+	SongID     int64              `json:"song_id"`
+	EnsembleID int64              `json:"ensemble_id"`
+	CreatedAt  time.Time          `json:"created_at"`
+	UpdatedAt  pgtype.Timestamptz `json:"updated_at"`
 }
 
 type Translation struct {
@@ -84,7 +99,6 @@ type Video struct {
 	Link          string             `json:"link"`
 	TranslationID pgtype.Int8        `json:"translation_id"`
 	Name          string             `json:"name"`
-	DanceID       pgtype.Int8        `json:"dance_id"`
 	Type          string             `json:"type"`
 	CreatedAt     time.Time          `json:"created_at"`
 	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`

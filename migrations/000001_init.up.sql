@@ -46,7 +46,7 @@ CREATE TABLE dances (
     genres TEXT[],
     handshakes TEXT[],
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ
+    updated_at TIMESTAMPTZ,
     deleted_at TIMESTAMPTZ
 );
 
@@ -67,7 +67,7 @@ CREATE TABLE dance_region (
     dance_id BIGINT NOT NULL,
     region_id BIGINT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ
+    updated_at TIMESTAMPTZ,
     CONSTRAINT unique_dance_region UNIQUE (dance_id, region_id) -- Защита от дублей
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE dance_song (
     dance_id BIGINT NOT NULL,
     song_id BIGINT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ
+    updated_at TIMESTAMPTZ,
     CONSTRAINT unique_dance_song UNIQUE (dance_id, song_id)
 );
 
@@ -85,7 +85,7 @@ CREATE TABLE song_ensemble (
     song_id BIGINT NOT NULL,
     ensemble_id BIGINT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ
+    updated_at TIMESTAMPTZ,
     CONSTRAINT unique_song_ensemble UNIQUE (song_id, ensemble_id)
 );
 
@@ -94,6 +94,6 @@ CREATE TABLE dance_videos (
     dance_id BIGINT NOT NULL,
     video_id BIGINT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ
+    updated_at TIMESTAMPTZ,
     CONSTRAINT unique_dance_video UNIQUE (dance_id, video_id)
 );

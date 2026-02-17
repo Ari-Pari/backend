@@ -8,14 +8,14 @@ CREATE TABLE translations (
 );
 
 CREATE TABLE regions (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
     translation_id BIGINT,
     name VARCHAR NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ
 );
 
-CREATE TABLE ensemble (
+CREATE TABLE ensembles (
     id BIGSERIAL PRIMARY KEY,
     translation_id BIGINT,
     name VARCHAR NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE ensemble (
 );
 
 CREATE TABLE songs (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
     translation_id BIGINT,
     file_key VARCHAR NOT NULL,
     name VARCHAR NOT NULL,
@@ -34,15 +34,14 @@ CREATE TABLE songs (
 );
 
 CREATE TABLE dances (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
     translation_id BIGINT,
     name VARCHAR NOT NULL,
-    complexity INTEGER NOT NULL CHECK (complexity >= 1 AND complexity <= 5),
+    complexity INTEGER CHECK (complexity >= 1 AND complexity <= 5),
     photo_key VARCHAR,
     gender VARCHAR NOT NULL, 
     paces INTEGER[],
     popularity INTEGER NOT NULL DEFAULT 0,
-    created_by BIGINT,
     genres TEXT[],
     handshakes TEXT[],
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

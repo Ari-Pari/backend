@@ -14,12 +14,11 @@ type Dance struct {
 	ID            int64              `json:"id"`
 	TranslationID pgtype.Int8        `json:"translation_id"`
 	Name          string             `json:"name"`
-	Complexity    int32              `json:"complexity"`
+	Complexity    pgtype.Int4        `json:"complexity"`
 	PhotoKey      pgtype.Text        `json:"photo_key"`
 	Gender        string             `json:"gender"`
 	Paces         []int32            `json:"paces"`
 	Popularity    int32              `json:"popularity"`
-	CreatedBy     pgtype.Int8        `json:"created_by"`
 	Genres        []string           `json:"genres"`
 	Handshakes    []string           `json:"handshakes"`
 	CreatedAt     time.Time          `json:"created_at"`

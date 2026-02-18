@@ -11,8 +11,48 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const getArtists = `-- name: GetArtists :many
+SELECT id, translation_id, name, link, deleted_at
+FROM artists
+`
+
+type GetArtistsRow struct {
+	ID            int64              `json:"id"`
+	TranslationID pgtype.Int8        `json:"translation_id"`
+	Name          string             `json:"name"`
+	Link          string             `json:"link"`
+	DeletedAt     pgtype.Timestamptz `json:"deleted_at"`
+}
+
+func (q *Queries) GetArtists(ctx context.Context) ([]GetArtistsRow, error) {
+	rows, err := q.db.Query(ctx, getArtists)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []GetArtistsRow{}
+	for rows.Next() {
+		var i GetArtistsRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.TranslationID,
+			&i.Name,
+			&i.Link,
+			&i.DeletedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getDanceRegions = `-- name: GetDanceRegions :many
-SELECT dance_id, region_id FROM dance_region
+SELECT dance_id, region_id
+FROM dance_region
 `
 
 type GetDanceRegionsRow struct {
@@ -41,7 +81,8 @@ func (q *Queries) GetDanceRegions(ctx context.Context) ([]GetDanceRegionsRow, er
 }
 
 const getDanceSongs = `-- name: GetDanceSongs :many
-SELECT dance_id, song_id FROM dance_song
+SELECT dance_id, song_id
+FROM dance_song
 `
 
 type GetDanceSongsRow struct {
@@ -70,7 +111,8 @@ func (q *Queries) GetDanceSongs(ctx context.Context) ([]GetDanceSongsRow, error)
 }
 
 const getDanceVideos = `-- name: GetDanceVideos :many
-SELECT dance_id, video_id FROM dance_videos
+SELECT dance_id, video_id
+FROM dance_videos
 `
 
 type GetDanceVideosRow struct {
@@ -99,8 +141,16 @@ func (q *Queries) GetDanceVideos(ctx context.Context) ([]GetDanceVideosRow, erro
 }
 
 const getDances = `-- name: GetDances :many
-SELECT id, translation_id, name, complexity, gender,
-       paces, popularity, genres, handshakes, deleted_at
+SELECT id,
+       translation_id,
+       name,
+       complexity,
+       gender,
+       paces,
+       popularity,
+       genres,
+       handshakes,
+       deleted_at
 FROM dances
 `
 
@@ -148,44 +198,9 @@ func (q *Queries) GetDances(ctx context.Context) ([]GetDancesRow, error) {
 	return items, nil
 }
 
-const getEnsembles = `-- name: GetEnsembles :many
-SELECT id, translation_id, name, link FROM ensembles
-`
-
-type GetEnsemblesRow struct {
-	ID            int64       `json:"id"`
-	TranslationID pgtype.Int8 `json:"translation_id"`
-	Name          string      `json:"name"`
-	Link          string      `json:"link"`
-}
-
-func (q *Queries) GetEnsembles(ctx context.Context) ([]GetEnsemblesRow, error) {
-	rows, err := q.db.Query(ctx, getEnsembles)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	items := []GetEnsemblesRow{}
-	for rows.Next() {
-		var i GetEnsemblesRow
-		if err := rows.Scan(
-			&i.ID,
-			&i.TranslationID,
-			&i.Name,
-			&i.Link,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
 const getRegions = `-- name: GetRegions :many
-SELECT id, translation_id, name FROM regions
+SELECT id, translation_id, name
+FROM regions
 `
 
 type GetRegionsRow struct {
@@ -215,7 +230,8 @@ func (q *Queries) GetRegions(ctx context.Context) ([]GetRegionsRow, error) {
 }
 
 const getSongs = `-- name: GetSongs :many
-SELECT id, translation_id, name, file_key FROM songs
+SELECT id, translation_id, name, file_key
+FROM songs
 `
 
 type GetSongsRow struct {
@@ -251,7 +267,8 @@ func (q *Queries) GetSongs(ctx context.Context) ([]GetSongsRow, error) {
 }
 
 const getTranslations = `-- name: GetTranslations :many
-SELECT id, eng_name, ru_name, arm_name FROM translations
+SELECT id, eng_name, ru_name, arm_name
+FROM translations
 `
 
 type GetTranslationsRow struct {
@@ -287,7 +304,8 @@ func (q *Queries) GetTranslations(ctx context.Context) ([]GetTranslationsRow, er
 }
 
 const getVideos = `-- name: GetVideos :many
-SELECT id, link, translation_id, name, type FROM videos
+SELECT id, link, translation_id, name, type
+FROM videos
 `
 
 type GetVideosRow struct {
@@ -322,6 +340,34 @@ func (q *Queries) GetVideos(ctx context.Context) ([]GetVideosRow, error) {
 		return nil, err
 	}
 	return items, nil
+}
+
+const insertArtists = `-- name: InsertArtists :exec
+INSERT INTO artists (id, translation_id, name, link, deleted_at)
+SELECT unnest($1::bigint[])              as id,
+       unnest($2::bigint[])  as translation_id,
+       unnest($3::text[])              as name,
+       unnest($4::text[])              as link,
+       unnest($5::timestamptz[]) as deleted_at
+`
+
+type InsertArtistsParams struct {
+	Ids            []int64              `json:"ids"`
+	TranslationIds []int64              `json:"translation_ids"`
+	Names          []string             `json:"names"`
+	Links          []string             `json:"links"`
+	DeletedAts     []pgtype.Timestamptz `json:"deleted_ats"`
+}
+
+func (q *Queries) InsertArtists(ctx context.Context, arg InsertArtistsParams) error {
+	_, err := q.db.Exec(ctx, insertArtists,
+		arg.Ids,
+		arg.TranslationIds,
+		arg.Names,
+		arg.Links,
+		arg.DeletedAts,
+	)
+	return err
 }
 
 const insertDance = `-- name: InsertDance :exec
@@ -407,40 +453,6 @@ func (q *Queries) InsertDanceVideos(ctx context.Context, arg InsertDanceVideosPa
 	return err
 }
 
-const insertEnsembles = `-- name: InsertEnsembles :many
-INSERT INTO ensembles (translation_id, name, link)
-SELECT unnest($1::bigint[]) as translation_id,
-       unnest($2::text[])             as name,
-       unnest($3::text[])             as link
-    RETURNING id
-`
-
-type InsertEnsemblesParams struct {
-	TranslationIds []int64  `json:"translation_ids"`
-	Names          []string `json:"names"`
-	Links          []string `json:"links"`
-}
-
-func (q *Queries) InsertEnsembles(ctx context.Context, arg InsertEnsemblesParams) ([]int64, error) {
-	rows, err := q.db.Query(ctx, insertEnsembles, arg.TranslationIds, arg.Names, arg.Links)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	items := []int64{}
-	for rows.Next() {
-		var id int64
-		if err := rows.Scan(&id); err != nil {
-			return nil, err
-		}
-		items = append(items, id)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
 const insertRegions = `-- name: InsertRegions :exec
 INSERT INTO regions (id, translation_id, name)
 SELECT unnest($1::bigint[])             as id,
@@ -456,6 +468,22 @@ type InsertRegionsParams struct {
 
 func (q *Queries) InsertRegions(ctx context.Context, arg InsertRegionsParams) error {
 	_, err := q.db.Exec(ctx, insertRegions, arg.Ids, arg.TranslationIds, arg.Names)
+	return err
+}
+
+const insertSongArtists = `-- name: InsertSongArtists :exec
+INSERT INTO song_artist (song_id, artist_id)
+SELECT unnest($1::bigint[])   as song_id,
+       unnest($2::bigint[]) as artist_id ON CONFLICT (song_id, artist_id) DO NOTHING
+`
+
+type InsertSongArtistsParams struct {
+	SongIds   []int64 `json:"song_ids"`
+	ArtistIds []int64 `json:"artist_ids"`
+}
+
+func (q *Queries) InsertSongArtists(ctx context.Context, arg InsertSongArtistsParams) error {
+	_, err := q.db.Exec(ctx, insertSongArtists, arg.SongIds, arg.ArtistIds)
 	return err
 }
 
@@ -563,10 +591,10 @@ const truncateAllTables = `-- name: TruncateAllTables :exec
 TRUNCATE TABLE
     dance_region,
     dance_song,
-    song_ensemble,
+    song_artist,
     dance_videos,
     regions,
-    ensembles,
+    artists,
     songs,
     dances,
     videos,

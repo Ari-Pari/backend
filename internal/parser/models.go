@@ -81,7 +81,7 @@ type MusicDto struct {
 	NameKey  string  `json:"nameKey"`
 	DanceIds []int64 `json:"danceIds"`
 	Type     TypeDto `json:"type"`
-	//TODO добавить ансамбли
+	Artists  []int64 `json:"groupIds"`
 }
 
 type VideoTypeDto string
@@ -97,4 +97,11 @@ type VideoDto struct {
 	Url      string       `json:"url"`
 	Type     VideoTypeDto `json:"type"`
 	DanceIds []int64      `json:"danceIds"`
+}
+
+type ArtistDto struct {
+	Id   int64   `json:"id"`
+	Name NameDto `json:"name"`
+	Type TypeDto `json:"type"`
+	Url  string  `json:"urlInsta"`
 }

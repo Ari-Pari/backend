@@ -7,6 +7,7 @@ import (
 )
 
 type Parser interface {
+	ParseArtistsFile(filename string) ([]ArtistDto, error)
 	ParseStatesFile(filename string) ([]StateDto, error)
 	ParseDancesFile(filename string) ([]DanceDto, error)
 	ParseMusicsFile(filename string) ([]MusicDto, error)
@@ -15,6 +16,10 @@ type Parser interface {
 
 type jsonParser struct {
 	fileReader FileReader
+}
+
+func (j jsonParser) ParseArtistsFile(filename string) ([]ArtistDto, error) {
+	return parseFile(j.fileReader, filename, j.parseArtistsReader)
 }
 
 func (j jsonParser) ParseVideosFile(filename string) ([]VideoDto, error) {
@@ -40,6 +45,17 @@ func NewJSONParser() Parser {
 	return jsonParser{
 		fileReader: DefaultFileReader,
 	}
+}
+
+func (j jsonParser) parseArtistsReader(r io.Reader) ([]ArtistDto, error) {
+	var artists []ArtistDto
+
+	decoder := json.NewDecoder(r)
+	if err := decoder.Decode(&artists); err != nil {
+		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+
+	return artists, nil
 }
 
 func (j jsonParser) parseVideosReader(r io.Reader) ([]VideoDto, error) {

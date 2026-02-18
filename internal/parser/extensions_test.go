@@ -94,14 +94,14 @@ func TestToDomainHoldingType(t *testing.T) {
 }
 
 // -------------------------------
-// Тесты для ToDomainVideoType
+// Тесты для toDomainVideoType
 // -------------------------------
 
 func TestToDomainVideoType(t *testing.T) {
-	assert.Equal(t, domain.Lesson, ToDomainVideoType(VideoTypeLesson))
-	assert.Equal(t, domain.Video, ToDomainVideoType(VideoTypeVideo))
-	assert.Equal(t, domain.Source, ToDomainVideoType(VideoTypeSource))
-	assert.Equal(t, domain.VideoType(""), ToDomainVideoType("Unknown"))
+	assert.Equal(t, domain.Lesson, toDomainVideoType(VideoTypeLesson))
+	assert.Equal(t, domain.Video, toDomainVideoType(VideoTypeVideo))
+	assert.Equal(t, domain.Source, toDomainVideoType(VideoTypeSource))
+	assert.Equal(t, domain.VideoType(""), toDomainVideoType("Unknown"))
 }
 
 // -------------------------------

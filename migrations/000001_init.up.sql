@@ -15,13 +15,14 @@ CREATE TABLE regions (
     updated_at TIMESTAMPTZ
 );
 
-CREATE TABLE ensembles (
-    id BIGSERIAL PRIMARY KEY,
+CREATE TABLE artists (
+    id BIGINT PRIMARY KEY,
     translation_id BIGINT,
     name VARCHAR NOT NULL,
     link VARCHAR NOT NULL DEFAULT '',
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ
+    updated_at TIMESTAMPTZ,
+    deleted_at TIMESTAMPTZ
 );
 
 CREATE TABLE songs (
@@ -79,13 +80,13 @@ CREATE TABLE dance_song (
     CONSTRAINT unique_dance_song UNIQUE (dance_id, song_id)
 );
 
-CREATE TABLE song_ensemble (
+CREATE TABLE song_artist (
     id BIGSERIAL PRIMARY KEY,
     song_id BIGINT NOT NULL,
-    ensemble_id BIGINT NOT NULL,
+    artist_id BIGINT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
-    CONSTRAINT unique_song_ensemble UNIQUE (song_id, ensemble_id)
+    CONSTRAINT unique_song_artist UNIQUE (song_id, artist_id)
 );
 
 CREATE TABLE dance_videos (

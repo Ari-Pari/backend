@@ -38,6 +38,30 @@ func ToDomainVideos(dto []VideoDto) []domain.VideoShort {
 	return videos
 }
 
+func ToDomainArtists(dto []ArtistDto) []domain.ArtistShort {
+	artists := make([]domain.ArtistShort, len(dto))
+	for i, artist := range dto {
+		artists[i] = toDomainArtist(artist)
+	}
+	return artists
+}
+
+func toDomainArtist(dto ArtistDto) domain.ArtistShort {
+	now := time.Now()
+	deletedAt := &now
+	if dto.Type != Extra {
+		deletedAt = nil
+	}
+
+	return domain.ArtistShort{
+		Id:        dto.Id,
+		Name:      toDomainTranslation(dto.Name),
+		NameKey:   dto.Name.ArmName,
+		Url:       dto.Url,
+		DeletedAt: deletedAt,
+	}
+}
+
 func toDomainVideo(dto VideoDto) domain.VideoShort {
 	return domain.VideoShort{
 		Id:       nil,
@@ -45,7 +69,7 @@ func toDomainVideo(dto VideoDto) domain.VideoShort {
 		NameKey:  dto.Name.ArmName,
 		Link:     dto.Url,
 		DanceIds: dto.DanceIds,
-		Type:     ToDomainVideoType(dto.Type),
+		Type:     toDomainVideoType(dto.Type),
 	}
 }
 
@@ -84,10 +108,11 @@ func toDomainDance(dto DanceDto) domain.DanceShort {
 
 func toDomainSong(dto MusicDto) domain.SongShort {
 	return domain.SongShort{
-		Id:       dto.Id,
-		Name:     toDomainTranslation(dto.Name),
-		NameKey:  dto.NameKey,
-		DanceIds: dto.DanceIds,
+		Id:        dto.Id,
+		Name:      toDomainTranslation(dto.Name),
+		NameKey:   dto.NameKey,
+		DanceIds:  dto.DanceIds,
+		ArtistIds: dto.Artists,
 	}
 }
 
@@ -184,7 +209,7 @@ func toDomainRegion(dto StateDto) domain.Region {
 	}
 }
 
-func ToDomainVideoType(dto VideoTypeDto) domain.VideoType {
+func toDomainVideoType(dto VideoTypeDto) domain.VideoType {
 	switch dto {
 	case VideoTypeLesson:
 		return domain.Lesson

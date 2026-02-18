@@ -8,15 +8,32 @@ import (
 )
 
 type AutoUploadDataService interface {
-	CreateVideos(ctx context.Context, videos []domain.VideoShort) error
-	CreateRegions(ctx context.Context, regions []domain.Region) error
-	CreateDances(ctx context.Context, dances []domain.DanceShort) error
-	CreateSongs(ctx context.Context, songs []domain.SongShort) error
 	ClearAllTables(ctx context.Context) error
+	CreateArtists(ctx context.Context, artists []domain.ArtistShort) error
+	CreateDances(ctx context.Context, dances []domain.DanceShort) error
+	CreateRegions(ctx context.Context, regions []domain.Region) error
+	CreateSongs(ctx context.Context, songs []domain.SongShort) error
+	CreateVideos(ctx context.Context, videos []domain.VideoShort) error
 }
 
 type autoUploadDataService struct {
 	querier db.Querier
+}
+
+func (a autoUploadDataService) CreateArtists(ctx context.Context, artists []domain.ArtistShort) error {
+	translations := make([]domain.Translation, len(artists))
+
+	for i := range artists {
+		translations[i] = artists[i].Name
+	}
+
+	translationToParams := TranslationToDao(translations)
+	translationIds, err := a.querier.InsertTranslations(ctx, translationToParams)
+	if err != nil {
+		return err
+	}
+	insertArtistsParams := ArtistsToDao(artists, translationIds)
+	return a.querier.InsertArtists(ctx, insertArtistsParams)
 }
 
 func (a autoUploadDataService) CreateVideos(ctx context.Context, videos []domain.VideoShort) error {
@@ -37,11 +54,7 @@ func (a autoUploadDataService) CreateVideos(ctx context.Context, videos []domain
 		return err
 	}
 
-	danceVideoToParams, err := DanceVideosToDao(videos, videoIds)
-
-	if err != nil {
-		return err
-	}
+	danceVideoToParams := DanceVideosToDao(videos, videoIds)
 
 	return a.querier.InsertDanceVideos(ctx, danceVideoToParams)
 }
@@ -62,7 +75,13 @@ func (a autoUploadDataService) CreateSongs(ctx context.Context, songs []domain.S
 	}
 
 	danceSongToParams := SongDancesToDao(songs)
-	return a.querier.InsertDanceSongs(ctx, danceSongToParams)
+	if err = a.querier.InsertDanceSongs(ctx, danceSongToParams); err != nil {
+		return err
+	}
+
+	songArtists := SongArtistsToDao(songs)
+
+	return a.querier.InsertSongArtists(ctx, songArtists)
 }
 
 func (a autoUploadDataService) ClearAllTables(ctx context.Context) error {

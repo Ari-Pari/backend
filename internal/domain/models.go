@@ -71,10 +71,11 @@ type DanceShort struct {
 }
 
 type SongShort struct {
-	Id       int64
-	Name     Translation
-	NameKey  string
-	DanceIds []int64
+	Id        int64
+	Name      Translation
+	NameKey   string
+	DanceIds  []int64
+	ArtistIds []int64
 }
 
 type VideoType string
@@ -92,4 +93,12 @@ type VideoShort struct {
 	NameKey  string
 	Link     string
 	DanceIds []int64
+}
+
+type ArtistShort struct {
+	Id        int64
+	Name      Translation
+	NameKey   string
+	Url       string
+	DeletedAt *time.Time
 }

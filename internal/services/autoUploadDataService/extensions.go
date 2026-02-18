@@ -1,7 +1,6 @@
 package autoUploadDataService
 
 import (
-	"errors"
 	"time"
 
 	db "github.com/Ari-Pari/backend/internal/db/sqlc"
@@ -147,6 +146,23 @@ func SongDancesToDao(songs []domain.SongShort) db.InsertDanceSongsParams {
 	}
 }
 
+func SongArtistsToDao(songs []domain.SongShort) db.InsertSongArtistsParams {
+	songIds := make([]int64, 0, len(songs))
+	artistIds := make([]int64, 0, len(songs))
+
+	for _, song := range songs {
+		for _, artistId := range song.ArtistIds {
+			songIds = append(songIds, song.Id)
+			artistIds = append(artistIds, artistId)
+		}
+	}
+
+	return db.InsertSongArtistsParams{
+		SongIds:   songIds,
+		ArtistIds: artistIds,
+	}
+}
+
 func VideosToDao(videos []domain.VideoShort, translationIds []int64) db.InsertVideosParams {
 	links := make([]string, len(videos))
 	names := make([]string, len(videos))
@@ -166,9 +182,9 @@ func VideosToDao(videos []domain.VideoShort, translationIds []int64) db.InsertVi
 	}
 }
 
-func DanceVideosToDao(videos []domain.VideoShort, videoIds []int64) (db.InsertDanceVideosParams, error) {
+func DanceVideosToDao(videos []domain.VideoShort, videoIds []int64) db.InsertDanceVideosParams {
 	if len(videos) != len(videoIds) {
-		return db.InsertDanceVideosParams{}, errors.New("length of videos and videoIds must be equal")
+		return db.InsertDanceVideosParams{}
 	}
 	danceIds := make([]int64, 0, len(videos))
 	videoIdsToFill := make([]int64, 0, len(videos))
@@ -183,5 +199,31 @@ func DanceVideosToDao(videos []domain.VideoShort, videoIds []int64) (db.InsertDa
 	return db.InsertDanceVideosParams{
 		DanceIds: danceIds,
 		VideoIds: videoIdsToFill,
-	}, nil
+	}
+}
+
+func ArtistsToDao(artists []domain.ArtistShort, translations []int64) db.InsertArtistsParams {
+	ids := make([]int64, len(artists))
+	names := make([]string, len(artists))
+	links := make([]string, len(artists))
+	deletedAts := make([]pgtype.Timestamptz, len(artists))
+
+	for i, artist := range artists {
+		ids[i] = artist.Id
+		names[i] = artist.NameKey
+		links[i] = artist.Url
+		if artist.DeletedAt == nil {
+			deletedAts[i] = pgtype.Timestamptz{Time: time.Now(), Valid: false}
+		} else {
+			deletedAts[i] = pgtype.Timestamptz{Time: *artist.DeletedAt, Valid: true}
+		}
+	}
+
+	return db.InsertArtistsParams{
+		Ids:            ids,
+		TranslationIds: translations,
+		Names:          names,
+		Links:          links,
+		DeletedAts:     deletedAts,
+	}
 }

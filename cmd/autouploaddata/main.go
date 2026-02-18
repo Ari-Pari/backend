@@ -48,6 +48,19 @@ func main() {
 		log.Fatal("Failed to create regions:", err)
 	}
 
+	artists, err := myParser.ParseArtistsFile("static/autouploaddata/artists.json")
+
+	if err != nil {
+		log.Fatal("Failed to parse states:", err)
+	}
+
+	domainArtists := parser.ToDomainArtists(artists)
+
+	err = service.CreateArtists(ctx, domainArtists)
+	if err != nil {
+		log.Fatal("Failed to create artists:", err)
+	}
+
 	dances, err := myParser.ParseDancesFile("static/autouploaddata/dances.json")
 
 	if err != nil {

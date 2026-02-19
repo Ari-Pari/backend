@@ -9,7 +9,7 @@ import (
 )
 
 type Querier interface {
-	Placeholder(ctx context.Context) (Translation, error)
+	SearchDances(ctx context.Context, arg SearchDancesParams) ([]SearchDancesRow, error)
 }
 
 var _ Querier = (*Queries)(nil)

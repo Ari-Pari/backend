@@ -1,20 +1,163 @@
 package api
 
 import (
+	"encoding/json"
+	api "github.com/Ari-Pari/backend/internal/api/generated"
+	db "github.com/Ari-Pari/backend/internal/db/sqlc"
 	"log"
 	"net/http"
-
-	api "github.com/Ari-Pari/backend/internal/api/generated"
+	"slices"
+	"strings"
 )
 
 type Server struct {
-	logger *log.Logger
+	logger  *log.Logger
+	queries *db.Queries
 	// Добавьте ваши зависимости (БД, кэш, сервисы и т.д.)
 }
 
 func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params api.PostDancesSearchParams) {
-	//TODO implement me
-	panic("implement me")
+	var req api.DanceSearchRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	page := 1
+	size := 20
+	if params.Page != nil && *params.Page > 0 {
+		page = *params.Page
+	}
+	if params.Size != nil && *params.Size > 0 {
+		size = *params.Size
+	}
+
+	lang := "ru"
+	if params.Lang != nil && *params.Lang != "" {
+		lang = *params.Lang
+	}
+
+	searchText := req.SearchText
+
+	genresIn := []string{}
+	if string(req.Genres) != "" {
+		genresIn = []string{string(req.Genres)}
+	}
+
+	regionIdsIn := make([]int64, 0, len(req.Regions))
+	for _, id := range req.Regions {
+		regionIdsIn = append(regionIdsIn, int64(id))
+	}
+
+	complexitiesIn := make([]int32, 0, len(req.Complexities))
+	for _, c := range req.Complexities {
+		complexitiesIn = append(complexitiesIn, int32(c))
+	}
+
+	pacesIn := make([]int32, 0, len(req.Paces))
+	for _, p := range req.Paces {
+		pacesIn = append(pacesIn, int32(p))
+	}
+
+	gendersIn := make([]string, 0, len(req.Genders))
+	for _, g := range req.Genders {
+		gendersIn = append(gendersIn, string(g))
+	}
+
+	handshakesIn := make([]string, 0, len(req.Handshakes))
+	for _, h := range req.Handshakes {
+		handshakesIn = append(handshakesIn, string(h))
+	}
+
+	dbParams := db.SearchDancesParams{
+		Lang:           lang,
+		SearchText:     searchText,
+		GenresIn:       genresIn,
+		RegionIdsIn:    regionIdsIn,
+		ComplexitiesIn: complexitiesIn,
+		GendersIn:      gendersIn,
+		PacesIn:        pacesIn,
+		HandshakesIn:   handshakesIn,
+		Limit:          int32(size),
+		Offset:         int32((page - 1) * size),
+	}
+
+	rows, err := s.queries.SearchDances(r.Context(), dbParams)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if strings.ToUpper(string(req.SortType)) == "DESC" {
+		slices.Reverse(rows)
+	}
+
+	resp := make([]api.DanceShortResponse, 0, len(rows))
+	for _, d := range rows {
+		id := int(d.ID)
+
+		genderEnum := api.DanceShortResponseGender(d.Gender)
+
+		genres := make([]api.Genre, 0, len(d.Genres))
+		for _, g := range d.Genres {
+			genres = append(genres, api.Genre(g))
+		}
+
+		handshakes := make([]api.Handshake, 0, len(d.Handshakes))
+		for _, h := range d.Handshakes {
+			handshakes = append(handshakes, api.Handshake(h))
+		}
+
+		paces := make([]int, 0, len(d.Paces))
+		for _, p := range d.Paces {
+			paces = append(paces, int(p))
+		}
+
+		// d.Regions сейчас имеет тип []interface {} с map[string]interface{}
+		var regions []api.RegionResponse
+
+		if d.Regions != nil {
+			if arr, ok := d.Regions.([]interface{}); ok {
+				regions = make([]api.RegionResponse, 0, len(arr))
+				for _, item := range arr {
+					m, ok := item.(map[string]interface{})
+					if !ok {
+						continue
+					}
+
+					var reg api.RegionResponse
+
+					if v, ok := m["id"].(float64); ok {
+						reg.Id = int(v)
+					}
+
+					if v, ok := m["name"].(string); ok {
+						reg.Name = v
+					}
+
+					regions = append(regions, reg)
+				}
+			}
+		}
+
+		resp = append(resp, api.DanceShortResponse{
+			Id:         &id,
+			Name:       d.Name,
+			Complexity: int(d.Complexity),
+			Gender:     genderEnum,
+			Genres:     genres,
+			Handshakes: handshakes,
+			Paces:      paces,
+			PhotoLink:  d.PhotoLink.String,
+			Regions:    regions,
+		})
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(resp); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, params api.GetDancesIdParams) {
@@ -27,8 +170,9 @@ func (s Server) GetRegions(w http.ResponseWriter, r *http.Request, params api.Ge
 	panic("implement me")
 }
 
-func NewServer(logger *log.Logger) *Server {
+func NewServer(logger *log.Logger, q *db.Queries) *Server {
 	return &Server{
-		logger: logger,
+		logger:  logger,
+		queries: q,
 	}
 }

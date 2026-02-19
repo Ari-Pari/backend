@@ -7,22 +7,219 @@ package db
 
 import (
 	"context"
+	"time"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
-const placeholder = `-- name: Placeholder :one
-SELECT id, eng_name, ru_name, arm_name, created_at, updated_at FROM translations LIMIT 1
+const searchDances = `-- name: SearchDances :many
+SELECT
+    d.id,
+    d.translation_id,
+    COALESCE(
+            CASE $1::text
+                WHEN 'en' THEN t.eng_name
+                WHEN 'ru' THEN t.ru_name
+                WHEN 'am' THEN t.arm_name
+                ELSE t.ru_name
+                END,
+            d.name
+    ) AS name,
+    d.complexity,
+    d.photo_key         AS photo_link,
+    d.gender,
+    d.paces,
+    d.genres,
+    d.handshakes,
+    d.popularity,
+    d.created_by,
+    d.created_at,
+    d.updated_at,
+    COALESCE(
+                    json_agg(
+                    DISTINCT jsonb_build_object(
+                            'id', r.id,
+                            'translation_id', r.translation_id,
+                            'name', COALESCE(
+                                    CASE $1::text
+                                        WHEN 'en' THEN rt.eng_name
+                                        WHEN 'ru' THEN rt.ru_name
+                                        WHEN 'am' THEN rt.arm_name
+                                        ELSE rt.ru_name
+                                        END,
+                                    r.name
+                                    )
+                             )
+                            ) FILTER (WHERE r.id IS NOT NULL),
+                    '[]'::json
+    ) AS regions
+FROM dances d
+         LEFT JOIN translations t
+                   ON t.id = d.translation_id
+         LEFT JOIN dance_region dr
+                   ON dr.dance_id = d.id
+         LEFT JOIN regions r
+                   ON r.id = dr.region_id
+         LEFT JOIN translations rt
+                   ON rt.id = r.translation_id
+WHERE d.deleted_at IS NULL
+  AND (
+    CASE
+        WHEN $2::text IS NOT NULL
+            AND $2::text <> ''
+            THEN COALESCE(
+                         CASE $1::text
+                             WHEN 'en' THEN t.eng_name
+                             WHEN 'ru' THEN t.ru_name
+                             WHEN 'am' THEN t.arm_name
+                             ELSE t.ru_name
+                             END,
+                         d.name
+                 ) ILIKE ('%' || $2::text || '%')
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($3::text[], 1) > 0
+            THEN d.genres && $3::text[]
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($4::bigint[], 1) > 0
+            THEN dr.region_id = ANY($4::bigint[])
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($5::int[], 1) > 0
+            THEN d.complexity = ANY($5::int[])
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($6::text[], 1) > 0
+            THEN d.gender = ANY($6::text[])
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($7::int[], 1) > 0
+            THEN d.paces && $7::int[]
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($8::text[], 1) > 0
+            THEN d.handshakes && $8::text[]
+        ELSE TRUE
+        END
+    )
+GROUP BY
+    d.id,
+    d.translation_id,
+    COALESCE(
+            CASE $1::text
+                WHEN 'en' THEN t.eng_name
+                WHEN 'ru' THEN t.ru_name
+                WHEN 'am' THEN t.arm_name
+                ELSE t.ru_name
+                END,
+            d.name
+    ),
+    d.complexity,
+    d.photo_key,
+    d.gender,
+    d.paces,
+    d.genres,
+    d.handshakes,
+    d.popularity,
+    d.created_by,
+    d.created_at,
+    d.updated_at
+ORDER BY d.created_at DESC
+LIMIT  $10::int
+    OFFSET $9::int
 `
 
-func (q *Queries) Placeholder(ctx context.Context) (Translation, error) {
-	row := q.db.QueryRow(ctx, placeholder)
-	var i Translation
-	err := row.Scan(
-		&i.ID,
-		&i.EngName,
-		&i.RuName,
-		&i.ArmName,
-		&i.CreatedAt,
-		&i.UpdatedAt,
+type SearchDancesParams struct {
+	Lang           string   `json:"lang"`
+	SearchText     string   `json:"search_text"`
+	GenresIn       []string `json:"genres_in"`
+	RegionIdsIn    []int64  `json:"region_ids_in"`
+	ComplexitiesIn []int32  `json:"complexities_in"`
+	GendersIn      []string `json:"genders_in"`
+	PacesIn        []int32  `json:"paces_in"`
+	HandshakesIn   []string `json:"handshakes_in"`
+	Offset         int32    `json:"offset"`
+	Limit          int32    `json:"limit"`
+}
+
+type SearchDancesRow struct {
+	ID            int64              `json:"id"`
+	TranslationID pgtype.Int8        `json:"translation_id"`
+	Name          string             `json:"name"`
+	Complexity    int32              `json:"complexity"`
+	PhotoLink     pgtype.Text        `json:"photo_link"`
+	Gender        string             `json:"gender"`
+	Paces         []int32            `json:"paces"`
+	Genres        []string           `json:"genres"`
+	Handshakes    []string           `json:"handshakes"`
+	Popularity    int32              `json:"popularity"`
+	CreatedBy     pgtype.Int8        `json:"created_by"`
+	CreatedAt     time.Time          `json:"created_at"`
+	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`
+	Regions       interface{}        `json:"regions"`
+}
+
+func (q *Queries) SearchDances(ctx context.Context, arg SearchDancesParams) ([]SearchDancesRow, error) {
+	rows, err := q.db.Query(ctx, searchDances,
+		arg.Lang,
+		arg.SearchText,
+		arg.GenresIn,
+		arg.RegionIdsIn,
+		arg.ComplexitiesIn,
+		arg.GendersIn,
+		arg.PacesIn,
+		arg.HandshakesIn,
+		arg.Offset,
+		arg.Limit,
 	)
-	return i, err
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []SearchDancesRow{}
+	for rows.Next() {
+		var i SearchDancesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.TranslationID,
+			&i.Name,
+			&i.Complexity,
+			&i.PhotoLink,
+			&i.Gender,
+			&i.Paces,
+			&i.Genres,
+			&i.Handshakes,
+			&i.Popularity,
+			&i.CreatedBy,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.Regions,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }

@@ -40,7 +40,7 @@ CREATE TABLE dances (
     name VARCHAR NOT NULL,
     complexity INTEGER CHECK (complexity >= 1 AND complexity <= 5),
     photo_key VARCHAR,
-    gender VARCHAR NOT NULL, 
+    gender VARCHAR NOT NULL,
     paces INTEGER[],
     popularity INTEGER NOT NULL DEFAULT 0,
     genres TEXT[],

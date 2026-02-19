@@ -6,18 +6,24 @@ package db
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Querier interface {
 	GetArtists(ctx context.Context) ([]GetArtistsRow, error)
+	GetDanceByID(ctx context.Context, arg GetDanceByIDParams) (GetDanceByIDRow, error)
 	GetDanceRegions(ctx context.Context) ([]GetDanceRegionsRow, error)
 	GetDanceSongs(ctx context.Context) ([]GetDanceSongsRow, error)
 	GetDanceVideos(ctx context.Context) ([]GetDanceVideosRow, error)
 	GetDances(ctx context.Context) ([]GetDancesRow, error)
 	GetRegions(ctx context.Context) ([]GetRegionsRow, error)
+	GetRegionsByDanceID(ctx context.Context, danceID int64) ([]GetRegionsByDanceIDRow, error)
 	GetSongs(ctx context.Context) ([]GetSongsRow, error)
+	GetSongsByDanceID(ctx context.Context, danceID int64) ([]GetSongsByDanceIDRow, error)
 	GetTranslations(ctx context.Context) ([]GetTranslationsRow, error)
 	GetVideos(ctx context.Context) ([]GetVideosRow, error)
+	GetVideosByDanceID(ctx context.Context, danceID int64) ([]GetVideosByDanceIDRow, error)
 	InsertArtists(ctx context.Context, arg InsertArtistsParams) error
 	InsertDance(ctx context.Context, arg InsertDanceParams) error
 	InsertDanceRegions(ctx context.Context, arg InsertDanceRegionsParams) error
@@ -28,6 +34,7 @@ type Querier interface {
 	InsertSongs(ctx context.Context, arg InsertSongsParams) error
 	InsertTranslations(ctx context.Context, arg InsertTranslationsParams) ([]int64, error)
 	InsertVideos(ctx context.Context, arg InsertVideosParams) ([]int64, error)
+	ListRegions(ctx context.Context, lang pgtype.Text) ([]ListRegionsRow, error)
 	SearchDances(ctx context.Context, arg SearchDancesParams) ([]SearchDancesRow, error)
 	TruncateAllTables(ctx context.Context) error
 }

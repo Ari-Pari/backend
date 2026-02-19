@@ -3,6 +3,9 @@ package main
 import (
 	"context"
 	"errors"
+	"github.com/Ari-Pari/backend/internal/api"
+	db "github.com/Ari-Pari/backend/internal/db/sqlc"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"log"
 	"net/http"
 	"os"
@@ -10,7 +13,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Ari-Pari/backend/internal/api"
+	gen "github.com/Ari-Pari/backend/internal/api/generated"
 	"github.com/Ari-Pari/backend/internal/clients/dbstorage"
 	"github.com/Ari-Pari/backend/internal/clients/filestorage"
 	"github.com/Ari-Pari/backend/internal/config"
@@ -30,12 +33,20 @@ func main() {
 	ctx := context.Background()
 
 	setupDbStorage(ctx, cfg)
-
 	setupMinioStorage(cfg)
 
 	logger := log.New(os.Stdout, "API: ", log.LstdFlags|log.Lshortfile)
 
-	server := api.NewServer(logger)
+	dsn := os.Getenv("DATABASE_URL")
+	pool, err := pgxpool.New(ctx, dsn)
+	if err != nil {
+		logger.Fatalf("failed to connect to db: %v", err)
+	}
+	defer pool.Close()
+
+	queries := db.New(pool)
+
+	server := api.NewServer(logger, queries)
 
 	router := setupRouter(server, logger)
 
@@ -44,16 +55,17 @@ func main() {
 	select {}
 }
 
-func setupRouter(apiHandler *api.Server, logger *log.Logger) *chi.Mux {
+func setupRouter(apiHandler gen.ServerInterface, logger *log.Logger) *chi.Mux {
 	r := chi.NewRouter()
 
-	// Базовые middleware
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Timeout(60 * time.Second))
 	r.Use(middleware.Compress(5))
+
+	gen.HandlerFromMux(apiHandler, r)
 
 	return r
 }

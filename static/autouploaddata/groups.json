@@ -1,0 +1,964 @@
+[ {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF7",
+  "url" : "https://www.instagram.com/ararat.danzasarmenias",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Արգենտինա, Կորդոբա - Արարատ",
+    "en" : "Argentina, Cordoba - Ararat",
+    "ru" : "Аргентина, Кордова - Арарат"
+  }
+}, {
+  "flag" : "\uD83C\uDDFA\uD83C\uDDF8",
+  "url" : "https://www.facebook.com/profile.php?id=100079996384621",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "ԱՄՆ, Բրբանք - ՖոլկԼորիկ",
+    "en" : "USA, Burbank - FolkLoric",
+    "ru" : "США, Бербанк - ФолкЛорик"
+  }
+}, {
+  "flag" : "\uD83C\uDDFA\uD83C\uDDF8",
+  "url" : "https://www.instagram.com/araratdancegroup/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "ԱՄՆ, Գլենդել - Արարատ",
+    "en" : "USA, Glendale - Ararat",
+    "ru" : "США, Глендейл - Арарат"
+  }
+}, {
+  "flag" : "\uD83C\uDDFA\uD83C\uDDF8",
+  "url" : "https://www.instagram.com/lernazang/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "ԱՄՆ, Լոս Անջելես - Լեռնազանգ",
+    "en" : "USA, Los Angeles - Lernazang",
+    "ru" : "США, Лос-Анджелес - Лерназанг"
+  }
+}, {
+  "flag" : "\uD83C\uDDFA\uD83C\uDDF8",
+  "url" : "https://www.instagram.com/paraxumb/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "ԱՄՆ, Նյու Յորք - Պարախումբ",
+    "en" : "USA, New York - Parakhumb",
+    "ru" : "США, Нью-Йорк - Парахумб"
+  }
+}, {
+  "flag" : "\uD83C\uDDFA\uD83C\uDDF8",
+  "url" : "https://www.instagram.com/hayihokidc/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "ԱՄՆ, Վաշինգտոն - Հայի Հոգի",
+    "en" : "USA, Washington - Hayi Hogi",
+    "ru" : "США, Вашингтон - Айи Оки"
+  }
+}, {
+  "flag" : "\uD83C\uDDFA\uD83C\uDDF8",
+  "url" : "https://www.instagram.com/nareh_armenianculturalcenter",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "ԱՄՆ, Լանքյաստեր - Նարե",
+    "en" : "USA, Lancaster - Nareh",
+    "ru" : "США, Ланкастер - Наре"
+  }
+}, {
+  "flag" : "\uD83C\uDDE7\uD83C\uDDEA",
+  "url" : "https://www.instagram.com/kanch_folk_group",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Բելգիա, Անտվերպ - Կանչ",
+    "en" : "Belgium, Antwerp - Kanch",
+    "ru" : "Бельгия, Антверп - Канч"
+  }
+}, {
+  "flag" : "\uD83C\uDDE7\uD83C\uDDEA",
+  "url" : "https://www.instagram.com/gandzak.be/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Բելգիա, Բրյուսել - Գանձակ",
+    "en" : "Belgium, Brussels - Gandzak",
+    "ru" : "Бельгия, Брюссель - Гандзак"
+  }
+}, {
+  "flag" : "\uD83C\uDDE7\uD83C\uDDEA",
+  "url" : "https://www.instagram.com/nemrut_folk_group",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Բելգիա, Միշլեն - Նեմրութ",
+    "en" : "Belgium, Mechelen - Nemrut",
+    "ru" : "Бельгия, Мехелен - Немрут"
+  }
+}, {
+  "flag" : "\uD83C\uDDE7\uD83C\uDDF7",
+  "url" : "https://www.instagram.com/grupokilikia",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Բրազիլիա, Սան Պաուլո - Կիլիկիա",
+    "en" : "Brazil, Sao Paulo - Kilikia",
+    "ru" : "Бразилия, Сан-Паулу - Киликия"
+  }
+}, {
+  "flag" : "\uD83C\uDDE9\uD83C\uDDEA",
+  "url" : "https://www.instagram.com/hayeci_armenian_dancing",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Գերմանիա, Բեռլին - Հայեցի",
+    "en" : "Germany, Berlin - Hayeci",
+    "ru" : "Германия, Берлин - Айеци"
+  }
+}, {
+  "flag" : "\uD83C\uDDE9\uD83C\uDDEA",
+  "url" : "https://www.instagram.com/achtamar_dancegroup",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Գերմանիա, Բրեմեն - Ախթամար",
+    "en" : "Germany, Bremen - Akhtamar",
+    "ru" : "Германия, Бремен - Ахтамар"
+  }
+}, {
+  "flag" : "\uD83C\uDDE9\uD83C\uDDEA",
+  "url" : "https://www.instagram.com/khoyak_folk_group",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Գերմանիա, Մյունխեն - Խոյակ",
+    "en" : "Germany, Munich - Khoyak",
+    "ru" : "Германия, Мюнхен - Хояк"
+  }
+}, {
+  "flag" : "\uD83C\uDDEA\uD83C\uDDEA",
+  "url" : "https://www.instagram.com/mashtots_school/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Էստոնիա, Տալին - Տայք",
+    "en" : "Estonia, Tallinn - Tayk",
+    "ru" : "Эстония, Таллин - Тайк"
+  }
+}, {
+  "flag" : "\uD83C\uDDF9\uD83C\uDDF7",
+  "url" : "https://www.instagram.com/ermeni_danslari/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Թուրքիա, Ստամբուլ - Հայկական պարեր",
+    "en" : "Turkey, Istanbul - Haykakan Parer",
+    "ru" : "Турция, Стамбул - Айкакан Парер"
+  }
+}, {
+  "flag" : "\uD83C\uDDE8\uD83C\uDDED",
+  "url" : "https://www.instagram.com/gamar.folk.gva",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Շվեյցարիա, Ժնև - Կամար",
+    "en" : "Switzerland, Geneva - Kamar",
+    "ru" : "Швейцария, Женева - Камар"
+  }
+}, {
+  "flag" : "\uD83C\uDDF5\uD83C\uDDF1",
+  "url" : "https://www.instagram.com/omo.arm.pl",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Լեհաստան, Վարշավա - Երիտասարդական",
+    "en" : "Poland, Warsaw - Yeridasardakan",
+    "ru" : "Польша, Варшава - Эритасардакан"
+  }
+}, {
+  "flag" : "\uD83C\uDDE8\uD83C\uDDED",
+  "url" : "https://www.instagram.com/margarit.armeniandance/#",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Շվեյցարիա, Լոզան - Մարգարիտ",
+    "en" : "Switzerland, Lausanne - Margarit",
+    "ru" : "Швейцария, Лозанна - Маргарит"
+  }
+}, {
+  "flag" : "\uD83C\uDDE8\uD83C\uDDFE",
+  "url" : "https://www.facebook.com/KiLiKiA.Dance.Group",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Կիպրոս, Լիմասոլ - Կիլիկիա",
+    "en" : "Cyprus, Limassol - Kilikia",
+    "ru" : "Кипр, Лимассол - Киликия"
+  }
+}, {
+  "flag" : "\uD83C\uDDE8\uD83C\uDDFE",
+  "url" : "https://www.instagram.com/hamazkayin_sipan_dance_group/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Կիպրոս, Նիկոսիա - Սիփան",
+    "en" : "Cyprus, Nicosia - Sipan",
+    "ru" : "Кипр, Никосия - Сипан"
+  }
+}, {
+  "flag" : "\uD83C\uDDE8\uD83C\uDDFE",
+  "url" : "https://www.instagram.com/hamazkayin_ani_dance_group/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Կիպրոս, Պափոս - Անի",
+    "en" : "Cyprus, Paphos - Ani",
+    "ru" : "Кипр, Пафос - Ани"
+  }
+}, {
+  "flag" : "\uD83C\uDDF3\uD83C\uDDF1",
+  "url" : "https://www.instagram.com/armeensedansschool/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Նիդեռլանդներ, Ուտրեխտ - Դպրոց",
+    "en" : "Netherlands, Utrecht - Dprots",
+    "ru" : "Нидерланды, Утрехт - Дпроц"
+  }
+}, {
+  "flag" : "\uD83C\uDDED\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/hawk_of_budapest/#",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Հունգարիա, Բուդապեշտ - Հաւք",
+    "en" : "Hungary, Budapest - Havq",
+    "ru" : "Венгрия, Будапешт - Авк"
+  }
+}, {
+  "flag" : "\uD83C\uDDEC\uD83C\uDDF7",
+  "url" : "https://www.instagram.com/urartudance/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Հունաստան, Կումունիտի - Ուրարտու",
+    "en" : "Greece, Community - Urartu",
+    "ru" : "Греция, Community - Урарту"
+  }
+}, {
+  "flag" : "\uD83C\uDDEC\uD83C\uDDF7",
+  "url" : "https://www.instagram.com/avetis.armenian.culturalcenter/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Հունաստան, Աթենք - Ավետիս",
+    "en" : "Greece, Athens - Avetis",
+    "ru" : "Греция, Афины - Аветис"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/armat_folk_group/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Բելգորոդ - Արմատ",
+    "en" : "Russia, Belgorod - Armat",
+    "ru" : "Россия, Белгород - Армат"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/aralez_spb/#",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Ստ․ Պետերբուրգ - Արալեզ",
+    "en" : "Russia, Saint Petersburg - Arazlez",
+    "ru" : "Россия, Санкт-Петербург - Аралез"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/zartonqpeterburg/#",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Ստ․ Պետերբուրգ - Զարթոնք",
+    "en" : "Russia, Saint Petersburg - Zartonk",
+    "ru" : "Россия, Санкт-Петербург - Зартонк"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/nairi_dance_ensemble",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Ստ․ Պետերբուրգ - Նաիրի",
+    "en" : "Russia, Saint Petersburg - Nairi",
+    "ru" : "Россия, Санкт-Петербург - Наири"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/arev_folk/#",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Մոսկվա - Արև",
+    "en" : "Russia, Moscow - Arev",
+    "ru" : "Россия, Москва - Арев"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/ayg_ethnic_dance/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Մոսկվա - Այգ",
+    "en" : "Russia, Moscow - Ayg",
+    "ru" : "Россия, Москва - Айг"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/gokhtn_bmstu/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Մոսկվա - Գողթն",
+    "en" : "Russia, Moscow - Goghtn",
+    "ru" : "Россия, Москва - Гохтн"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/kayts_group/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Մոսկվա - Կայծ",
+    "en" : "Russia, Moscow - Kayts",
+    "ru" : "Россия, Москва - Кайц"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/g_njdeh/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Մոսկվա - Նժդեհ",
+    "en" : "Russia, Moscow - Njdeh",
+    "ru" : "Россия, Москва - Нжде"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/amd_adana/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Մոսկվա - Ադանա",
+    "en" : "Russia, Moscow - Adana",
+    "ru" : "Россия, Москва - Адана"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/amroc_par/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Նորգինսկ - Ամրոց",
+    "en" : "Russia, Norginsk - Amrots",
+    "ru" : "Россия, Ногинск - Амроц"
+  }
+}, {
+  "flag" : "\uD83C\uDDEF\uD83C\uDDF5",
+  "url" : "https://www.instagram.com/menq.japan",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ճապոնիա, Տոկիո - Մենք",
+    "en" : "Japan, Tokio - Menq",
+    "ru" : "Япония, Токио - Менк"
+  }
+}, {
+  "flag" : "\uD83C\uDDEF\uD83C\uDDF5",
+  "url" : "https://www.instagram.com/menq.japan",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ճապոնիա, Կիոտո - Մենք",
+    "en" : "Japan, Kioto - Menq",
+    "ru" : "Япония, Киото - Менк"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/zark_ethnic_dance/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Ռոստով - Զարկ",
+    "en" : "Russia, Rostov - Zark",
+    "ru" : "Россия, Ростов - Зарк"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/vahagn__ethnic__dance/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Ռոստով - Վահագն",
+    "en" : "Russia, Rostov - Vahagn",
+    "ru" : "Россия, Ростов - Ваагн"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/arma_vrn/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Վորոնեժ - Արմա",
+    "en" : "Russia, Voronezh - Arma",
+    "ru" : "Россия, Воронеж - Арма"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/asaypari",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Մոսկվա - Ասա ու պարի МГУ",
+    "en" : "Russia, Moscow - Asa u Pari МГУ",
+    "ru" : "Россия, Москва - Аса у пари МГУ"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/nka_nairi_samara/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Սամարա - Նաիրի",
+    "en" : "Russia, Samara - Nairi",
+    "ru" : "Россия, Самара - Наири"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/ararat_dance_studio/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Սոչի - Արարատ",
+    "en" : "Russia, Sochi - Ararat",
+    "ru" : "Россия, Сочи - Арарат"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDFA",
+  "url" : "https://www.instagram.com/amaras_armdance_tambov",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռուսաստան, Տամբով - Ամարաս",
+    "en" : "Russia, Tambov - Amaras",
+    "ru" : "Россия, Тамбов - Амарас"
+  }
+}, {
+  "flag" : "\uD83C\uDDEC\uD83C\uDDEA",
+  "url" : "https://www.instagram.com/taron.folk.ensamble/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Վրաստան, Թբիլիսի - Տարոն",
+    "en" : "Georgia, Tbilisi - Taron",
+    "ru" : "Грузия, Тбилиси - Тарон"
+  }
+}, {
+  "flag" : "\uD83C\uDDEC\uD83C\uDDEA",
+  "url" : "https://www.instagram.com/lineup_akhalkalaki",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Վրաստան, Ջավախք - Լայն Ափ",
+    "en" : "Georgia, Javakhk - Layn Ap",
+    "ru" : "Грузия, Джавахк - Лайн Ап"
+  }
+}, {
+  "flag" : "\uD83C\uDDEC\uD83C\uDDEA",
+  "url" : "https://www.instagram.com/naxnyac_kanch_folk_ensemble/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Վրաստան, Օրալ - Նախնյաց կանչ",
+    "en" : "Georgia, Oral - Nakhnyats kanch",
+    "ru" : "Грузия, Орал - Нахняц канч"
+  }
+}, {
+  "flag" : "\uD83C\uDDEB\uD83C\uDDF7",
+  "url" : "https://www.instagram.com/erevan_s_mcagd_",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ֆրանսիա, Գրենոբլ - Երևան",
+    "en" : "France, Grenobl - Yerevan",
+    "ru" : "Франция, Гренобл - Ереван"
+  }
+}, {
+  "flag" : "\uD83C\uDDEB\uD83C\uDDF7",
+  "url" : "https://www.instagram.com/avand.danse_paris/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ֆրանսիա, Փարիզ - Ավանդ",
+    "en" : "France, Paris - Avand",
+    "ru" : "Франция, Париж - Аванд"
+  }
+}, {
+  "flag" : "\uD83C\uDDF7\uD83C\uDDF4",
+  "url" : "https://www.instagram.com/vardavar_official",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ռումինիա, Բուխարեստ - Վարդավառ",
+    "en" : "Romania, Bucharest - Vardavar",
+    "ru" : "Руминия, Бухарест - Вардавар"
+  }
+}, {
+  "flag" : "\uD83C\uDDEB\uD83C\uDDF7",
+  "url" : "https://www.instagram.com/voskeparnice/",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ֆրանսիա, Նիցե - Ոսկեպար",
+    "en" : "France, Nice - Voskepar",
+    "ru" : "Франция, Ницца - Воскепар"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/profile.php?id=100066811010583",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Աշնակ - Աշնակ",
+    "en" : "Ashnak - Ashnak",
+    "ru" : "Ашнак - Ашнак"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/_andok_dance_/",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Ներքին Սասնաշեն - Անդոկ",
+    "en" : "Nerkin Sasnashen - Andok",
+    "ru" : "Неркин Саснашэн - Андок"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/gorani_dance_/",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Ներքին Բազմաբերդ - Գորանի",
+    "en" : "Nerkin Bazmaberd - Gorani",
+    "ru" : "Неркин Базмаберд - Горани"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/alashkert_parayinhamuyt",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Ծովասար - Ալաշկերտ",
+    "en" : "Tsovasar - Alashkert",
+    "ru" : "Цовасар - Алашкерт"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/andok_avandakan/",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Չարենցավան - Անդոկ",
+    "en" : "Charentsavan - Andok",
+    "ru" : "Чаренцаван - Андок"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/tavrosfolk/",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Մասիս - Տավրոս",
+    "en" : "Masis - Tavros",
+    "ru" : "Масис - Таврос"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/Zark.FolkDanceGroup",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Աբովյան - Զարկ",
+    "en" : "Abovyan - Zark",
+    "ru" : "Абовян - Зарк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/Hrayrq",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Գյումրի - Հրայրք",
+    "en" : "Gyumri - Hrayrq",
+    "ru" : "Гюмри - Райрк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/vorotnasisian",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Սիսիան - Որոտնա",
+    "en" : "Sisian - Vorotna",
+    "ru" : "Сисиан - Воротна"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/verelqfolk",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Վանաձոր - Վերելք",
+    "en" : "Vanadzor - Verelq",
+    "ru" : "Ванадзор - Верелк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/surmalu_azgagrakan_hamuyt/",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Մեծամոր - Սուրմալու",
+    "en" : "Metsamor - Surmalu",
+    "ru" : "Мецамор - Сурмалу"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/jermuk_youth_center/",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Ջերմուկ - Պարախումբ",
+    "en" : "Jermuk - Parakhumb",
+    "ru" : "Джермук - Парахумб"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/razmik_folk_group/",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Ստեփանավան - Ռազմիկ",
+    "en" : "Stepanavan - Razmik",
+    "ru" : "Степанаван - Размик"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/menq.sarnaghbyur",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Սառնաղբյուր - Մենք",
+    "en" : "Sarnaghbyur - Menq",
+    "ru" : "Сарнахбюр - Менк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/megharadzorculturecenter",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Մեղրաձոր - Արծափ",
+    "en" : "Meghradzor - Artsap",
+    "ru" : "Мехрадзор - Арцап"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/profile.php?id=100071432088305",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Բյուրեղավան - Ծիլք",
+    "en" : "Byureghavan - Tsilk",
+    "ru" : "Бюрегаван - Цилк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/fidayakanch_home_/",
+  "type" : "STATE",
+  "name" : {
+    "hy" : "Ամասիա - Ֆիդայականչ",
+    "en" : "Amasia - Fidayakanch",
+    "ru" : "Амасия - Фидаяканч"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/akunqfolk/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Ակունք",
+    "en" : "Akunk",
+    "ru" : "Акунк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/akner_folk_ensemble/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Ակներ",
+    "en" : "Akner",
+    "ru" : "Акнер"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/areg_folk_dance/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Արեգ",
+    "en" : "Areg",
+    "ru" : "Арег"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/acos_folk_dance_group/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Ակոս",
+    "en" : "Akos",
+    "ru" : "Акос"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/ap_api_folk_group/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Ափ ափի",
+    "en" : "Ap Api",
+    "ru" : "Ап Апи"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/ardvin_ensemble/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Արդվին",
+    "en" : "Ardvin",
+    "ru" : "Ардвин"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/bekor_folk/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Բեկոր",
+    "en" : "Bekor",
+    "ru" : "Бекор"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/gorani_folk_group/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Գորանի",
+    "en" : "Gorani",
+    "ru" : "Горани"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/tarerq_ethnic_dance/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Տարերք",
+    "en" : "Tarerq",
+    "ru" : "Тарерк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/profile.php?id=100063474551189",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Լեռնապար",
+    "en" : "Lernapar",
+    "ru" : "Лернапар"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/tsovak_folk_group/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Ծովակ",
+    "en" : "Tsovak",
+    "ru" : "Цовак"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/kamsar_folk_group/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Կամսար",
+    "en" : "Kamsar",
+    "ru" : "Камсар"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/karin_folk_group/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Կարին",
+    "en" : "Karin",
+    "ru" : "Карин"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/nairi_folk_group",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Նայիրի",
+    "en" : "Nayiri",
+    "ru" : "Наири"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/harq_folk_group/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Հարք",
+    "en" : "Harq",
+    "ru" : "Арк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/haykanch_folk_group/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Հայկանչ",
+    "en" : "Haykanch",
+    "ru" : "Айканч"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/menqfolk",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Մենք",
+    "en" : "Menq",
+    "ru" : "Менк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/masunq/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Մասունք",
+    "en" : "Masunq",
+    "ru" : "Масунк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/nubarfolkensemble_/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Նուբար",
+    "en" : "Nubar",
+    "ru" : "Нубар"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/sasna_crer_folk_ensemble/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Սասնա Ծռեր",
+    "en" : "Sasna Tsrer",
+    "ru" : "Сасна Црер"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/sasun_folk_group/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Սասուն",
+    "en" : "Sasun",
+    "ru" : "Сасун"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/vahagn_dance_group/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Վահագն",
+    "en" : "Vahagn",
+    "ru" : "Ваагн"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/varqhayots/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Վարք Հայոց",
+    "en" : "Varq Hayots",
+    "ru" : "Варк Айоц"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/van_folk_ensamble/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Վան",
+    "en" : "Van",
+    "ru" : "Ван"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/vanaknfolk/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Վանակն",
+    "en" : "Vanakn",
+    "ru" : "Ванакн"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/veradardz_folk_ensemble/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Վերադարձ",
+    "en" : "Veradardz",
+    "ru" : "Верадарц"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/verelq_dance_and_singing_group/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Վերելք",
+    "en" : "Verelq",
+    "ru" : "Верелк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/gharibyan_parayin_studia/",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Ղարիբյան",
+    "en" : "Gharibyan",
+    "ru" : "Гарибян"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.instagram.com/dare_folk_group",
+  "type" : "YEREVAN",
+  "name" : {
+    "hy" : "Դարե",
+    "en" : "Dare",
+    "ru" : "Даре"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/vary.varenk",
+  "type" : "ORGANIZATION",
+  "name" : {
+    "hy" : "Վարը Վարենկ",
+    "en" : "Vary Varenk",
+    "ru" : "Варе Варенк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/ParenqHayeren",
+  "type" : "ORGANIZATION",
+  "name" : {
+    "hy" : "Պարենք Հայերեն",
+    "en" : "Parenq Hayeren",
+    "ru" : "Паренк Айерен"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/kaythub",
+  "type" : "ORGANIZATION",
+  "name" : {
+    "hy" : "Կայթ",
+    "en" : "Kayt",
+    "ru" : "Кайт"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/GutanfolkfestArmenia",
+  "type" : "ORGANIZATION",
+  "name" : {
+    "hy" : "Գութան",
+    "en" : "Gutan",
+    "ru" : "Гутан"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/TamzaraIjevan",
+  "type" : "ORGANIZATION",
+  "name" : {
+    "hy" : "Թամզարա",
+    "en" : "Tamzara",
+    "ru" : "Тамзара"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://www.facebook.com/NSDAcademy",
+  "type" : "ORGANIZATION",
+  "name" : {
+    "hy" : "Պարի Ակադեմիա",
+    "en" : "Pari Akademia",
+    "ru" : "Пари Академиа"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF2",
+  "url" : "https://t.me/oursongsandwe",
+  "type" : "ORGANIZATION",
+  "name" : {
+    "hy" : "Մեր երգերը և մենք",
+    "en" : "Mer Yerqery yev Menq",
+    "ru" : "Мер Еркере ев Менк"
+  }
+}, {
+  "flag" : "\uD83C\uDDE6\uD83C\uDDF9",
+  "url" : "https://www.instagram.com/yerasank.vienna",
+  "type" : "DIASPORA",
+  "name" : {
+    "hy" : "Ավստրիա, Վիեննա - Երազանք",
+    "en" : "Austria, Vienna - Yerasank",
+    "ru" : "Австрия, Виенна - Еразанк"
+  }
+} ]

@@ -1,0 +1,3440 @@
+[
+  {
+    "name": {
+      "hy": "Ախ գարուն է",
+      "en": "Akh garun e",
+      "ru": "Ах гарун э"
+    },
+    "id": 2,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/Wk61XUxP2Mg"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Ախ գարուն է",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 1,
+    "genres": [],
+    "states": [
+      30
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ակար մակար",
+      "en": "Akar makar",
+      "ru": "Акар макар"
+    },
+    "id": 3,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/oTpus1j9Tdg"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/slimyMH2QP4"
+    ],
+    "nameKey": "Ակար մակար",
+    "temps": [
+      3
+    ],
+    "holdingTypes": [
+      "US"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      1
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ասմար",
+      "en": "Asmar",
+      "ru": "Асмар"
+    },
+    "id": 4,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/pLGJYWj3YUU"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Ասմար",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 1,
+    "genres": [],
+    "states": [
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Աստվածածնա / Յայլի",
+      "en": "Astvatsatsna / Yayli",
+      "ru": "Астватцатцна / Яйли"
+    },
+    "id": 5,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/6KLpp0IJgOg"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/dfhGHmol4MQ",
+      "https://youtu.be/WlvparB8jnQ"
+    ],
+    "urlSourceList": [
+      "https://youtu.be/1rFTjwMnCSo"
+    ],
+    "nameKey": "Աստվածածնա,Յայլի",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "PILGRIMAGE"
+    ],
+    "states": [
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Արզումանի",
+      "en": "Arzumani",
+      "ru": "Арзумани"
+    },
+    "id": 7,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/R2n8F6e35RI"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/wllpSda_CaQ?si=OJjCQHDYQc7H1seR"
+    ],
+    "nameKey": "Արզումանի",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Արշավապար / մտրակներով պար",
+      "en": "Arshavapar / mtraknerov par",
+      "ru": "Аршавапар / мтракнеров пар"
+    },
+    "id": 8,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/inlgL0JpsBU"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Արշավապար,մտրակներով պար",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "MTRAK"
+    ],
+    "gender": "BOY",
+    "difficult": 3,
+    "genres": [
+      "WAR"
+    ],
+    "states": [
+      28,
+      16
+    ]
+  },
+  {
+    "name": {
+      "hy": "Բանդի / Զնգրթա",
+      "en": "Bandi / Zngrta",
+      "ru": "Банди / Знгрта"
+    },
+    "id": 27,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=MEQPRMCNQJU&pp=ygUM1abVttWj1oDVqdWh"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Բանդի,Զնգրթա",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [],
+    "states": [
+      16
+    ]
+  },
+  {
+    "name": {
+      "hy": "Բիճո",
+      "en": "Bitcho",
+      "ru": "Бичо"
+    },
+    "id": 9,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/mhdHyKsS4SI"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Բիճո",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "PILGRIMAGE"
+    ],
+    "states": [
+      22
+    ]
+  },
+  {
+    "name": {
+      "hy": "Բուլուլ",
+      "en": "Bulul",
+      "ru": "Булул"
+    },
+    "id": 10,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/j0wknADFUzs"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/8TsVgZAU4VQ?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Բուլուլ",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "LABOR"
+    ],
+    "states": [
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Գյովնդ",
+      "en": "Gyovnd",
+      "ru": "Гйовнд"
+    },
+    "id": 11,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/3R_gKCL1R-s?si=eYY0m0bp89rgVBHs"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/ORZZ82g4PBg",
+      "https://www.youtube.com/watch?v=c3EyaoN_N9k"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Գյովնդ",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 1,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      37
+    ]
+  },
+  {
+    "name": {
+      "hy": "Գյովնդ Ապարանի",
+      "en": "Gyovnd Aparani",
+      "ru": "Гйовнд Апарани"
+    },
+    "id": 15,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/sAveorDjYHk"
+    ],
+    "nameKey": "Գյովնդ Ապարանի,Գյովնդ",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 1,
+    "genres": [
+      "COMMUNITY"
+    ],
+    "states": [
+      1,
+      12
+    ]
+  },
+  {
+    "name": {
+      "hy": "Գյովնդ Թագավորի",
+      "en": "Gyovnd Tagavori",
+      "ru": "Гйовнд Тагавори"
+    },
+    "id": 16,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/mN-ztXy3pJ8?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [
+      "https://youtu.be/zmWKlG3uCoM"
+    ],
+    "nameKey": "Գյովնդ Թագավորի,Գյովնդ",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      1
+    ]
+  },
+  {
+    "name": {
+      "hy": "Գորանի Ալաշկերտի",
+      "en": "Gorani Alashkerti",
+      "ru": "Горани Алашкерти"
+    },
+    "id": 128,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Գորանի Ալաշկերտի,գորանի",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "RITUAL",
+      "FUNERAL"
+    ],
+    "states": [
+      1
+    ]
+  },
+  {
+    "name": {
+      "hy": "Գորանի Սասնո",
+      "en": "Gorani Sasno",
+      "ru": "Горани Сасно"
+    },
+    "id": 17,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/Jr5TaaAGjqE"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/xCTD1kj7AUs",
+      "https://www.youtube.com/watch?v=9Ez-sdUKk0M"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Գորանի Սասնո,գորանի",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "RITUAL",
+      "FUNERAL"
+    ],
+    "states": [
+      26,
+      12,
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Դաբկի Կիլիկիո",
+      "en": "Dabki Kilikio",
+      "ru": "Дабки Киликио"
+    },
+    "id": 129,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Դաբկի Կիլիկիո,դապկե,դաբկի,Կիլիկո տապկե",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "BOY",
+    "difficult": 3,
+    "genres": [
+      "LABOR",
+      "RITUAL"
+    ],
+    "states": [
+      31,
+      32
+    ]
+  },
+  {
+    "name": {
+      "hy": "Դաբկի Մուսալեռան",
+      "en": "Dabki Musaleran",
+      "ru": "Дабки Мусалеран"
+    },
+    "id": 18,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/kFVx9QjO6Ks"
+    ],
+    "nameKey": "Դաբկի Մուսալեռան,դապկե,դաբկի,Մուսա լեռան դապկի",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "LABOR",
+      "RITUAL"
+    ],
+    "states": [
+      13
+    ]
+  },
+  {
+    "name": {
+      "hy": "Դերիկո",
+      "en": "Deriko",
+      "ru": "Дерико"
+    },
+    "id": 20,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/6FL1vsTlCTU"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/SNmgyr3BvmQ"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Դերիկո",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "US"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "FESTIVE"
+    ],
+    "states": [
+      10
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ետ ու առաջ",
+      "en": "Et u araj",
+      "ru": "Ет у арадж"
+    },
+    "id": 22,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/nOiUuw46GF8"
+    ],
+    "urlSourceList": [
+      "https://youtu.be/nOiUuw46GF8"
+    ],
+    "nameKey": "Ետ ու առաջ,հետուառաջ,հետ ու առաջ",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 5,
+    "genres": [
+      "FESTIVE",
+      "RITUAL"
+    ],
+    "states": [
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Երեք ոտք Ալաշկերտի / Սաքմա",
+      "en": "Ereq votq Alashkerti",
+      "ru": "Ерек вотк Алашкерти"
+    },
+    "id": 23,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/yP5ZLpqQyio",
+      "https://youtu.be/mTWn8ZhiEog"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Երեք ոտք Ալաշկերտի,3,3 ոտք,երեք ոտք",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      1
+    ]
+  },
+  {
+    "name": {
+      "hy": "Երեք ոտք Կարնո / Պուդուդի Ջամբար ամի",
+      "en": "Ereq votq Karno / Pududi Jambar ami",
+      "ru": "Ерек вотк Карно / Пудуди Джамбар ами"
+    },
+    "id": 24,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Երեք ոտք Կարնո,պուդուդի Ջամբար ամի,3,3 ոտք,երեք ոտք,պուդուդի ջամբարամբի",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "RITUAL",
+      "AMULET"
+    ],
+    "states": [
+      8
+    ]
+  },
+  {
+    "name": {
+      "hy": "Երեք ոտք Սեբաստիո",
+      "en": "Ereq votq Sebastio",
+      "ru": "Ерек вотк Себастио"
+    },
+    "id": 25,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/TGSf-NV2zb0"
+    ],
+    "nameKey": "Երեք ոտք Սեբաստիո,3,3 ոտք,երեք ոտք,Սեբաստիայի",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "FESTIVE"
+    ],
+    "states": [
+      22
+    ]
+  },
+  {
+    "name": {
+      "hy": "Զաքենի",
+      "en": "Zaqeni",
+      "ru": "Закени"
+    },
+    "id": 26,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/vvPuMeZSG_w"
+    ],
+    "nameKey": "Զաքենի",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "AZAT"
+    ],
+    "gender": "BOY",
+    "difficult": 4,
+    "genres": [
+      "CULT"
+    ],
+    "states": [
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Էլմաջուղ / Ջուխտ կրունկ",
+      "en": "Elmajugh / Jukht krunk",
+      "ru": "Элмаджух / Джухт крунк"
+    },
+    "id": 28,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/Umo0xP0vugA"
+    ],
+    "nameKey": "Էլմաջուղ,Ջուխտ կրունկ,յիլմաճուգ",
+    "temps": [
+      3
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "BOY",
+    "difficult": 3,
+    "genres": [
+      "WEDDING",
+      "AMULET"
+    ],
+    "states": [
+      9
+    ]
+  },
+  {
+    "name": {
+      "hy": "Էջմիածին",
+      "en": "Ejmiatsin",
+      "ru": "Эджмиатцин"
+    },
+    "id": 29,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/Im16AltUiTY"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/AbhykKO_HbQ"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Էջմիածին,էշմիածին",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "CULT"
+    ],
+    "states": [
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Էրիշտա",
+      "en": "Erishta",
+      "ru": "Эришта"
+    },
+    "id": 30,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/FtRO9txkkfg"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Էրիշտա",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "US",
+      "MEJQ"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "LABOR"
+    ],
+    "states": [
+      33,
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Թագվորապար",
+      "en": "Tagvorapar",
+      "ru": "Тагворапар"
+    },
+    "id": 31,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=v-i4PfLufwQ&pp=ygUU1anVodWj1b7VuNaA1aHVutWh1oA%3D"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Թագվորապար",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "GOTI"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      28
+    ]
+  },
+  {
+    "name": {
+      "hy": "Թամզարա",
+      "en": "Tamzara",
+      "ru": "Тамзара"
+    },
+    "id": 33,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/rSAmb39GsQA?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Թամզարա",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "US",
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 1,
+    "genres": [
+      "AMULET",
+      "WEDDING"
+    ],
+    "states": [
+      3,
+      1,
+      2,
+      6,
+      11,
+      5
+    ]
+  },
+  {
+    "name": {
+      "hy": "Թամիր աղա Ալաշկերտի",
+      "en": "Tamir agha Alashkerti",
+      "ru": "Тамир аха Алашкерти"
+    },
+    "id": 34,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/N3T_5t6v9zE"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Թամիր աղա Ալաշկերտի,թամիր աղա,թեմուր աղա",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "AP",
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "MEMORIAL"
+    ],
+    "states": [
+      1
+    ]
+  },
+  {
+    "name": {
+      "hy": "Թաշկինակներով պար",
+      "en": "Tashkinaknerov par",
+      "ru": "Ташкинакнеров пар"
+    },
+    "id": 35,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/Zl4w20-w2E8"
+    ],
+    "nameKey": "Թաշկինակներով պար,թաշկինակ",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "AZAT"
+    ],
+    "gender": "GIRL",
+    "difficult": 3,
+    "genres": [],
+    "states": [
+      28
+    ]
+  },
+  {
+    "name": {
+      "hy": "Թարս պար",
+      "en": "Tars par",
+      "ru": "Тарс пар"
+    },
+    "id": 36,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/NIc-zuQZJwk",
+      "https://www.youtube.com/watch?v=gbmCC4gLkGw"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Թարս պար",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "AMULET",
+      "REVERSE"
+    ],
+    "states": [
+      21
+    ]
+  },
+  {
+    "name": {
+      "hy": "Թաք թանզարա",
+      "en": "Taq tanzara",
+      "ru": "Так танзара"
+    },
+    "id": 32,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Թաք թանզարա,թակ թանզարա,թաքթանզարա",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "BOY",
+    "difficult": 5,
+    "genres": [
+      "WAR"
+    ],
+    "states": [
+      9
+    ]
+  },
+  {
+    "name": {
+      "hy": "Թաք Խանչալ",
+      "en": "Taq Khanchal",
+      "ru": "Так Ханчал"
+    },
+    "id": 38,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=dEmvVqvFahw&pp=ygUT1LnVodaEINWt1aHVttW51aHVrA%3D%3D"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Թաք Խանչալ",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "ZENQ"
+    ],
+    "gender": "BOY",
+    "difficult": 4,
+    "genres": [],
+    "states": []
+  },
+  {
+    "name": {
+      "hy": "Թովլամա",
+      "en": "Tovlama",
+      "ru": "Товлама"
+    },
+    "id": 40,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtube.com/clip/UgkxKAS2Ge12yspgXQ2pdNYnGFiClbf65sjk?si=ojjX8HQjQKov8ALa"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Թովլամա",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "WEDDING",
+      "AMULET"
+    ],
+    "states": [
+      16
+    ]
+  },
+  {
+    "name": {
+      "hy": "Թոփալ պար",
+      "en": "Topal par",
+      "ru": "Топал пар"
+    },
+    "id": 41,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/B-bll8zJ89Y?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [
+      "https://youtu.be/QEeaghKfn6w"
+    ],
+    "nameKey": "Թոփալ պար",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      9
+    ]
+  },
+  {
+    "name": {
+      "hy": "Թրթռուկ",
+      "en": "Trtruk",
+      "ru": "Тртрук"
+    },
+    "id": 42,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/K6VqWSBLhxA"
+    ],
+    "urlSourceList": [
+      "https://youtu.be/QEeaghKfn6w"
+    ],
+    "nameKey": "Թրթռուկ,թրթռուգ,թռթռուգ",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "BOY",
+    "difficult": 5,
+    "genres": [
+      "CULT",
+      "WAR"
+    ],
+    "states": [
+      9
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ինը ոտք",
+      "en": "Iny votq",
+      "ru": "Ине вотк"
+    },
+    "id": 43,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/CsCI0InrREQ?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Ինը ոտք,9,9 ոտք",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "US"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "FESTIVE"
+    ],
+    "states": [
+      26,
+      12,
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Իշխանաց պար / Շեյխանի",
+      "en": "Ishkhanats par / Sheykhani",
+      "ru": "Ишханац пар / Шейхани"
+    },
+    "id": 44,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/yDmsm0U-wrU",
+      "https://youtu.be/Vuk1bsvXdRY"
+    ],
+    "urlSourceList": [
+      "https://youtu.be/ohsm3scfWQk"
+    ],
+    "nameKey": "Իշխանաց պար,Շեյխանի,իշխանաց,իշխանապար",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 5,
+    "genres": [
+      "FESTIVE"
+    ],
+    "states": [
+      16,
+      17
+    ]
+  },
+  {
+    "name": {
+      "hy": "Լազ պար",
+      "en": "Laz par",
+      "ru": "Лаз пар"
+    },
+    "id": 45,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=vQ_-ZYyIUk0&pp=ygUN1azVodWmINW61aHWgA%3D%3D"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Լազ պար,լազ բար",
+    "temps": [
+      3
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "BOY",
+    "difficult": 5,
+    "genres": [],
+    "states": []
+  },
+  {
+    "name": {
+      "hy": "Լաչին",
+      "en": "Lachin",
+      "ru": "Лачин"
+    },
+    "id": 46,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/yHwrT928ghM?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Լաչին",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 1,
+    "genres": [
+      "COMMUNITY"
+    ],
+    "states": [
+      1,
+      26,
+      25,
+      12,
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Լե լե աշե",
+      "en": "Le le ashe",
+      "ru": "Ле ле аше"
+    },
+    "id": 47,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/i8ha04v0EAU"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Լե լե աշե",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "AZAT"
+    ],
+    "gender": "GIRL",
+    "difficult": 4,
+    "genres": [],
+    "states": [
+      24,
+      25,
+      12
+    ]
+  },
+  {
+    "name": {
+      "hy": "Լիկիլի",
+      "en": "Likili",
+      "ru": "Ликили"
+    },
+    "id": 48,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/-RR5N78X-R0"
+    ],
+    "nameKey": "Լիկիլի",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 5,
+    "genres": [],
+    "states": [
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Լորկե Մուսալեռան",
+      "en": "Lorke Musaleran",
+      "ru": "Лорке Мусалеран"
+    },
+    "id": 51,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/-6Ysj16RAdM"
+    ],
+    "nameKey": "Լորկե Մուսալեռան,լորկե",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "WEDDING",
+      ""
+    ],
+    "states": [
+      13
+    ]
+  },
+  {
+    "name": {
+      "hy": "Լորկե Շատախի",
+      "en": "Lorke Shatakhi",
+      "ru": "Лорке Шатахи"
+    },
+    "id": 52,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=Bg5-p14BR3E&pp=ygUX1bfVodW_1aHVrdWrINWs1bjWgNWv1aU%3D"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Լորկե Շատախի,լորկե",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "KHACH",
+      "CHKUYT"
+    ],
+    "gender": "BOY",
+    "difficult": 4,
+    "genres": [
+      "WAR",
+      "HUNTING"
+    ],
+    "states": [
+      29
+    ]
+  },
+  {
+    "name": {
+      "hy": "Լորկե Սասնա",
+      "en": "Lorke Sasna",
+      "ru": "Лорке Сасна"
+    },
+    "id": 53,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Լորկե Սասնա,լորկե",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Լորկե Վասպուրականի",
+      "en": "Lorke Vaspurakani",
+      "ru": "Лорке Васпуракани"
+    },
+    "id": 54,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/pe3NUJh2MZs"
+    ],
+    "nameKey": "Լորկե Վասպուրականի,լորկե",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "CULT"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Լուտկի",
+      "en": "Lutki",
+      "ru": "Лутки"
+    },
+    "id": 55,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/sjDMXstrPv8",
+      "https://www.youtube.com/watch?v=LyJ6IPFMY6Y"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Լուտկի,լուդգի,լուտկե",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "KHACH",
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "RITUAL",
+      "FESTIVE"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Լուտկի Վասպուրականի",
+      "en": "Lutki Vaspurakani",
+      "ru": "Лутки Васпуракани"
+    },
+    "id": 56,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/IGUv0dZl8mE"
+    ],
+    "nameKey": "Լուտկի Վասպուրականի,Լուտկի,լուդգի,լուտկե",
+    "temps": [
+      3
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "BOY",
+    "difficult": 5,
+    "genres": [
+      "RITUAL",
+      "CULT"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Խամ խամա",
+      "en": "Kham khama",
+      "ru": "Хам хама"
+    },
+    "id": 57,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/r1p89I54CFM"
+    ],
+    "nameKey": "Խամ խամա,խամխամա,խմխմա",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "FESTIVE"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Խարսխանե",
+      "en": "Kharskhane",
+      "ru": "Харсхане"
+    },
+    "id": 58,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=DkdF5Z8qIas&pp=ygUQ1a3VodaA1b3VrdWh1bbVpQ%3D%3D"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Խարսխանե,հարսհանե,հարս հանե",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      24,
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Խնկի ծառ",
+      "en": "Khnki tsar",
+      "ru": "Хнки тцар"
+    },
+    "id": 59,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/kSjS5m-OVlU"
+    ],
+    "nameKey": "Խնկի ծառ",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "AZAT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "CULT"
+    ],
+    "states": [
+      25,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Խոշ բիլազիկ",
+      "en": "Khosh bilazik",
+      "ru": "Хош билазик"
+    },
+    "id": 60,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/Kef8iDivlFA",
+      "https://www.youtube.com/watch?v=jS9fKuZ1hdQ"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Խոշ բիլազիկ",
+    "temps": [
+      3
+    ],
+    "holdingTypes": [
+      "US"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "LABOR"
+    ],
+    "states": [
+      8
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ծաղկաձորի",
+      "en": "Tsaghkadzori",
+      "ru": "Тцахкадзори"
+    },
+    "id": 61,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/mUSrfuJKxZY",
+      "https://www.youtube.com/watch?v=XQ-30Ef0vLw"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Ծաղկաձորի",
+    "temps": [
+      3
+    ],
+    "holdingTypes": [
+      "US"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "FESTIVE"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ծափիկ",
+      "en": "Tsapik",
+      "ru": "Тсапик"
+    },
+    "id": 62,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/IfV366m0O2Y?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [
+      "https://youtu.be/vfYVA4cUsfU?t=175"
+    ],
+    "nameKey": "Ծափիկ",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "AMULET"
+    ],
+    "states": [
+      9
+    ]
+  },
+  {
+    "name": {
+      "hy": "Կարմիր ֆստան",
+      "en": "Karmir fstan",
+      "ru": "Кармир фстан"
+    },
+    "id": 64,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/Rq-5uboxiRg"
+    ],
+    "nameKey": "Կարմիր ֆստան Մուսալեռան,գերմեր ֆստան,Կարմիր ֆստան",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "FESTIVE"
+    ],
+    "states": [
+      13
+    ]
+  },
+  {
+    "name": {
+      "hy": "Կռնկավե",
+      "en": "Krnkave",
+      "ru": "Крнкаве"
+    },
+    "id": 65,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/aZlnn_o0_-o"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Կռնկավե",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "AZAT",
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "CULT"
+    ],
+    "states": [
+      12
+    ]
+  },
+  {
+    "name": {
+      "hy": "Կտկտիկ / Փայլանչո / Կուռկուտիկ",
+      "en": "Ktktik / Paylancho / Kurkutik",
+      "ru": "Ктктик / Пайланчо / Куркутик"
+    },
+    "id": 66,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/GlLz8oAaY6M?t=367"
+    ],
+    "nameKey": "Կտկտիկ,Փայլանչո,Կուռկուտիկ",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "RITUAL"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Հոռմի Բար",
+      "en": "Hormi Bar",
+      "ru": "Хорми Бар"
+    },
+    "id": 69,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=8DT28KAbB_0&pp=ygUR1bDVuNW81bTVqyDVotWh1oA%3D"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Հոռմի Բար,հոռմիբար",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [],
+    "states": []
+  },
+  {
+    "name": {
+      "hy": "Ճիկտի",
+      "en": "Tchikti",
+      "ru": "Чикти"
+    },
+    "id": 70,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=gUq2-UdNwVc&pp=ygUK1YPVq9Wv1b_Vqw%3D%3D"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Ճիկտի",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "AZAT",
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [],
+    "states": [
+      28
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ճոճք",
+      "en": "Tchotchq",
+      "ru": "Чочк"
+    },
+    "id": 71,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/FvTpwCOWTxk?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Ճոճք",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "US"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Մածուն",
+      "en": "Matsun",
+      "ru": "Матцун"
+    },
+    "id": 72,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/TUDW8OU76Dk",
+      "https://www.youtube.com/watch?v=PARVSHFTWDU"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Մածուն",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "US",
+      "MEJQ"
+    ],
+    "gender": "GIRL",
+    "difficult": 3,
+    "genres": [
+      "LABOR",
+      "RITUAL"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Մամռ",
+      "en": "Mamr",
+      "ru": "Мамр"
+    },
+    "id": 73,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=4mdQa0mpx-M&pp=ygUI1YTVodW01bw%3D"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Մամռ",
+    "temps": [
+      3
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "BOY",
+    "difficult": 4,
+    "genres": [
+      "WAR"
+    ],
+    "states": [
+      16
+    ]
+  },
+  {
+    "name": {
+      "hy": "Մայրոքե",
+      "en": "Mayroqe",
+      "ru": "Майроке"
+    },
+    "id": 74,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/Ih1k6YB1xrU"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Մայրոքե,մեյրոկե,մայրո,լեյլմ լե",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "CULT",
+      "LABOR",
+      "REVERSE"
+    ],
+    "states": [
+      26,
+      12,
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Մարալոյ աղջիկ",
+      "en": "Maraloy aghjik",
+      "ru": "Маралой ахджик"
+    },
+    "id": 75,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/zZNjuctYgrY"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Մարալոյ աղջիկ",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "MEJQ"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [],
+    "states": [
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Մինինդուր",
+      "en": "Minindur",
+      "ru": "Мининдур"
+    },
+    "id": 76,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/xxrXMTqsXGc"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Մինինդուր",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "WEDDING",
+      "COMMUNITY"
+    ],
+    "states": [
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Մնդո",
+      "en": "Mndo",
+      "ru": "Мндо"
+    },
+    "id": 77,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=ap84h2aS7ws&pp=ygUI1bTVhtS01Yg%3D"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Մնդո",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "AZAT"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [],
+    "states": [
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Մոմերով պար / Կայնե ֆիդան",
+      "en": "Momerov par / Kayne fidan",
+      "ru": "Момеров пар / Кайне фидан"
+    },
+    "id": 78,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/HQ_b3yAnO30"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Մոմերով պար,Կայնե ֆիդան",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Յալլի",
+      "en": "Yalli",
+      "ru": "Ялли"
+    },
+    "id": 80,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/xv_IsaXZWT8"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Յալլի",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "COMMUNITY"
+    ],
+    "states": [
+      28
+    ]
+  },
+  {
+    "name": {
+      "hy": "Յարխուշտա",
+      "en": "Yarkhushta",
+      "ru": "Ярхушта"
+    },
+    "id": 81,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/z4p4A9M-PZo"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/cZg93ZLGbAY",
+      "https://youtu.be/gTGHv47IkWY"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Յարխուշտա,յարխուշտի",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "AZAT"
+    ],
+    "gender": "BOY",
+    "difficult": 5,
+    "genres": [
+      "WAR"
+    ],
+    "states": [
+      26,
+      12,
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Նարե",
+      "en": "Nare",
+      "ru": "Наре"
+    },
+    "id": 83,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/3aV2iSc6B1E?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Նարե",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "US",
+      "MEJQ"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "CULT",
+      "FESTIVE"
+    ],
+    "states": [
+      25,
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Նեյ բար",
+      "en": "Ney bar",
+      "ru": "Ней бар"
+    },
+    "id": 84,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/vfYVA4cUsfU"
+    ],
+    "nameKey": "Նեյ բար",
+    "temps": [
+      3
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      9
+    ]
+  },
+  {
+    "name": {
+      "hy": "Շավալի Կարնո",
+      "en": "Shavali Karno",
+      "ru": "Шавали Карно"
+    },
+    "id": 85,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/uQqk-BUjT34",
+      "https://www.youtube.com/watch?v=czRavzhmq-A"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Շավալի,շավալի կարնո",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "WEDDING",
+      "MATCHMAKERS"
+    ],
+    "states": [
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Շատախի ռազմապար",
+      "en": "Shatakhi razmapar",
+      "ru": "Шатахи размапар"
+    },
+    "id": 87,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/4-wYCRpcPRU"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/mw8XVkqKOzk?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Շատախի ռազմապար,շատախի մարտական",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "BOY",
+    "difficult": 4,
+    "genres": [
+      "WAR"
+    ],
+    "states": [
+      25,
+      29
+    ]
+  },
+  {
+    "name": {
+      "hy": "Շարանի",
+      "en": "Sharani",
+      "ru": "Шарани"
+    },
+    "id": 88,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/sWHqsxA5O6U?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Շարանի",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "BOY",
+    "difficult": 2,
+    "genres": [
+      "WAR"
+    ],
+    "states": [
+      1
+    ]
+  },
+  {
+    "name": {
+      "hy": "Շորոր Ապարանի",
+      "en": "Shoror Aparani",
+      "ru": "Шорор Апарани"
+    },
+    "id": 89,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/3emrGllJrDU"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Շորոր Ապարանի",
+    "temps": [],
+    "holdingTypes": [
+      "AZAT"
+    ],
+    "gender": "MULTY",
+    "difficult": null,
+    "genres": [],
+    "states": [
+      1,
+      12
+    ]
+  },
+  {
+    "name": {
+      "hy": "Շորոր Կարնո",
+      "en": "Shoror Karno",
+      "ru": "Шорор Карно"
+    },
+    "id": 90,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/phV2KBNMYSs"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Շորոր Կարնո,էրզրումի",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "CULT",
+      "MEMORABLE"
+    ],
+    "states": [
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Շորոր Կոմիտասի",
+      "en": "Shoror Komitasi",
+      "ru": "Шорор Комитаси"
+    },
+    "id": 91,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/-hiXXderwI8?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Շորոր Կոմիտասի",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "CULT",
+      "WEDDING",
+      "MEMORABLE",
+      "REVERSE"
+    ],
+    "states": []
+  },
+  {
+    "name": {
+      "hy": "Շորոր Սասնա",
+      "en": "Shoror Sasna",
+      "ru": "Шорор Сасна"
+    },
+    "id": 92,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/K0bbfZ7Q0Bg"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Շորոր Սասնա",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "CULT"
+    ],
+    "states": [
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Շորոր Վանա",
+      "en": "Shoror Vana",
+      "ru": "Шорор Вана"
+    },
+    "id": 93,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=Zh3c2JOxwTg&pp=ygUT1bfVuNaA1bjWgCDVvtWh1bbVoQ%3D%3D"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Շորոր Վանա",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "CULT"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Շորոր Վասպուրականի",
+      "en": "Shoror Vaspurakani",
+      "ru": "Шорор Васпуракани"
+    },
+    "id": 94,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://www.youtube.com/watch?v=7QIJ6xHUoOY&pp=ygUj1bfVuNaA1bjWgCDVvtWh1b3VutW41oLWgNWh1a_VodW21as%3D"
+    ],
+    "nameKey": "Շորոր Վասպուրականի",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "CULT"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Չալ մը դանգի",
+      "en": "Chal my dangi",
+      "ru": "Чал ме данги"
+    },
+    "id": 96,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/-iv3MNpRk2c?si=W906g7JHVuTS5tCD"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Չալ մը դանգի,չալմը դանգի,չալմը դանգ",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "ZENQ"
+    ],
+    "gender": "BOY",
+    "difficult": 4,
+    "genres": [
+      "WEDDING",
+      "WAR"
+    ],
+    "states": [
+      13
+    ]
+  },
+  {
+    "name": {
+      "hy": "Չաչանե",
+      "en": "Chachane",
+      "ru": "Чачане"
+    },
+    "id": 97,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/--Zz4MfT4Ds"
+    ],
+    "nameKey": "Չաչանե",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "AMULET"
+    ],
+    "states": [
+      27
+    ]
+  },
+  {
+    "name": {
+      "hy": "Պոզարե",
+      "en": "Pozare",
+      "ru": "Позаре"
+    },
+    "id": 98,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://youtu.be/vinOTeIeQto?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Պոզարե,պոզարեհ",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "CULT",
+      "WAR"
+    ],
+    "states": [
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ջումլամեր",
+      "en": "Jumlamer",
+      "ru": "Джумламер"
+    },
+    "id": 100,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/ELl9LXD0CxE"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Ջումլամեր",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "PILGRIMAGE"
+    ],
+    "states": [
+      10
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ջուրջենա",
+      "en": "Jurjena",
+      "ru": "Джурджена"
+    },
+    "id": 101,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=AWgZ5maXIcY&pp=ygUO1bvVuNaC1oDVu9W21aE%3D"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Ջուրջենա",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [],
+    "states": [
+      6
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ռոմանի",
+      "en": "Romani",
+      "ru": "Романи"
+    },
+    "id": 102,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=fKyBuXdpQp0&pp=ygUM1YzVuNW01aHVttWr"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Ռոմանի",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [],
+    "states": [
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ռոստամ բազի / Քաջաց խաղ",
+      "en": "Rostam bazi / Qajats khagh",
+      "ru": "Ростам бази / Каджац хах"
+    },
+    "id": 103,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [
+      "https://www.youtube.com/watch?v=tHxV13PwVbM",
+      "https://youtu.be/Nh9kCrP_EvE"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Ռոստամ բազի,Քաջաց խաղ,ռոստոմի",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "US"
+    ],
+    "gender": "BOY",
+    "difficult": 4,
+    "genres": [
+      "WAR"
+    ],
+    "states": [
+      16
+    ]
+  },
+  {
+    "name": {
+      "hy": "Սալամե",
+      "en": "Salame",
+      "ru": "Саламе"
+    },
+    "id": 104,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/7SQbAj53LWA"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Սալամե",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "REVERSE",
+      "WEDDING",
+      "AMULET"
+    ],
+    "states": [
+      9
+    ]
+  },
+  {
+    "name": {
+      "hy": "Սնջանե",
+      "en": "Snjane",
+      "ru": "Снджане"
+    },
+    "id": 106,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=e1DSMaiQ5PA&pp=ygUM1Y3VttW71aHVttWl"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Սնջանե",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Սրապար",
+      "en": "Srapar",
+      "ru": "Срапар"
+    },
+    "id": 107,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/kuop83fw_YM"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/G2NqYAkLTR8"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Սրապար",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      9
+    ]
+  },
+  {
+    "name": {
+      "hy": "Սըք Ռիզե",
+      "en": "Syq Rize",
+      "ru": "Сек Ризе"
+    },
+    "id": 105,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/watch?v=yA5AficNweQ&pp=ygUP1Y3VqNaEINW81avVptWl"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Սըք Ռիզե",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 5,
+    "genres": [
+      "WEDDING"
+    ],
+    "states": [
+      9
+    ]
+  },
+  {
+    "name": {
+      "hy": "Վանա ձկնորս",
+      "en": "Vana dzknors",
+      "ru": "Вана дзкнорс"
+    },
+    "id": 108,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/Bvl8bPBJ_hk"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/op8VDWnlndY?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Վանա ձկնորս",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "BOY",
+    "difficult": 4,
+    "genres": [
+      "LABOR"
+    ],
+    "states": [
+      7
+    ]
+  },
+  {
+    "name": {
+      "hy": "Վերվերի",
+      "en": "Ververi",
+      "ru": "Вервери"
+    },
+    "id": 109,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://www.youtube.com/shorts/obr9YbW66qo"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/phN75rgx2i8",
+      "https://www.youtube.com/watch?v=Tk2sYAY8j_c"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Վերվերի",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "AP",
+      "CHKUYT",
+      "US"
+    ],
+    "gender": "MULTY",
+    "difficult": 1,
+    "genres": [
+      "CULT",
+      "FESTIVE"
+    ],
+    "states": [
+      37
+    ]
+  },
+  {
+    "name": {
+      "hy": "Վերվերի մանդր",
+      "en": "Ververi mandr",
+      "ru": "Вервери мандр"
+    },
+    "id": 134,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Վերվերի մանր",
+    "temps": [
+      3
+    ],
+    "holdingTypes": [
+      "CHKUYT",
+      "US"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "CULT",
+      "FESTIVE"
+    ],
+    "states": [
+      12
+    ]
+  },
+  {
+    "name": {
+      "hy": "Վերվերի Սալմաստի / Հեշտայի",
+      "en": "Ververi Salmasti / Heshtayi",
+      "ru": "Вервери Салмасти / Хештайи"
+    },
+    "id": 110,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/IlKE6EU-ReM"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/--Zz4MfT4Ds?t=50"
+    ],
+    "nameKey": "Վերվերի Սալմաստի / Հեշտայի",
+    "temps": [
+      3
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "CULT",
+      "FESTIVE"
+    ],
+    "states": [
+      19
+    ]
+  },
+  {
+    "name": {
+      "hy": "Տալտալա",
+      "en": "Taltala",
+      "ru": "Талтала"
+    },
+    "id": 111,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/WoVVFHBpoD0"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/38Zp_rdxj4s?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Տալտալա",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "LABOR",
+      "RITUAL"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Տասներկու ոտք",
+      "en": "Tasnerku votq",
+      "ru": "Таснерку вотк"
+    },
+    "id": 112,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/s5DqdlvGpPM"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/RkDGPXMjKhg",
+      "https://youtu.be/RnikcJ25w8s"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Տասներկու ոտք,12",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "FESTIVE"
+    ],
+    "states": [
+      1,
+      24,
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ցորեն եմ ցանե",
+      "en": "Tsoren em tsane",
+      "ru": "Цорен ем цане"
+    },
+    "id": 114,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/EpeZlLGqdOs"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/DFRigZqlCsI"
+    ],
+    "nameKey": "Ցորեն եմ ցանե,ցորեն",
+    "temps": [
+      1
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 1,
+    "genres": [
+      "LABOR"
+    ],
+    "states": [
+      14
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ուրֆանե",
+      "en": "Urfane",
+      "ru": "Урфане"
+    },
+    "id": 95,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/O5m-cvRNi7k?t=102"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Ուրֆանե",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "ROAD",
+      "WEDDING"
+    ],
+    "states": [
+      15
+    ]
+  },
+  {
+    "name": {
+      "hy": "Փափուռի Սասնա",
+      "en": "Papuri Sasna",
+      "ru": "Папури Сасна"
+    },
+    "id": 115,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/WPidCq2-8NA"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/f8f-qwkaA8E",
+      "https://www.youtube.com/watch?v=ok2_eVsEhSk"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Փափուռի Սասնա",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "US"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "AMULET",
+      "FESTIVE"
+    ],
+    "states": [
+      26,
+      20,
+      12
+    ]
+  },
+  {
+    "name": {
+      "hy": "Փափուռի Խորգոմի",
+      "en": "Papuri Khorgomi",
+      "ru": "Папури Хоргоми"
+    },
+    "id": 135,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Փափուռի Վասպուրականի, Փափուռի խորգոմի, փափուռի,խորգոմ",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "AMULET",
+      "FESTIVE"
+    ],
+    "states": [
+      34,
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Քեչին վրեն",
+      "en": "Qechin vren",
+      "ru": "Кечин врен"
+    },
+    "id": 116,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/TWSWm_j4eaQ"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Քեչին վրեն",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "BOY",
+    "difficult": 3,
+    "genres": [
+      "LABOR"
+    ],
+    "states": [
+      14,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Քերծի",
+      "en": "Qertsi",
+      "ru": "Кертци"
+    },
+    "id": 117,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/krHQyppi2p4"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/WrqvwGb4K-4",
+      "https://www.youtube.com/watch?v=KxV9oXp0mOw"
+    ],
+    "urlSourceList": [
+      "https://youtu.be/68VsP-kGDdU"
+    ],
+    "nameKey": "Քերծի",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "HUNTING",
+      "WAR"
+    ],
+    "states": [
+      25
+    ]
+  },
+  {
+    "name": {
+      "hy": "Քոչարի Ալաշկերտի",
+      "en": "Qochari Alashkerti",
+      "ru": "Кочари Алашкерти"
+    },
+    "id": 119,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/3sfgSVNT5Fs"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/9Ez0-if_5tI?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [
+      "https://youtu.be/5JBPWsTUosE"
+    ],
+    "nameKey": "Քոչարի Ալաշկերտի",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "MEJQ"
+    ],
+    "gender": "BOY",
+    "difficult": 5,
+    "genres": [
+      "CULT",
+      "WAR"
+    ],
+    "states": [
+      1
+    ]
+  },
+  {
+    "name": {
+      "hy": "Քոչարի Աղքտի",
+      "en": "Qochari Aghqti",
+      "ru": "Кочари Ахкти"
+    },
+    "id": 120,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/WCnJTfeOC_8"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/-fU-x98WJ4c"
+    ],
+    "nameKey": "Քոչարի Աղքտի",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "MEJQ"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "WAR"
+    ],
+    "states": []
+  },
+  {
+    "name": {
+      "hy": "Քոչարի Բուլանուխի",
+      "en": "Qochari Bulanukhi",
+      "ru": "Кочари Буланухи"
+    },
+    "id": 121,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/XWm8K-Cdkf8"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/oAy8hRb3kMw"
+    ],
+    "nameKey": "Քոչարի Բուլանուխի,Բուլանխի քոչարի",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "KHACH",
+      "MEJQ"
+    ],
+    "gender": "BOY",
+    "difficult": 5,
+    "genres": [
+      "CULT",
+      "WAR"
+    ],
+    "states": [
+      4
+    ]
+  },
+  {
+    "name": {
+      "hy": "Քոչարի Կարնո",
+      "en": "Qochari Karno",
+      "ru": "Кочари Карно"
+    },
+    "id": 123,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/46jf4k3MfOo?t=2"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/SKSv9T3P32s",
+      "https://www.youtube.com/watch?v=sJFvtoTJba0"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Քոչարի Կարնո",
+    "temps": [
+      1,
+      3
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 2,
+    "genres": [
+      "CULT",
+      "WAR"
+    ],
+    "states": [
+      8
+    ]
+  },
+  {
+    "name": {
+      "hy": "Քոչարի Մշո",
+      "en": "Qochari Msho",
+      "ru": "Кочари Мшо"
+    },
+    "id": 124,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/_EwEdyHBeQQ"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/mRui__gRMTk?list=PLbLNk30NakOjVEDID1uEgunNh-fEIO62K"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Քոչարի Մշո",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 3,
+    "genres": [
+      "CULT",
+      "WAR"
+    ],
+    "states": [
+      12
+    ]
+  },
+  {
+    "name": {
+      "hy": "Քոչարի Սղերդի",
+      "en": "Qochari Sgherdi",
+      "ru": "Кочари Схерди"
+    },
+    "id": 125,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/N9k23XC521c"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/4VwyPXYuFUY"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Քոչարի Սղերդի",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "CULT",
+      "WAR"
+    ],
+    "states": [
+      23
+    ]
+  },
+  {
+    "name": {
+      "hy": "Քոչարի Վանա",
+      "en": "Qochari Vana",
+      "ru": "Кочари Вана"
+    },
+    "id": 126,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/SqMAJMZxAl8"
+    ],
+    "urlLessonList": [],
+    "urlSourceList": [
+      "https://youtu.be/SqMAJMZxAl8"
+    ],
+    "nameKey": "Քոչարի Վանա",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "AZAT",
+      "MEJQ"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "CULT",
+      "WAR"
+    ],
+    "states": [
+      24
+    ]
+  },
+  {
+    "name": {
+      "hy": "Քոչարի (Մշո խըռ)",
+      "en": "Qochari (Msho khyr)",
+      "ru": "Кочари (Мшо хр)"
+    },
+    "id": 118,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtube.com/clip/UgkxaILwJaGoRneZj2A-mXo-4c8CvsCiuBFA?si=GKI35TL2bhhsw6NV"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/btvp1UtrdYk",
+      "https://www.youtube.com/watch?v=0JSYptVFurg"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Քոչարի (Մշո խըռ),սասնա քոչարի,մշո խռ,մշո խըռ",
+    "temps": [
+      1,
+      2
+    ],
+    "holdingTypes": [
+      "KHACH"
+    ],
+    "gender": "MULTY",
+    "difficult": 4,
+    "genres": [
+      "CULT",
+      "WAR"
+    ],
+    "states": [
+      26,
+      12,
+      20
+    ]
+  },
+  {
+    "name": {
+      "hy": "Ֆնջան",
+      "en": "Fnjan",
+      "ru": "Фнджан"
+    },
+    "id": 127,
+    "type": "ACTIVE",
+    "urlDanceList": [
+      "https://youtu.be/QzS9zU6SceY"
+    ],
+    "urlLessonList": [
+      "https://youtu.be/rEKG3W4OtV8",
+      "https://www.youtube.com/watch?v=rozxXcUUNqw"
+    ],
+    "urlSourceList": [],
+    "nameKey": "Ֆնջան",
+    "temps": [
+      2,
+      3
+    ],
+    "holdingTypes": [
+      "AP"
+    ],
+    "gender": "MULTY",
+    "difficult": 5,
+    "genres": [
+      "FESTIVE"
+    ],
+    "states": [
+      8,
+      18
+    ]
+  },
+  {
+    "name": {
+      "hy": "Շատրվանի մոտ / Հովս բաշի",
+      "en": "Shatrvani mot / Hovs bashi",
+      "ru": "Шатрвани мот / Овс баши"
+    },
+    "id": 136,
+    "type": "ACTIVE",
+    "urlDanceList": [],
+    "urlLessonList": [],
+    "urlSourceList": [],
+    "nameKey": "Շատրվանի մոտ,Շատրվան,Հովս բաշի",
+    "temps": [
+      2
+    ],
+    "holdingTypes": [
+      "CHKUYT"
+    ],
+    "gender": "GIRL",
+    "difficult": 2,
+    "genres": [
+      "CULT"
+    ],
+    "states": [
+      16
+    ]
+  }
+]

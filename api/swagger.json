@@ -370,7 +370,8 @@
             "type": "string",
             "enum": [
               "createdBy",
-              "popularity"
+              "popularity",
+              "alphabet"
             ]
           },
           "sortType": {

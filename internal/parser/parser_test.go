@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/Ari-Pari/backend/internal/mocks"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 )
@@ -51,7 +52,7 @@ func TestParseVideosFile_Success(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockReader := NewMockFileReader(ctrl)
+	mockReader := mocks.NewMockFileReader(ctrl)
 	mockReader.EXPECT().
 		Open("videos.json").
 		Return(io.NopCloser(strings.NewReader(`[{"name":{"hy":"Տեսանյութ 1"},"url":"https://example.com/1"}]`)), nil)
@@ -70,7 +71,7 @@ func TestParseVideosFile_FileOpenError(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockReader := NewMockFileReader(ctrl)
+	mockReader := mocks.NewMockFileReader(ctrl)
 	mockReader.EXPECT().
 		Open("missing.json").
 		Return(nil, errors.New("file not found"))
@@ -91,7 +92,7 @@ func TestParseMusicsFile_Success(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockReader := NewMockFileReader(ctrl)
+	mockReader := mocks.NewMockFileReader(ctrl)
 	mockReader.EXPECT().
 		Open("musics.json").
 		Return(io.NopCloser(strings.NewReader(`[{"id":1,"name":{"hy":"Երգ 1"},"nameKey":"song.key.1"}]`)), nil)
@@ -110,7 +111,7 @@ func TestParseMusicsFile_FileOpenError(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockReader := NewMockFileReader(ctrl)
+	mockReader := mocks.NewMockFileReader(ctrl)
 	mockReader.EXPECT().
 		Open("missing.json").
 		Return(nil, errors.New("file not found"))
@@ -131,7 +132,7 @@ func TestParseDancesFile_Success(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockReader := NewMockFileReader(ctrl)
+	mockReader := mocks.NewMockFileReader(ctrl)
 	mockReader.EXPECT().
 		Open("dances.json").
 		Return(io.NopCloser(strings.NewReader(`[{"Id":1,"name":{"hy":"Պար 1"},"nameKey":"dance.key.1","difficult":3}]`)), nil)
@@ -151,7 +152,7 @@ func TestParseDancesFile_FileOpenError(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockReader := NewMockFileReader(ctrl)
+	mockReader := mocks.NewMockFileReader(ctrl)
 	mockReader.EXPECT().
 		Open("missing.json").
 		Return(nil, errors.New("file not found"))
@@ -168,7 +169,7 @@ func TestParseFile_ParseFuncError(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockReader := NewMockFileReader(ctrl)
+	mockReader := mocks.NewMockFileReader(ctrl)
 	mockReader.EXPECT().
 		Open("broken.json").
 		Return(io.NopCloser(strings.NewReader(`invalid`)), nil)
@@ -194,7 +195,7 @@ func TestParseFile_CloseError(t *testing.T) {
 	// Явно вызываем Close(), чтобы избежать ошибки "evaluated but not used"
 	_ = mockedFile.Close()
 
-	mockReader := NewMockFileReader(ctrl)
+	mockReader := mocks.NewMockFileReader(ctrl)
 	mockReader.EXPECT().
 		Open("close_error.json").
 		Return(mockedFile, nil)
@@ -212,7 +213,7 @@ func TestParseFile_ParseFuncReturnsNilAndError(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockReader := NewMockFileReader(ctrl)
+	mockReader := mocks.NewMockFileReader(ctrl)
 	mockReader.EXPECT().
 		Open("parse_error.json").
 		Return(io.NopCloser(strings.NewReader(`{}`)), nil)
@@ -264,7 +265,7 @@ func TestParseStatesFile_Success(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockReader := NewMockFileReader(ctrl)
+	mockReader := mocks.NewMockFileReader(ctrl)
 	mockReader.EXPECT().
 		Open("states.json").
 		Return(io.NopCloser(strings.NewReader(`[{"name":{"hy":"անուն"},"id":1}]`)), nil)
@@ -283,7 +284,7 @@ func TestParseFile_FileReaderReturnsNilReader(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockReader := NewMockFileReader(ctrl)
+	mockReader := mocks.NewMockFileReader(ctrl)
 	mockReader.EXPECT().
 		Open("nil_reader.json").
 		Return(nil, nil) // <-- Возвращаем (nil, nil)

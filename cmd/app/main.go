@@ -41,8 +41,6 @@ func main() {
 
 	minioStore := setupMinioStorage(cfg)
 
-	setupMinioStorage(cfg)
-
 	logger := log.New(os.Stdout, "API: ", log.LstdFlags|log.Lshortfile)
 
 	server := api.NewServer(logger, queries, minioStore)
@@ -113,7 +111,7 @@ func setupDbStorage(ctx context.Context, cfg *config.Config) *dbstorage.Storage 
 	if err != nil {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
-	log.Println("Successfully connected to the database!")
+	log.Println("Successfully connected to the database from akob main!")
 	return storage
 }
 

@@ -22,7 +22,8 @@ SELECT
      WHERE dr.dance_id = d.id) AS regions_json,
     (SELECT COALESCE(json_agg(json_build_object('id', v.id, 'name', v.name, 'link', v.link, 'type', v.type)), '[]'::json)
      FROM videos v
-     WHERE v.dance_id = d.id) AS videos_json
+     JOIN dance_videos dv ON dv.video_id = v.id
+     WHERE dv.dance_id = d.id) AS videos_json
 FROM dances d
 LEFT JOIN translations t ON d.translation_id = t.id
 WHERE d.id = $1;

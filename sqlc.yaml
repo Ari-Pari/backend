@@ -15,6 +15,10 @@ sql:
         emit_exact_table_names: false
         overrides:
           - db_type: "timestamptz"
-            go_type: "time.Time"
+            go_type: "github.com/jackc/pgx/v5/pgtype.Timestamptz"
           - db_type: "uuid"
             go_type: "github.com/google/uuid.UUID"
+          - db_type: "int[][]"
+            go_type: "github.com/jackc/pgx/v5/pgtype.Array[[]int32]"
+          - db_type: "text[][]"
+            go_type: "github.com/jackc/pgx/v5/pgtype.Array[[]string]"

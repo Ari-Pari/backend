@@ -10,16 +10,25 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type Artist struct {
+	ID            int64              `json:"id"`
+	TranslationID pgtype.Int8        `json:"translation_id"`
+	Name          string             `json:"name"`
+	Link          string             `json:"link"`
+	CreatedAt     time.Time          `json:"created_at"`
+	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`
+	DeletedAt     pgtype.Timestamptz `json:"deleted_at"`
+}
+
 type Dance struct {
 	ID            int64              `json:"id"`
 	TranslationID pgtype.Int8        `json:"translation_id"`
 	Name          string             `json:"name"`
-	Complexity    int32              `json:"complexity"`
+	Complexity    pgtype.Int4        `json:"complexity"`
 	PhotoKey      pgtype.Text        `json:"photo_key"`
 	Gender        string             `json:"gender"`
 	Paces         []int32            `json:"paces"`
 	Popularity    int32              `json:"popularity"`
-	CreatedBy     pgtype.Int8        `json:"created_by"`
 	Genres        []string           `json:"genres"`
 	Handshakes    []string           `json:"handshakes"`
 	CreatedAt     time.Time          `json:"created_at"`
@@ -51,15 +60,6 @@ type DanceVideo struct {
 	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
 }
 
-type Ensemble struct {
-	ID            int64              `json:"id"`
-	TranslationID pgtype.Int8        `json:"translation_id"`
-	Name          string             `json:"name"`
-	Link          string             `json:"link"`
-	CreatedAt     time.Time          `json:"created_at"`
-	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`
-}
-
 type Region struct {
 	ID            int64              `json:"id"`
 	TranslationID pgtype.Int8        `json:"translation_id"`
@@ -77,12 +77,12 @@ type Song struct {
 	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`
 }
 
-type SongEnsemble struct {
-	ID         int64              `json:"id"`
-	SongID     int64              `json:"song_id"`
-	EnsembleID int64              `json:"ensemble_id"`
-	CreatedAt  time.Time          `json:"created_at"`
-	UpdatedAt  pgtype.Timestamptz `json:"updated_at"`
+type SongArtist struct {
+	ID        int64              `json:"id"`
+	SongID    int64              `json:"song_id"`
+	ArtistID  int64              `json:"artist_id"`
+	CreatedAt time.Time          `json:"created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
 }
 
 type Translation struct {

@@ -33,6 +33,7 @@ const (
 
 // Defines values for DanceSearchRequestSortedBy.
 const (
+	Alphabet   DanceSearchRequestSortedBy = "alphabet"
 	CreatedBy  DanceSearchRequestSortedBy = "createdBy"
 	Popularity DanceSearchRequestSortedBy = "popularity"
 )

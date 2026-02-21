@@ -3,16 +3,17 @@ package api
 import (
 	"encoding/json"
 	api "github.com/Ari-Pari/backend/internal/api/generated"
+	"github.com/Ari-Pari/backend/internal/clients/filestorage"
 	db "github.com/Ari-Pari/backend/internal/db/sqlc"
 	"log"
 	"net/http"
-	"slices"
 	"strings"
 )
 
 type Server struct {
 	logger  *log.Logger
 	queries *db.Queries
+	storage filestorage.FileStorage // minio
 	// Добавьте ваши зависимости (БД, кэш, сервисы и т.д.)
 }
 
@@ -32,7 +33,7 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 		size = *params.Size
 	}
 
-	lang := "ru"
+	lang := "en"
 	if params.Lang != nil && *params.Lang != "" {
 		lang = *params.Lang
 	}
@@ -69,6 +70,23 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 		handshakesIn = append(handshakesIn, string(h))
 	}
 
+	// поле сортировки из enum SortedBy
+	sortField := "created_at"
+	switch req.SortedBy {
+	case api.Popularity:
+		sortField = "popularity"
+	case api.Alphabet:
+		sortField = "name"
+	case api.CreatedBy:
+		sortField = "created_at"
+	}
+
+	// направление сортировки из SortType
+	sortDirection := "ASC"
+	if strings.ToUpper(string(req.SortType)) == "DESC" {
+		sortDirection = "DESC"
+	}
+
 	dbParams := db.SearchDancesParams{
 		Lang:           lang,
 		SearchText:     searchText,
@@ -78,6 +96,8 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 		GendersIn:      gendersIn,
 		PacesIn:        pacesIn,
 		HandshakesIn:   handshakesIn,
+		OrderBy:        sortField,
+		OrderDir:       sortDirection,
 		Limit:          int32(size),
 		Offset:         int32((page - 1) * size),
 	}
@@ -86,10 +106,6 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
-	}
-
-	if strings.ToUpper(string(req.SortType)) == "DESC" {
-		slices.Reverse(rows)
 	}
 
 	resp := make([]api.DanceShortResponse, 0, len(rows))
@@ -113,9 +129,7 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 			paces = append(paces, int(p))
 		}
 
-		// d.Regions сейчас имеет тип []interface {} с map[string]interface{}
 		var regions []api.RegionResponse
-
 		if d.Regions != nil {
 			if arr, ok := d.Regions.([]interface{}); ok {
 				regions = make([]api.RegionResponse, 0, len(arr))
@@ -143,7 +157,7 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 		resp = append(resp, api.DanceShortResponse{
 			Id:         &id,
 			Name:       d.Name,
-			Complexity: int(d.Complexity),
+			Complexity: int(d.Complexity.Int32),
 			Gender:     genderEnum,
 			Genres:     genres,
 			Handshakes: handshakes,
@@ -170,9 +184,10 @@ func (s Server) GetRegions(w http.ResponseWriter, r *http.Request, params api.Ge
 	panic("implement me")
 }
 
-func NewServer(logger *log.Logger, q *db.Queries) *Server {
+func NewServer(logger *log.Logger, q *db.Queries, storage filestorage.FileStorage) *Server {
 	return &Server{
 		logger:  logger,
 		queries: q,
+		storage: storage,
 	}
 }

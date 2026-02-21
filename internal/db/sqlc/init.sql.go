@@ -32,7 +32,6 @@ SELECT
     d.genres,
     d.handshakes,
     d.popularity,
-    d.created_by,
     d.created_at,
     d.updated_at,
     COALESCE(
@@ -54,14 +53,10 @@ SELECT
                     '[]'::json
     ) AS regions
 FROM dances d
-         LEFT JOIN translations t
-                   ON t.id = d.translation_id
-         LEFT JOIN dance_region dr
-                   ON dr.dance_id = d.id
-         LEFT JOIN regions r
-                   ON r.id = dr.region_id
-         LEFT JOIN translations rt
-                   ON rt.id = r.translation_id
+         LEFT JOIN translations t ON t.id = d.translation_id
+         LEFT JOIN dance_region dr ON dr.dance_id = d.id
+         LEFT JOIN regions r       ON r.id = dr.region_id
+         LEFT JOIN translations rt ON rt.id = r.translation_id
 WHERE d.deleted_at IS NULL
   AND (
     CASE
@@ -140,12 +135,36 @@ GROUP BY
     d.genres,
     d.handshakes,
     d.popularity,
-    d.created_by,
     d.created_at,
     d.updated_at
-ORDER BY d.created_at DESC
-LIMIT  $10::int
-    OFFSET $9::int
+ORDER BY
+    CASE $9::text
+        WHEN 'popularity' THEN d.popularity::numeric
+        WHEN 'name'       THEN 0::numeric  -- сортируем по имени отдельным уровнем
+        WHEN 'created_at' THEN EXTRACT(EPOCH FROM d.created_at)::numeric
+        ELSE EXTRACT(EPOCH FROM d.created_at)::numeric
+        END
+        *
+    CASE
+        WHEN $10::text = 'DESC' THEN -1::numeric
+        ELSE 1::numeric
+        END,
+    -- для случая order_by = 'name' включаем второе поле сортировки
+    CASE
+        WHEN $9::text = 'name' THEN
+            COALESCE(
+                    CASE $1::text
+                        WHEN 'en' THEN t.eng_name
+                        WHEN 'ru' THEN t.ru_name
+                        WHEN 'am' THEN t.arm_name
+                        ELSE t.ru_name
+                        END,
+                    d.name
+            )
+        ELSE NULL
+        END
+LIMIT  $12::int
+    OFFSET $11::int
 `
 
 type SearchDancesParams struct {
@@ -157,6 +176,8 @@ type SearchDancesParams struct {
 	GendersIn      []string `json:"genders_in"`
 	PacesIn        []int32  `json:"paces_in"`
 	HandshakesIn   []string `json:"handshakes_in"`
+	OrderBy        string   `json:"order_by"`
+	OrderDir       string   `json:"order_dir"`
 	Offset         int32    `json:"offset"`
 	Limit          int32    `json:"limit"`
 }
@@ -165,14 +186,13 @@ type SearchDancesRow struct {
 	ID            int64              `json:"id"`
 	TranslationID pgtype.Int8        `json:"translation_id"`
 	Name          string             `json:"name"`
-	Complexity    int32              `json:"complexity"`
+	Complexity    pgtype.Int4        `json:"complexity"`
 	PhotoLink     pgtype.Text        `json:"photo_link"`
 	Gender        string             `json:"gender"`
 	Paces         []int32            `json:"paces"`
 	Genres        []string           `json:"genres"`
 	Handshakes    []string           `json:"handshakes"`
 	Popularity    int32              `json:"popularity"`
-	CreatedBy     pgtype.Int8        `json:"created_by"`
 	CreatedAt     time.Time          `json:"created_at"`
 	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`
 	Regions       interface{}        `json:"regions"`
@@ -188,6 +208,8 @@ func (q *Queries) SearchDances(ctx context.Context, arg SearchDancesParams) ([]S
 		arg.GendersIn,
 		arg.PacesIn,
 		arg.HandshakesIn,
+		arg.OrderBy,
+		arg.OrderDir,
 		arg.Offset,
 		arg.Limit,
 	)
@@ -209,7 +231,6 @@ func (q *Queries) SearchDances(ctx context.Context, arg SearchDancesParams) ([]S
 			&i.Genres,
 			&i.Handshakes,
 			&i.Popularity,
-			&i.CreatedBy,
 			&i.CreatedAt,
 			&i.UpdatedAt,
 			&i.Regions,

@@ -9,7 +9,26 @@ import (
 )
 
 type Querier interface {
-	Placeholder(ctx context.Context) (Translation, error)
+	GetArtists(ctx context.Context) ([]GetArtistsRow, error)
+	GetDanceRegions(ctx context.Context) ([]GetDanceRegionsRow, error)
+	GetDanceSongs(ctx context.Context) ([]GetDanceSongsRow, error)
+	GetDanceVideos(ctx context.Context) ([]GetDanceVideosRow, error)
+	GetDances(ctx context.Context) ([]GetDancesRow, error)
+	GetRegions(ctx context.Context) ([]GetRegionsRow, error)
+	GetSongs(ctx context.Context) ([]GetSongsRow, error)
+	GetTranslations(ctx context.Context) ([]GetTranslationsRow, error)
+	GetVideos(ctx context.Context) ([]GetVideosRow, error)
+	InsertArtists(ctx context.Context, arg InsertArtistsParams) error
+	InsertDance(ctx context.Context, arg InsertDanceParams) error
+	InsertDanceRegions(ctx context.Context, arg InsertDanceRegionsParams) error
+	InsertDanceSongs(ctx context.Context, arg InsertDanceSongsParams) error
+	InsertDanceVideos(ctx context.Context, arg InsertDanceVideosParams) error
+	InsertRegions(ctx context.Context, arg InsertRegionsParams) error
+	InsertSongArtists(ctx context.Context, arg InsertSongArtistsParams) error
+	InsertSongs(ctx context.Context, arg InsertSongsParams) error
+	InsertTranslations(ctx context.Context, arg InsertTranslationsParams) ([]int64, error)
+	InsertVideos(ctx context.Context, arg InsertVideosParams) ([]int64, error)
+	TruncateAllTables(ctx context.Context) error
 }
 
 var _ Querier = (*Queries)(nil)

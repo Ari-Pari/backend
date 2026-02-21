@@ -56,3 +56,6 @@ generate:
 			-package api \
 			-o $(GENERATED_FILE) \
 			$(SWAGGER_FILE)
+
+mockgen:
+	mockgen -source=$(source) -package=mocks -destination=$(destination)

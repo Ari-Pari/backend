@@ -1,0 +1,154 @@
+[ {
+  "id" : 1,
+  "name" : {
+    "hy" : "Կարին",
+    "en" : "Karin",
+    "ru" : "Карин"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/karin_folk_group/"
+}, {
+  "id" : 2,
+  "name" : {
+    "hy" : "Մասունք",
+    "en" : "Masunk",
+    "ru" : "Масунк"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/masunq/"
+}, {
+  "id" : 3,
+  "name" : {
+    "hy" : "Սասնա Ծռեր",
+    "en" : "Sasna Tsrer",
+    "ru" : "Сасна Црер"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/sasna_crer_folk_ensemble/"
+}, {
+  "id" : 4,
+  "name" : {
+    "hy" : "Շողակն",
+    "en" : "Shoghakn",
+    "ru" : "Шогакн"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.facebook.com/profile.php?id=100031771406962"
+}, {
+  "id" : 5,
+  "name" : {
+    "hy" : "Վան",
+    "en" : "Van",
+    "ru" : "Ван"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/van_folk_ensamble"
+}, {
+  "id" : 6,
+  "name" : {
+    "hy" : "Բեկոր",
+    "en" : "Bekor",
+    "ru" : "Бекор"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/bekor_folk/"
+}, {
+  "id" : 7,
+  "name" : {
+    "hy" : "Կայթ",
+    "en" : "Kayt",
+    "ru" : "Кайт"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/kayt_band/"
+}, {
+  "id" : 8,
+  "name" : {
+    "hy" : "Սասուն",
+    "en" : "Sasun",
+    "ru" : "Сасун"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/sasun_folk_group/"
+}, {
+  "id" : 9,
+  "name" : {
+    "hy" : "Նորայր Քարտաշյան",
+    "en" : "Norayr Kartashyan",
+    "ru" : "Норайр Карташян"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/menuaband"
+}, {
+  "id" : 10,
+  "name" : {
+    "hy" : "Ծովակ",
+    "en" : "Tsovak",
+    "ru" : "Цовак"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/tsovak_folk_group/"
+}, {
+  "id" : 11,
+  "name" : {
+    "hy" : "Նուբար",
+    "en" : "Nubar",
+    "ru" : "Нубар"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/nubarfolkensemble_/"
+}, {
+  "id" : 12,
+  "name" : {
+    "hy" : "Արեգ",
+    "en" : "Areg",
+    "ru" : "Арег"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/areg_folk_dance/"
+}, {
+  "id" : 13,
+  "name" : {
+    "hy" : "Վերադարձ",
+    "en" : "Veradardz",
+    "ru" : "Верадардз"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/veradardz_folk_ensemble/"
+}, {
+  "id" : 14,
+  "name" : {
+    "hy" : "Ակունք",
+    "en" : "Akunk",
+    "ru" : "Акунк"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/akunqfolk/"
+}, {
+  "id" : 15,
+  "name" : {
+    "hy" : "Գաթա բենդ",
+    "en" : "Gata Band",
+    "ru" : "Гата Бенд"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/gata_band_armenia/"
+}, {
+  "id" : 16,
+  "name" : {
+    "hy" : "Մարաթուկ",
+    "en" : "Maratuk",
+    "ru" : "Маратук"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.instagram.com/maratukhamuyt/"
+}, {
+  "id" : 17,
+  "name" : {
+    "hy" : "Ղևիկ",
+    "en" : "GhevIk",
+    "ru" : "Хевик"
+  },
+  "type" : "ACTIVE",
+  "urlInsta" : "https://www.aripari.am"
+} ]

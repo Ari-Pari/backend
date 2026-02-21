@@ -8,24 +8,25 @@ CREATE TABLE translations (
 );
 
 CREATE TABLE regions (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
     translation_id BIGINT,
     name VARCHAR NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ
 );
 
-CREATE TABLE ensemble (
-    id BIGSERIAL PRIMARY KEY,
+CREATE TABLE artists (
+    id BIGINT PRIMARY KEY,
     translation_id BIGINT,
     name VARCHAR NOT NULL,
     link VARCHAR NOT NULL DEFAULT '',
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ
+    updated_at TIMESTAMPTZ,
+    deleted_at TIMESTAMPTZ
 );
 
 CREATE TABLE songs (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
     translation_id BIGINT,
     file_key VARCHAR NOT NULL,
     name VARCHAR NOT NULL,
@@ -34,15 +35,14 @@ CREATE TABLE songs (
 );
 
 CREATE TABLE dances (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
     translation_id BIGINT,
     name VARCHAR NOT NULL,
-    complexity INTEGER NOT NULL CHECK (complexity >= 1 AND complexity <= 5),
+    complexity INTEGER CHECK (complexity >= 1 AND complexity <= 5),
     photo_key VARCHAR,
-    gender VARCHAR NOT NULL, 
+    gender VARCHAR NOT NULL,
     paces INTEGER[],
     popularity INTEGER NOT NULL DEFAULT 0,
-    created_by BIGINT,
     genres TEXT[],
     handshakes TEXT[],
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -80,13 +80,13 @@ CREATE TABLE dance_song (
     CONSTRAINT unique_dance_song UNIQUE (dance_id, song_id)
 );
 
-CREATE TABLE song_ensemble (
+CREATE TABLE song_artist (
     id BIGSERIAL PRIMARY KEY,
     song_id BIGINT NOT NULL,
-    ensemble_id BIGINT NOT NULL,
+    artist_id BIGINT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
-    CONSTRAINT unique_song_ensemble UNIQUE (song_id, ensemble_id)
+    CONSTRAINT unique_song_artist UNIQUE (song_id, artist_id)
 );
 
 CREATE TABLE dance_videos (

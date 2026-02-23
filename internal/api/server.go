@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 )
 
 type Server struct {
@@ -19,6 +20,7 @@ type Server struct {
 
 func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params api.PostDancesSearchParams) {
 	var req api.DanceSearchRequest
+	ctx := r.Context()
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -153,6 +155,13 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 				}
 			}
 		}
+		photoURL := ""
+		if d.PhotoLink.Valid && d.PhotoLink.String != "" {
+			url, err := s.storage.GetFileURL(ctx, d.PhotoLink.String, time.Hour)
+			if err == nil {
+				photoURL = url
+			}
+		}
 
 		resp = append(resp, api.DanceShortResponse{
 			Id:         &id,
@@ -162,7 +171,7 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 			Genres:     genres,
 			Handshakes: handshakes,
 			Paces:      paces,
-			PhotoLink:  d.PhotoLink.String,
+			PhotoLink:  photoURL,
 			Regions:    regions,
 		})
 	}

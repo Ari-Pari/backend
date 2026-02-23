@@ -21,7 +21,7 @@ SELECT
     d.created_at,
     d.updated_at,
     COALESCE(
-                    json_agg(
+                    array_agg(
                     DISTINCT jsonb_build_object(
                             'id', r.id,
                             'translation_id', r.translation_id,
@@ -35,8 +35,8 @@ SELECT
                                     r.name
                                     )
                              )
-                            ) FILTER (WHERE r.id IS NOT NULL),
-                    '[]'::json
+                             ) FILTER (WHERE r.id IS NOT NULL),
+                    ARRAY[]::jsonb[]
     ) AS regions
 FROM dances d
          LEFT JOIN translations t ON t.id = d.translation_id
@@ -48,15 +48,7 @@ WHERE d.deleted_at IS NULL
     CASE
         WHEN sqlc.arg(search_text)::text IS NOT NULL
             AND sqlc.arg(search_text)::text <> ''
-            THEN COALESCE(
-                         CASE sqlc.arg('lang')::text
-                             WHEN 'en' THEN t.eng_name
-                             WHEN 'ru' THEN t.ru_name
-                             WHEN 'am' THEN t.arm_name
-                             ELSE t.ru_name
-                             END,
-                         d.name
-                 ) ILIKE ('%' || sqlc.arg(search_text)::text || '%')
+            THEN CONCAT_WS(' ', t.eng_name, t.ru_name, t.arm_name, d.name) ILIKE ('%' || sqlc.arg(search_text)::text || '%')
         ELSE TRUE
         END
     )
@@ -124,30 +116,30 @@ GROUP BY
     d.created_at,
     d.updated_at
 ORDER BY
-    CASE sqlc.arg('order_by')::text
-        WHEN 'popularity' THEN d.popularity::numeric
-        WHEN 'name'       THEN 0::numeric  -- сортируем по имени отдельным уровнем
-        WHEN 'created_at' THEN EXTRACT(EPOCH FROM d.created_at)::numeric
-        ELSE EXTRACT(EPOCH FROM d.created_at)::numeric
-        END
-        *
-    CASE
-        WHEN sqlc.arg('order_dir')::text = 'DESC' THEN -1::numeric
-        ELSE 1::numeric
-        END,
-    -- для случая order_by = 'name' включаем второе поле сортировки
-    CASE
-        WHEN sqlc.arg('order_by')::text = 'name' THEN
-            COALESCE(
-                    CASE sqlc.arg('lang')::text
-                        WHEN 'en' THEN t.eng_name
-                        WHEN 'ru' THEN t.ru_name
-                        WHEN 'am' THEN t.arm_name
-                        ELSE t.ru_name
-                        END,
-                    d.name
-            )
-        ELSE NULL
-        END
+    CASE WHEN sqlc.arg(order_by_popularity)::boolean = true AND sqlc.arg(reverse_order)::boolean = false THEN d.popularity END ASC,
+    CASE WHEN sqlc.arg(order_by_popularity)::boolean = true AND sqlc.arg(reverse_order)::boolean = true THEN d.popularity END DESC,
+
+    CASE WHEN sqlc.arg(order_by_name)::boolean = true AND sqlc.arg(reverse_order)::boolean = false THEN COALESCE(
+            CASE sqlc.arg('lang')::text
+                WHEN 'en' THEN t.eng_name
+                WHEN 'ru' THEN t.ru_name
+                WHEN 'am' THEN t.arm_name
+                ELSE t.ru_name
+                END,
+            d.name
+                                                                                                        ) END ASC,
+    CASE WHEN sqlc.arg(order_by_name)::boolean = true AND sqlc.arg(reverse_order)::boolean = true THEN COALESCE(
+            CASE sqlc.arg('lang')::text
+                WHEN 'en' THEN t.eng_name
+                WHEN 'ru' THEN t.ru_name
+                WHEN 'am' THEN t.arm_name
+                ELSE t.ru_name
+                END,
+            d.name
+                                                                                                       ) END DESC,
+
+    CASE WHEN sqlc.arg(order_by_created_at)::boolean = true AND sqlc.arg(reverse_order)::boolean = false THEN d.created_at END ASC,
+    CASE WHEN sqlc.arg(order_by_created_at)::boolean = true AND sqlc.arg(reverse_order)::boolean = true THEN d.created_at END DESC,
+    d.created_at DESC
 LIMIT  sqlc.arg('limit')::int
     OFFSET sqlc.arg('offset')::int;

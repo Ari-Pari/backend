@@ -42,12 +42,10 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 
 	searchText := req.SearchText
 
-	// === ИСПРАВЛЕНИЕ ОШИБОК С GENRES ===
 	genresIn := make([]string, 0, len(req.Genres))
 	for _, g := range req.Genres {
 		genresIn = append(genresIn, string(g))
 	}
-	// === КОНЕЦ ИСПРАВЛЕНИЯ ОШИБОК С GENRES ===
 
 	regionIdsIn := make([]int64, 0, len(req.Regions))
 	for _, id := range req.Regions {
@@ -74,7 +72,6 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 		handshakesIn = append(handshakesIn, string(h))
 	}
 
-	// === ИСПРАВЛЕНИЕ ОШИБОК С СОРТИРОВКОЙ ===
 	orderByPopularity := false
 	orderByAlphabet := false // Соответствует OrderByName в SQLC
 	orderByCreatedAt := false
@@ -104,7 +101,7 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 		HandshakesIn:      handshakesIn,
 		OrderByPopularity: orderByPopularity,
 		OrderByCreatedAt:  orderByCreatedAt,
-		OrderByName:       orderByAlphabet, // Соответствует OrderByAlphabet
+		OrderByName:       orderByAlphabet,
 		ReverseOrder:      reverseOrder,
 		Limit:             int32(size),
 		Offset:            int32((page - 1) * size),
@@ -137,7 +134,6 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 			paces = append(paces, int(p))
 		}
 
-		// === ИСПРАВЛЕНИЕ ОШИБОК С REGIONS (обновлено) ===
 		var regions []api.RegionResponse
 
 		// Приведение типов для RegionIds
@@ -167,7 +163,6 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 				}
 			}
 		}
-		// === КОНЕЦ ИСПРАВЛЕНИЯ ОШИБОК С REGIONS ===
 
 		photoURL := ""
 		if d.PhotoLink.Valid && d.PhotoLink.String != "" {

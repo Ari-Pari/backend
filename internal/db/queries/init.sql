@@ -20,12 +20,10 @@ SELECT
     d.popularity,
     d.created_at,
     d.updated_at,
-    -- Отдельный массив для ID регионов
     COALESCE(
                     array_agg(DISTINCT r.id) FILTER (WHERE r.id IS NOT NULL),
                     ARRAY[]::bigint[]
     ) AS region_ids,
-    -- Отдельный массив для названий регионов
     COALESCE(
                     array_agg(
                     DISTINCT COALESCE(

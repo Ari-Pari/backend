@@ -42,10 +42,12 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 
 	searchText := req.SearchText
 
-	genresIn := []string{}
-	if string(req.Genres) != "" {
-		genresIn = []string{string(req.Genres)}
+	// === ИСПРАВЛЕНИЕ ОШИБОК С GENRES ===
+	genresIn := make([]string, 0, len(req.Genres))
+	for _, g := range req.Genres {
+		genresIn = append(genresIn, string(g))
 	}
+	// === КОНЕЦ ИСПРАВЛЕНИЯ ОШИБОК С GENRES ===
 
 	regionIdsIn := make([]int64, 0, len(req.Regions))
 	for _, id := range req.Regions {
@@ -72,36 +74,40 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 		handshakesIn = append(handshakesIn, string(h))
 	}
 
-	// поле сортировки из enum SortedBy
-	sortField := "created_at"
+	// === ИСПРАВЛЕНИЕ ОШИБОК С СОРТИРОВКОЙ ===
+	orderByPopularity := false
+	orderByAlphabet := false // Соответствует OrderByName в SQLC
+	orderByCreatedAt := false
+
 	switch req.SortedBy {
 	case api.Popularity:
-		sortField = "popularity"
+		orderByPopularity = true
 	case api.Alphabet:
-		sortField = "name"
+		orderByAlphabet = true
 	case api.CreatedBy:
-		sortField = "created_at"
+		orderByCreatedAt = true
 	}
 
-	// направление сортировки из SortType
-	sortDirection := "ASC"
+	reverseOrder := false // Соответствует DESC если true
 	if strings.ToUpper(string(req.SortType)) == "DESC" {
-		sortDirection = "DESC"
+		reverseOrder = true
 	}
 
 	dbParams := db.SearchDancesParams{
-		Lang:           lang,
-		SearchText:     searchText,
-		GenresIn:       genresIn,
-		RegionIdsIn:    regionIdsIn,
-		ComplexitiesIn: complexitiesIn,
-		GendersIn:      gendersIn,
-		PacesIn:        pacesIn,
-		HandshakesIn:   handshakesIn,
-		OrderBy:        sortField,
-		OrderDir:       sortDirection,
-		Limit:          int32(size),
-		Offset:         int32((page - 1) * size),
+		Lang:              lang,
+		SearchText:        searchText,
+		GenresIn:          genresIn,
+		RegionIdsIn:       regionIdsIn,
+		ComplexitiesIn:    complexitiesIn,
+		GendersIn:         gendersIn,
+		PacesIn:           pacesIn,
+		HandshakesIn:      handshakesIn,
+		OrderByPopularity: orderByPopularity,
+		OrderByCreatedAt:  orderByCreatedAt,
+		OrderByName:       orderByAlphabet, // Соответствует OrderByAlphabet
+		ReverseOrder:      reverseOrder,
+		Limit:             int32(size),
+		Offset:            int32((page - 1) * size),
 	}
 
 	rows, err := s.queries.SearchDances(r.Context(), dbParams)
@@ -131,30 +137,38 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 			paces = append(paces, int(p))
 		}
 
+		// === ИСПРАВЛЕНИЕ ОШИБОК С REGIONS (обновлено) ===
 		var regions []api.RegionResponse
-		if d.Regions != nil {
-			if arr, ok := d.Regions.([]interface{}); ok {
-				regions = make([]api.RegionResponse, 0, len(arr))
-				for _, item := range arr {
-					m, ok := item.(map[string]interface{})
-					if !ok {
-						continue
-					}
 
-					var reg api.RegionResponse
+		// Приведение типов для RegionIds
+		regionIDs, ok := d.RegionIds.([]int64)
+		if !ok {
+			s.logger.Printf("Warning: d.RegionIds is not []int64, got %T. Initializing as empty slice.", d.RegionIds)
+			regionIDs = []int64{} // Если приведение не удалось, инициализируем пустым слайсом
+		}
 
-					if v, ok := m["id"].(float64); ok {
-						reg.Id = int(v)
-					}
+		// Приведение типов для RegionNames
+		regionNames, ok := d.RegionNames.([]string)
+		if !ok {
+			s.logger.Printf("Warning: d.RegionNames is not []string, got %T. Initializing as empty slice.", d.RegionNames)
+			regionNames = []string{} // Если приведение не удалось, инициализируем пустым слайсом
+		}
 
-					if v, ok := m["name"].(string); ok {
-						reg.Name = v
-					}
-
-					regions = append(regions, reg)
+		if len(regionIDs) > 0 {
+			regions = make([]api.RegionResponse, 0, len(regionIDs))
+			for i := range regionIDs {
+				if i < len(regionNames) { // Убедимся, что имя существует для этого ID
+					idVal := int(regionIDs[i])
+					nameVal := regionNames[i]
+					regions = append(regions, api.RegionResponse{
+						Id:   idVal,
+						Name: nameVal,
+					})
 				}
 			}
 		}
+		// === КОНЕЦ ИСПРАВЛЕНИЯ ОШИБОК С REGIONS ===
+
 		photoURL := ""
 		if d.PhotoLink.Valid && d.PhotoLink.String != "" {
 			url, err := s.storage.GetFileURL(ctx, d.PhotoLink.String, time.Hour)

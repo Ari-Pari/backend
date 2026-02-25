@@ -103,7 +103,7 @@ type DanceFullResponseGender string
 type DanceSearchRequest struct {
 	Complexities []int                       `json:"complexities"`
 	Genders      []DanceSearchRequestGenders `json:"genders"`
-	Genres       Genre                       `json:"genres"`
+	Genres       []Genre                     `json:"genres"`
 	Handshakes   []Handshake                 `json:"handshakes"`
 	Paces        []int                       `json:"paces"`
 	Regions      []int                       `json:"regions"`

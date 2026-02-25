@@ -7,7 +7,6 @@ package db
 
 import (
 	"context"
-	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
 )
@@ -20,8 +19,8 @@ SELECT
             CASE $1::text
                 WHEN 'en' THEN t.eng_name
                 WHEN 'ru' THEN t.ru_name
-                WHEN 'am' THEN t.arm_name
-                ELSE t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
                 END,
             d.name
     ) AS name,
@@ -34,24 +33,26 @@ SELECT
     d.popularity,
     d.created_at,
     d.updated_at,
+    -- Отдельный массив для ID регионов
     COALESCE(
-                    json_agg(
-                    DISTINCT jsonb_build_object(
-                            'id', r.id,
-                            'translation_id', r.translation_id,
-                            'name', COALESCE(
-                                    CASE $1::text
-                                        WHEN 'en' THEN rt.eng_name
-                                        WHEN 'ru' THEN rt.ru_name
-                                        WHEN 'am' THEN rt.arm_name
-                                        ELSE rt.ru_name
-                                        END,
-                                    r.name
-                                    )
+                    array_agg(DISTINCT r.id) FILTER (WHERE r.id IS NOT NULL),
+                    ARRAY[]::bigint[]
+    ) AS region_ids,
+    -- Отдельный массив для названий регионов
+    COALESCE(
+                    array_agg(
+                    DISTINCT COALESCE(
+                            CASE $1::text
+                                WHEN 'en' THEN rt.eng_name
+                                WHEN 'ru' THEN rt.ru_name
+                                WHEN 'hy' THEN rt.arm_name
+                                ELSE rt.eng_name
+                                END,
+                            r.name
                              )
-                            ) FILTER (WHERE r.id IS NOT NULL),
-                    '[]'::json
-    ) AS regions
+                             ) FILTER (WHERE r.id IS NOT NULL),
+                    ARRAY[]::text[]
+    ) AS region_names
 FROM dances d
          LEFT JOIN translations t ON t.id = d.translation_id
          LEFT JOIN dance_region dr ON dr.dance_id = d.id
@@ -62,15 +63,7 @@ WHERE d.deleted_at IS NULL
     CASE
         WHEN $2::text IS NOT NULL
             AND $2::text <> ''
-            THEN COALESCE(
-                         CASE $1::text
-                             WHEN 'en' THEN t.eng_name
-                             WHEN 'ru' THEN t.ru_name
-                             WHEN 'am' THEN t.arm_name
-                             ELSE t.ru_name
-                             END,
-                         d.name
-                 ) ILIKE ('%' || $2::text || '%')
+            THEN CONCAT_WS(' ', t.eng_name, t.ru_name, t.arm_name, d.name) ILIKE ('%' || $2::text || '%')
         ELSE TRUE
         END
     )
@@ -123,8 +116,8 @@ GROUP BY
             CASE $1::text
                 WHEN 'en' THEN t.eng_name
                 WHEN 'ru' THEN t.ru_name
-                WHEN 'am' THEN t.arm_name
-                ELSE t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
                 END,
             d.name
     ),
@@ -138,48 +131,50 @@ GROUP BY
     d.created_at,
     d.updated_at
 ORDER BY
-    CASE $9::text
-        WHEN 'popularity' THEN d.popularity::numeric
-        WHEN 'name'       THEN 0::numeric  -- сортируем по имени отдельным уровнем
-        WHEN 'created_at' THEN EXTRACT(EPOCH FROM d.created_at)::numeric
-        ELSE EXTRACT(EPOCH FROM d.created_at)::numeric
-        END
-        *
-    CASE
-        WHEN $10::text = 'DESC' THEN -1::numeric
-        ELSE 1::numeric
-        END,
-    -- для случая order_by = 'name' включаем второе поле сортировки
-    CASE
-        WHEN $9::text = 'name' THEN
-            COALESCE(
-                    CASE $1::text
-                        WHEN 'en' THEN t.eng_name
-                        WHEN 'ru' THEN t.ru_name
-                        WHEN 'am' THEN t.arm_name
-                        ELSE t.ru_name
-                        END,
-                    d.name
-            )
-        ELSE NULL
-        END
-LIMIT  $12::int
-    OFFSET $11::int
+    CASE WHEN $9::boolean = true AND $10::boolean = false THEN d.popularity END ASC,
+    CASE WHEN $9::boolean = true AND $10::boolean = true THEN d.popularity END DESC,
+
+    CASE WHEN $11::boolean = true AND $10::boolean = false THEN COALESCE(
+            CASE $1::text
+                WHEN 'en' THEN t.eng_name
+                WHEN 'ru' THEN t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
+                END,
+            d.name
+                                                                                                        ) END ASC,
+    CASE WHEN $11::boolean = true AND $10::boolean = true THEN COALESCE(
+            CASE $1::text
+                WHEN 'en' THEN t.eng_name
+                WHEN 'ru' THEN t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
+                END,
+            d.name
+                                                                                                       ) END DESC,
+
+    CASE WHEN $12::boolean = true AND $10::boolean = false THEN d.created_at END ASC,
+    CASE WHEN $12::boolean = true AND $10::boolean = true THEN d.created_at END DESC,
+    d.created_at DESC
+LIMIT  $14::int
+    OFFSET $13::int
 `
 
 type SearchDancesParams struct {
-	Lang           string   `json:"lang"`
-	SearchText     string   `json:"search_text"`
-	GenresIn       []string `json:"genres_in"`
-	RegionIdsIn    []int64  `json:"region_ids_in"`
-	ComplexitiesIn []int32  `json:"complexities_in"`
-	GendersIn      []string `json:"genders_in"`
-	PacesIn        []int32  `json:"paces_in"`
-	HandshakesIn   []string `json:"handshakes_in"`
-	OrderBy        string   `json:"order_by"`
-	OrderDir       string   `json:"order_dir"`
-	Offset         int32    `json:"offset"`
-	Limit          int32    `json:"limit"`
+	Lang              string   `json:"lang"`
+	SearchText        string   `json:"search_text"`
+	GenresIn          []string `json:"genres_in"`
+	RegionIdsIn       []int64  `json:"region_ids_in"`
+	ComplexitiesIn    []int32  `json:"complexities_in"`
+	GendersIn         []string `json:"genders_in"`
+	PacesIn           []int32  `json:"paces_in"`
+	HandshakesIn      []string `json:"handshakes_in"`
+	OrderByPopularity bool     `json:"order_by_popularity"`
+	ReverseOrder      bool     `json:"reverse_order"`
+	OrderByName       bool     `json:"order_by_name"`
+	OrderByCreatedAt  bool     `json:"order_by_created_at"`
+	Offset            int32    `json:"offset"`
+	Limit             int32    `json:"limit"`
 }
 
 type SearchDancesRow struct {
@@ -193,9 +188,10 @@ type SearchDancesRow struct {
 	Genres        []string           `json:"genres"`
 	Handshakes    []string           `json:"handshakes"`
 	Popularity    int32              `json:"popularity"`
-	CreatedAt     time.Time          `json:"created_at"`
+	CreatedAt     pgtype.Timestamptz `json:"created_at"`
 	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`
-	Regions       interface{}        `json:"regions"`
+	RegionIds     interface{}        `json:"region_ids"`
+	RegionNames   interface{}        `json:"region_names"`
 }
 
 func (q *Queries) SearchDances(ctx context.Context, arg SearchDancesParams) ([]SearchDancesRow, error) {
@@ -208,8 +204,10 @@ func (q *Queries) SearchDances(ctx context.Context, arg SearchDancesParams) ([]S
 		arg.GendersIn,
 		arg.PacesIn,
 		arg.HandshakesIn,
-		arg.OrderBy,
-		arg.OrderDir,
+		arg.OrderByPopularity,
+		arg.ReverseOrder,
+		arg.OrderByName,
+		arg.OrderByCreatedAt,
 		arg.Offset,
 		arg.Limit,
 	)
@@ -233,7 +231,8 @@ func (q *Queries) SearchDances(ctx context.Context, arg SearchDancesParams) ([]S
 			&i.Popularity,
 			&i.CreatedAt,
 			&i.UpdatedAt,
-			&i.Regions,
+			&i.RegionIds,
+			&i.RegionNames,
 		); err != nil {
 			return nil, err
 		}

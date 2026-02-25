@@ -28,8 +28,8 @@ type Querier interface {
 	InsertSongs(ctx context.Context, arg InsertSongsParams) error
 	InsertTranslations(ctx context.Context, arg InsertTranslationsParams) ([]int64, error)
 	InsertVideos(ctx context.Context, arg InsertVideosParams) ([]int64, error)
-	TruncateAllTables(ctx context.Context) error
 	SearchDances(ctx context.Context, arg SearchDancesParams) ([]SearchDancesRow, error)
+	TruncateAllTables(ctx context.Context) error
 }
 
 var _ Querier = (*Queries)(nil)

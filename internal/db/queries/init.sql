@@ -6,8 +6,8 @@ SELECT
             CASE sqlc.arg('lang')::text
                 WHEN 'en' THEN t.eng_name
                 WHEN 'ru' THEN t.ru_name
-                WHEN 'am' THEN t.arm_name
-                ELSE t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
                 END,
             d.name
     ) AS name,
@@ -20,24 +20,26 @@ SELECT
     d.popularity,
     d.created_at,
     d.updated_at,
+    -- Отдельный массив для ID регионов
+    COALESCE(
+                    array_agg(DISTINCT r.id) FILTER (WHERE r.id IS NOT NULL),
+                    ARRAY[]::bigint[]
+    ) AS region_ids,
+    -- Отдельный массив для названий регионов
     COALESCE(
                     array_agg(
-                    DISTINCT jsonb_build_object(
-                            'id', r.id,
-                            'translation_id', r.translation_id,
-                            'name', COALESCE(
-                                    CASE sqlc.arg('lang')::text
-                                        WHEN 'en' THEN rt.eng_name
-                                        WHEN 'ru' THEN rt.ru_name
-                                        WHEN 'am' THEN rt.arm_name
-                                        ELSE rt.ru_name
-                                        END,
-                                    r.name
-                                    )
+                    DISTINCT COALESCE(
+                            CASE sqlc.arg('lang')::text
+                                WHEN 'en' THEN rt.eng_name
+                                WHEN 'ru' THEN rt.ru_name
+                                WHEN 'hy' THEN rt.arm_name
+                                ELSE rt.eng_name
+                                END,
+                            r.name
                              )
                              ) FILTER (WHERE r.id IS NOT NULL),
-                    ARRAY[]::jsonb[]
-    ) AS regions
+                    ARRAY[]::text[]
+    ) AS region_names
 FROM dances d
          LEFT JOIN translations t ON t.id = d.translation_id
          LEFT JOIN dance_region dr ON dr.dance_id = d.id
@@ -101,8 +103,8 @@ GROUP BY
             CASE sqlc.arg('lang')::text
                 WHEN 'en' THEN t.eng_name
                 WHEN 'ru' THEN t.ru_name
-                WHEN 'am' THEN t.arm_name
-                ELSE t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
                 END,
             d.name
     ),
@@ -123,8 +125,8 @@ ORDER BY
             CASE sqlc.arg('lang')::text
                 WHEN 'en' THEN t.eng_name
                 WHEN 'ru' THEN t.ru_name
-                WHEN 'am' THEN t.arm_name
-                ELSE t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
                 END,
             d.name
                                                                                                         ) END ASC,
@@ -132,8 +134,8 @@ ORDER BY
             CASE sqlc.arg('lang')::text
                 WHEN 'en' THEN t.eng_name
                 WHEN 'ru' THEN t.ru_name
-                WHEN 'am' THEN t.arm_name
-                ELSE t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
                 END,
             d.name
                                                                                                        ) END DESC,

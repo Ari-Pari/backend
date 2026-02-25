@@ -19,6 +19,7 @@ type Server struct {
 }
 
 func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params api.PostDancesSearchParams) {
+
 	var req api.DanceSearchRequest
 	ctx := r.Context()
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -136,26 +137,12 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 
 		var regions []api.RegionResponse
 
-		// Приведение типов для RegionIds
-		regionIDs, ok := d.RegionIds.([]int64)
-		if !ok {
-			s.logger.Printf("Warning: d.RegionIds is not []int64, got %T. Initializing as empty slice.", d.RegionIds)
-			regionIDs = []int64{} // Если приведение не удалось, инициализируем пустым слайсом
-		}
-
-		// Приведение типов для RegionNames
-		regionNames, ok := d.RegionNames.([]string)
-		if !ok {
-			s.logger.Printf("Warning: d.RegionNames is not []string, got %T. Initializing as empty slice.", d.RegionNames)
-			regionNames = []string{} // Если приведение не удалось, инициализируем пустым слайсом
-		}
-
-		if len(regionIDs) > 0 {
-			regions = make([]api.RegionResponse, 0, len(regionIDs))
-			for i := range regionIDs {
-				if i < len(regionNames) { // Убедимся, что имя существует для этого ID
-					idVal := int(regionIDs[i])
-					nameVal := regionNames[i]
+		if len(d.RegionIds) > 0 {
+			regions = make([]api.RegionResponse, 0, len(d.RegionIds))
+			for i := range d.RegionIds {
+				if i < len(d.RegionNames) {
+					idVal := int(d.RegionIds[i])
+					nameVal := d.RegionNames[i]
 					regions = append(regions, api.RegionResponse{
 						Id:   idVal,
 						Name: nameVal,
@@ -190,6 +177,11 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	s.logger.Println(
+		"DB SEARCH:",
+		"lang =", lang,
+		"dbParams =", dbParams,
+	)
 }
 
 func (s Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, params api.GetDancesIdParams) {

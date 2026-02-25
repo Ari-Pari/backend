@@ -33,12 +33,10 @@ SELECT
     d.popularity,
     d.created_at,
     d.updated_at,
-    -- Отдельный массив для ID регионов
     COALESCE(
                     array_agg(DISTINCT r.id) FILTER (WHERE r.id IS NOT NULL),
                     ARRAY[]::bigint[]
-    ) AS region_ids,
-    -- Отдельный массив для названий регионов
+    )::bigint[] AS region_ids,
     COALESCE(
                     array_agg(
                     DISTINCT COALESCE(
@@ -52,7 +50,7 @@ SELECT
                              )
                              ) FILTER (WHERE r.id IS NOT NULL),
                     ARRAY[]::text[]
-    ) AS region_names
+    )::text[] AS region_names
 FROM dances d
          LEFT JOIN translations t ON t.id = d.translation_id
          LEFT JOIN dance_region dr ON dr.dance_id = d.id
@@ -190,8 +188,8 @@ type SearchDancesRow struct {
 	Popularity    int32              `json:"popularity"`
 	CreatedAt     pgtype.Timestamptz `json:"created_at"`
 	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`
-	RegionIds     interface{}        `json:"region_ids"`
-	RegionNames   interface{}        `json:"region_names"`
+	RegionIds     []int64            `json:"region_ids"`
+	RegionNames   []string           `json:"region_names"`
 }
 
 func (q *Queries) SearchDances(ctx context.Context, arg SearchDancesParams) ([]SearchDancesRow, error) {

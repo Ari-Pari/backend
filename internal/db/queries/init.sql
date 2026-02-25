@@ -23,7 +23,7 @@ SELECT
     COALESCE(
                     array_agg(DISTINCT r.id) FILTER (WHERE r.id IS NOT NULL),
                     ARRAY[]::bigint[]
-    ) AS region_ids,
+    )::bigint[] AS region_ids,
     COALESCE(
                     array_agg(
                     DISTINCT COALESCE(
@@ -37,7 +37,7 @@ SELECT
                              )
                              ) FILTER (WHERE r.id IS NOT NULL),
                     ARRAY[]::text[]
-    ) AS region_names
+    )::text[] AS region_names
 FROM dances d
          LEFT JOIN translations t ON t.id = d.translation_id
          LEFT JOIN dance_region dr ON dr.dance_id = d.id

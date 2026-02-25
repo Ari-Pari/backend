@@ -177,11 +177,6 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	s.logger.Println(
-		"DB SEARCH:",
-		"lang =", lang,
-		"dbParams =", dbParams,
-	)
 }
 
 func (s Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, params api.GetDancesIdParams) {

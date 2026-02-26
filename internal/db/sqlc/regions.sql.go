@@ -25,6 +25,7 @@ SELECT
     )::text AS name
 FROM regions r
 LEFT JOIN translations t ON r.translation_id = t.id
+ORDER BY r.id
 `
 
 type ListRegionsRow struct {

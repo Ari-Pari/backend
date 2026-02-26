@@ -7,22 +7,237 @@ package db
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
-const placeholder = `-- name: Placeholder :one
-SELECT id, eng_name, ru_name, arm_name, created_at, updated_at FROM translations LIMIT 1
+const searchDances = `-- name: SearchDances :many
+SELECT
+    d.id,
+    d.translation_id,
+    COALESCE(
+            CASE $1::text
+                WHEN 'en' THEN t.eng_name
+                WHEN 'ru' THEN t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
+                END,
+            d.name
+    ) AS name,
+    d.complexity,
+    d.photo_key         AS photo_link,
+    d.gender,
+    d.paces,
+    d.genres,
+    d.handshakes,
+    d.popularity,
+    d.created_at,
+    d.updated_at,
+    COALESCE(
+                    array_agg(DISTINCT r.id) FILTER (WHERE r.id IS NOT NULL),
+                    ARRAY[]::bigint[]
+    )::bigint[] AS region_ids,
+    COALESCE(
+                    array_agg(
+                    DISTINCT COALESCE(
+                            CASE $1::text
+                                WHEN 'en' THEN rt.eng_name
+                                WHEN 'ru' THEN rt.ru_name
+                                WHEN 'hy' THEN rt.arm_name
+                                ELSE rt.eng_name
+                                END,
+                            r.name
+                             )
+                             ) FILTER (WHERE r.id IS NOT NULL),
+                    ARRAY[]::text[]
+    )::text[] AS region_names
+FROM dances d
+         LEFT JOIN translations t ON t.id = d.translation_id
+         LEFT JOIN dance_region dr ON dr.dance_id = d.id
+         LEFT JOIN regions r       ON r.id = dr.region_id
+         LEFT JOIN translations rt ON rt.id = r.translation_id
+WHERE d.deleted_at IS NULL
+  AND (
+    CASE
+        WHEN $2::text IS NOT NULL
+            AND $2::text <> ''
+            THEN CONCAT_WS(' ', t.eng_name, t.ru_name, t.arm_name, d.name) ILIKE ('%' || $2::text || '%')
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($3::text[], 1) > 0
+            THEN d.genres && $3::text[]
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($4::bigint[], 1) > 0
+            THEN dr.region_id = ANY($4::bigint[])
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($5::int[], 1) > 0
+            THEN d.complexity = ANY($5::int[])
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($6::text[], 1) > 0
+            THEN d.gender = ANY($6::text[])
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($7::int[], 1) > 0
+            THEN d.paces && $7::int[]
+        ELSE TRUE
+        END
+    )
+  AND (
+    CASE
+        WHEN array_length($8::text[], 1) > 0
+            THEN d.handshakes && $8::text[]
+        ELSE TRUE
+        END
+    )
+GROUP BY
+    d.id,
+    d.translation_id,
+    COALESCE(
+            CASE $1::text
+                WHEN 'en' THEN t.eng_name
+                WHEN 'ru' THEN t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
+                END,
+            d.name
+    ),
+    d.complexity,
+    d.photo_key,
+    d.gender,
+    d.paces,
+    d.genres,
+    d.handshakes,
+    d.popularity,
+    d.created_at,
+    d.updated_at
+ORDER BY
+    CASE WHEN $9::boolean = true AND $10::boolean = false THEN d.popularity END ASC,
+    CASE WHEN $9::boolean = true AND $10::boolean = true THEN d.popularity END DESC,
+
+    CASE WHEN $11::boolean = true AND $10::boolean = false THEN COALESCE(
+            CASE $1::text
+                WHEN 'en' THEN t.eng_name
+                WHEN 'ru' THEN t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
+                END,
+            d.name
+                                                                                                        ) END ASC,
+    CASE WHEN $11::boolean = true AND $10::boolean = true THEN COALESCE(
+            CASE $1::text
+                WHEN 'en' THEN t.eng_name
+                WHEN 'ru' THEN t.ru_name
+                WHEN 'hy' THEN t.arm_name
+                ELSE t.eng_name
+                END,
+            d.name
+                                                                                                       ) END DESC,
+
+    CASE WHEN $12::boolean = true AND $10::boolean = false THEN d.created_at END ASC,
+    CASE WHEN $12::boolean = true AND $10::boolean = true THEN d.created_at END DESC,
+    d.created_at DESC
+LIMIT  $14::int
+    OFFSET $13::int
 `
 
-func (q *Queries) Placeholder(ctx context.Context) (Translation, error) {
-	row := q.db.QueryRow(ctx, placeholder)
-	var i Translation
-	err := row.Scan(
-		&i.ID,
-		&i.EngName,
-		&i.RuName,
-		&i.ArmName,
-		&i.CreatedAt,
-		&i.UpdatedAt,
+type SearchDancesParams struct {
+	Lang              string   `json:"lang"`
+	SearchText        string   `json:"search_text"`
+	GenresIn          []string `json:"genres_in"`
+	RegionIdsIn       []int64  `json:"region_ids_in"`
+	ComplexitiesIn    []int32  `json:"complexities_in"`
+	GendersIn         []string `json:"genders_in"`
+	PacesIn           []int32  `json:"paces_in"`
+	HandshakesIn      []string `json:"handshakes_in"`
+	OrderByPopularity bool     `json:"order_by_popularity"`
+	ReverseOrder      bool     `json:"reverse_order"`
+	OrderByName       bool     `json:"order_by_name"`
+	OrderByCreatedAt  bool     `json:"order_by_created_at"`
+	Offset            int32    `json:"offset"`
+	Limit             int32    `json:"limit"`
+}
+
+type SearchDancesRow struct {
+	ID            int64              `json:"id"`
+	TranslationID pgtype.Int8        `json:"translation_id"`
+	Name          string             `json:"name"`
+	Complexity    pgtype.Int4        `json:"complexity"`
+	PhotoLink     pgtype.Text        `json:"photo_link"`
+	Gender        string             `json:"gender"`
+	Paces         []int32            `json:"paces"`
+	Genres        []string           `json:"genres"`
+	Handshakes    []string           `json:"handshakes"`
+	Popularity    int32              `json:"popularity"`
+	CreatedAt     pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`
+	RegionIds     []int64            `json:"region_ids"`
+	RegionNames   []string           `json:"region_names"`
+}
+
+func (q *Queries) SearchDances(ctx context.Context, arg SearchDancesParams) ([]SearchDancesRow, error) {
+	rows, err := q.db.Query(ctx, searchDances,
+		arg.Lang,
+		arg.SearchText,
+		arg.GenresIn,
+		arg.RegionIdsIn,
+		arg.ComplexitiesIn,
+		arg.GendersIn,
+		arg.PacesIn,
+		arg.HandshakesIn,
+		arg.OrderByPopularity,
+		arg.ReverseOrder,
+		arg.OrderByName,
+		arg.OrderByCreatedAt,
+		arg.Offset,
+		arg.Limit,
 	)
-	return i, err
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []SearchDancesRow{}
+	for rows.Next() {
+		var i SearchDancesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.TranslationID,
+			&i.Name,
+			&i.Complexity,
+			&i.PhotoLink,
+			&i.Gender,
+			&i.Paces,
+			&i.Genres,
+			&i.Handshakes,
+			&i.Popularity,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.RegionIds,
+			&i.RegionNames,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }

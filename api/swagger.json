@@ -325,7 +325,10 @@
             "type": "string"
           },
           "genres": {
-            "$ref": "#/components/schemas/Genre"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Genre"
+            }
           },
           "regions": {
             "type": "array",

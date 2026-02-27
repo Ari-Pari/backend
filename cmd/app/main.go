@@ -11,16 +11,21 @@ import (
 	"time"
 
 	"github.com/Ari-Pari/backend/internal/api"
+	generated "github.com/Ari-Pari/backend/internal/api/generated"
 	"github.com/Ari-Pari/backend/internal/clients/dbstorage"
 	"github.com/Ari-Pari/backend/internal/clients/filestorage"
 	"github.com/Ari-Pari/backend/internal/config"
+	"github.com/Ari-Pari/backend/internal/db/sqlc"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	_ = godotenv.Load()
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("Warning: .env file not found")
+	}
 
 	cfg, err := config.Load()
 	if err != nil {
@@ -29,7 +34,10 @@ func main() {
 
 	ctx := context.Background()
 
-	setupDbStorage(ctx, cfg)
+	dbPool := setupDbStorage(ctx, cfg)
+	defer dbPool.Close()
+
+	queries := db.New(dbPool.Pool)
 
 	fileStore, err := setupMinioStorage(ctx, cfg)
 
@@ -43,13 +51,11 @@ func main() {
 
 	logger := log.New(os.Stdout, "API: ", log.LstdFlags|log.Lshortfile)
 
-	server := api.NewServer(logger)
+	server := api.NewServer(logger, queries, fileStore)
 
 	router := setupRouter(server, logger)
 
 	startServer(router, ":8080", logger)
-
-	select {}
 }
 
 func setupRouter(apiHandler *api.Server, logger *log.Logger) *chi.Mux {
@@ -62,6 +68,10 @@ func setupRouter(apiHandler *api.Server, logger *log.Logger) *chi.Mux {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Timeout(60 * time.Second))
 	r.Use(middleware.Compress(5))
+
+	r.Route("/api/v1", func(r chi.Router) {
+		r.Mount("/", generated.Handler(apiHandler))
+	})
 
 	return r
 }
@@ -103,13 +113,13 @@ func startServer(handler http.Handler, addr string, logger *log.Logger) {
 	logger.Println("Server stopped")
 }
 
-func setupDbStorage(ctx context.Context, cfg *config.Config) {
+func setupDbStorage(ctx context.Context, cfg *config.Config) *dbstorage.Storage {
 	storage, err := dbstorage.New(ctx, cfg.Postgres.DSN)
 	if err != nil {
-		log.Fatalf("Failed to initialize storage: %v", err)
+		log.Fatalf("Failed to initialize database: %v", err)
 	}
-	defer storage.Close()
 	log.Println("Successfully connected to the database!")
+	return storage
 }
 
 func setupMinioStorage(ctx context.Context, cfg *config.Config) (filestorage.FileStorage, error) {

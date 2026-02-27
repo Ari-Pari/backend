@@ -9,6 +9,7 @@ import (
 )
 
 func TranslationToDao(translations []domain.Translation) db.InsertTranslationsParams {
+
 	engNames := make([]string, len(translations))
 	ruNames := make([]string, len(translations))
 	armNames := make([]string, len(translations))

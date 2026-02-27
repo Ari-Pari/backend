@@ -22,3 +22,9 @@ sql:
             go_type: "github.com/jackc/pgx/v5/pgtype.Array[[]int32]"
           - db_type: "text[][]"
             go_type: "github.com/jackc/pgx/v5/pgtype.Array[[]string]"
+          - db_type: "bigint[]"
+            go_type:
+              type: "[]int64"
+          - db_type: "text[]"
+            go_type:
+              type: "[]string"

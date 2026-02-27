@@ -62,7 +62,6 @@ func setupRouter(apiHandler *api.Server, logger *log.Logger) *chi.Mux {
 	r.Use(middleware.Compress(5))
 
 	r.Route("/api/v1", func(r chi.Router) {
-		// Монтируем сгенерированный хендлер
 		r.Mount("/", generated.Handler(apiHandler))
 	})
 

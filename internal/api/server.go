@@ -2,23 +2,28 @@ package api
 
 import (
 	"encoding/json"
-	api "github.com/Ari-Pari/backend/internal/api/generated"
-	"github.com/Ari-Pari/backend/internal/clients/filestorage"
-	db "github.com/Ari-Pari/backend/internal/db/sqlc"
+	"errors"
 	"log"
 	"net/http"
 	"strings"
 	"time"
+
+	api "github.com/Ari-Pari/backend/internal/api/generated"
+	"github.com/Ari-Pari/backend/internal/clients/filestorage"
+	db "github.com/Ari-Pari/backend/internal/db/sqlc"
+	"github.com/Ari-Pari/backend/internal/domain"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Server struct {
 	logger  *log.Logger
-	queries *db.Queries
+	db      db.Querier              // бд
 	storage filestorage.FileStorage // minio
 	// Добавьте ваши зависимости (БД, кэш, сервисы и т.д.)
 }
 
-func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params api.PostDancesSearchParams) {
+func (s *Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params api.PostDancesSearchParams) {
 
 	var req api.DanceSearchRequest
 	ctx := r.Context()
@@ -108,7 +113,7 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 		Offset:            int32((page - 1) * size),
 	}
 
-	rows, err := s.queries.SearchDances(r.Context(), dbParams)
+	rows, err := s.db.SearchDances(r.Context(), dbParams)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -179,20 +184,154 @@ func (s Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params 
 	}
 }
 
-func (s Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, params api.GetDancesIdParams) {
-	//TODO implement me
-	panic("implement me")
+func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, params api.GetDancesIdParams) {
+	ctx := r.Context()
+	danceID := int64(id)
+
+	var argLang pgtype.Text
+	if params.Lang != nil {
+		argLang = pgtype.Text{String: *params.Lang, Valid: true}
+	}
+
+	dbDance, err := s.db.GetDanceByID(ctx, db.GetDanceByIDParams{ID: danceID, Lang: argLang})
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			w.WriteHeader(http.StatusNotFound)
+		} else {
+			s.logger.Printf("db error (dance): %v", err)
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+		return
+	}
+
+	dbRegions, err := s.db.GetRegionsByDanceID(ctx, db.GetRegionsByDanceIDParams{
+		DanceID: danceID,
+		Lang:    argLang,
+	})
+	if err != nil {
+		s.logger.Printf("db error (regions): %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	dbVideos, err := s.db.GetVideosByDanceID(ctx, danceID)
+	if err != nil {
+		s.logger.Printf("db error (videos): %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	dbSongs, err := s.db.GetSongsByDanceID(ctx, danceID)
+	if err != nil {
+		s.logger.Printf("db error (songs): %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	idVal := int(dbDance.ID)
+	res := api.DanceFullResponse{
+		Id:         &idVal,
+		Name:       dbDance.Name,
+		Complexity: int(dbDance.Complexity.Int32),
+		Gender:     api.DanceFullResponseGender(dbDance.Gender),
+		PhotoLink:  "",
+	}
+
+	if dbDance.PhotoKey.Valid && dbDance.PhotoKey.String != "" {
+		res.PhotoLink, _ = s.storage.GetFileURL(ctx, dbDance.PhotoKey.String, time.Hour)
+	}
+
+	res.Paces = make([]int, len(dbDance.Paces))
+	for i, p := range dbDance.Paces {
+		res.Paces[i] = int(p)
+	}
+
+	res.Regions = make([]api.RegionResponse, len(dbRegions))
+	for i, reg := range dbRegions {
+		res.Regions[i] = api.RegionResponse{Id: int(reg.ID), Name: reg.Name}
+	}
+
+	res.Songs = make([]api.SongResponse, len(dbSongs))
+	for i, song := range dbSongs {
+		songLink := ""
+		if song.FileKey != "" {
+			songLink, _ = s.storage.GetFileURL(ctx, song.FileKey, time.Hour)
+		}
+		res.Songs[i] = api.SongResponse{
+			Id:        int(song.ID),
+			Name:      song.Name,
+			Link:      songLink,
+			Ensembles: []api.EnsembleResponse{}, // Если ансамблей пока нет, отдаем пустой массив
+		}
+	}
+
+	src, les, perf := []api.VideoResponse{}, []api.VideoResponse{}, []api.VideoResponse{}
+	for _, v := range dbVideos {
+		vid := api.VideoResponse{
+			Id:   int(v.ID),
+			Name: v.Name,
+			Link: v.Link,
+		}
+
+		switch domain.VideoType(strings.ToUpper(v.Type)) {
+		case domain.Source:
+			src = append(src, vid)
+		case domain.Lesson:
+			les = append(les, vid)
+		case domain.Video:
+			perf = append(perf, vid)
+		}
+	}
+	res.SourceVideos, res.LessonVideos, res.PerformanceVideos = &src, &les, &perf
+
+	if len(dbDance.Genres) > 0 {
+		res.Genres = api.Genre(dbDance.Genres[0])
+	}
+	res.Handshakes = make([]api.Handshake, len(dbDance.Handshakes))
+	for i, h := range dbDance.Handshakes {
+		res.Handshakes[i] = api.Handshake(h)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(res); err != nil {
+		s.logger.Printf("json encode error: %v", err)
+		w.WriteHeader(500)
+	}
 }
 
-func (s Server) GetRegions(w http.ResponseWriter, r *http.Request, params api.GetRegionsParams) {
-	//TODO implement me
-	panic("implement me")
+func (s *Server) GetRegions(w http.ResponseWriter, r *http.Request, params api.GetRegionsParams) {
+	ctx := r.Context()
+
+	var argLang pgtype.Text
+	if params.Lang != nil {
+		argLang = pgtype.Text{String: *params.Lang, Valid: true}
+	}
+
+	dbRegions, err := s.db.ListRegions(ctx, argLang)
+	if err != nil {
+		s.logger.Printf("failed to list regions: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	response := make(api.RegionListResponse, len(dbRegions))
+	for i, reg := range dbRegions {
+		response[i] = api.RegionResponse{
+			Id:   int(reg.ID),
+			Name: reg.Name,
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		s.logger.Printf("json encode error: %v", err)
+	}
 }
 
-func NewServer(logger *log.Logger, q *db.Queries, storage filestorage.FileStorage) *Server {
+func NewServer(logger *log.Logger, db db.Querier, storage filestorage.FileStorage) *Server {
 	return &Server{
 		logger:  logger,
-		queries: q,
+		db:      db,
 		storage: storage,
 	}
 }

@@ -31,7 +31,15 @@ func main() {
 
 	setupDbStorage(ctx, cfg)
 
-	setupMinioStorage(cfg)
+	fileStore, err := setupMinioStorage(ctx, cfg)
+
+	if err != nil {
+		log.Fatalf("Failed to setup storage: %v", err)
+	}
+
+	res, err := fileStore.GetFileURL(ctx, "50c90485-7435-471e-b559-8112fb11a5d6.jpeg", time.Hour)
+
+	log.Println("URL: ", res)
 
 	logger := log.New(os.Stdout, "API: ", log.LstdFlags|log.Lshortfile)
 
@@ -104,8 +112,8 @@ func setupDbStorage(ctx context.Context, cfg *config.Config) {
 	log.Println("Successfully connected to the database!")
 }
 
-func setupMinioStorage(cfg *config.Config) {
-	fileStore, err := filestorage.NewMinioStorage(
+func setupMinioStorage(ctx context.Context, cfg *config.Config) (filestorage.FileStorage, error) {
+	fileStore, err := filestorage.NewMinioStorage(ctx,
 		cfg.Minio.Endpoint,
 		cfg.Minio.AccessKey,
 		cfg.Minio.SecretKey,
@@ -114,8 +122,9 @@ func setupMinioStorage(cfg *config.Config) {
 	)
 	if err != nil {
 		log.Printf("Warning: Failed to initialize file storage: %v", err)
+		return nil, err
 	} else {
 		log.Println("Successfully connected to MinIO!")
-		_ = fileStore
+		return fileStore, nil
 	}
 }

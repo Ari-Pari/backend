@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/Ari-Pari/backend/internal/clients/dbstorage"
+	"github.com/Ari-Pari/backend/internal/clients/filestorage"
 	"github.com/Ari-Pari/backend/internal/config"
 	db "github.com/Ari-Pari/backend/internal/db/sqlc"
 	"github.com/Ari-Pari/backend/internal/parser"
@@ -19,6 +20,8 @@ func main() {
 	cfg, err := config.Load()
 
 	setupDbStorage(ctx, cfg)
+
+	fileStore := setupMinioStorage(ctx, cfg)
 
 	conn, err := pgxpool.New(ctx, cfg.Postgres.DSN)
 	if err != nil {
@@ -67,7 +70,11 @@ func main() {
 		log.Fatal("Failed to parse dances:", err)
 	}
 
-	domainDances := parser.ToDomainDances(dances)
+	domainDances, err := parser.ToDomainDances(ctx, fileStore, parser.DefaultFileReader, dances, cfg.DancePhotosFolderPath)
+
+	if err != nil {
+		log.Fatal("Failed to parse dance files: ", err)
+	}
 
 	err = service.CreateDances(ctx, domainDances)
 	if err != nil {
@@ -80,7 +87,7 @@ func main() {
 		log.Fatal("Failed to parse musics:", err)
 	}
 
-	domainSongs := parser.ToDomainSongs(musics)
+	domainSongs := parser.ToDomainSongs(ctx, fileStore, parser.DefaultFileReader, musics, cfg.MusicFolderPath)
 
 	err = service.CreateSongs(ctx, domainSongs)
 	if err != nil {
@@ -108,4 +115,22 @@ func setupDbStorage(ctx context.Context, cfg *config.Config) {
 	}
 	defer storage.Close()
 	log.Println("Successfully connected to the database!")
+}
+
+func setupMinioStorage(ctx context.Context, cfg *config.Config) filestorage.FileStorage {
+	fileStore, err := filestorage.NewMinioStorage(
+		ctx,
+		cfg.Minio.Endpoint,
+		cfg.Minio.AccessKey,
+		cfg.Minio.SecretKey,
+		cfg.Minio.Bucket,
+		false,
+	)
+	if err != nil {
+		log.Printf("Warning: Failed to initialize file storage: %v", err)
+	} else {
+		log.Println("Successfully connected to MinIO!")
+		_ = fileStore
+	}
+	return fileStore
 }

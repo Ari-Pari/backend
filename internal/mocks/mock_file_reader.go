@@ -35,7 +35,7 @@ func (m *MockFileReader) EXPECT() *MockFileReaderMockRecorder {
 }
 
 // Open mocks base method.
-func (m *MockFileReader) Open(name string) (io.ReadCloser, error) {
+func (m *MockFileReader) Open(name string) (*File, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Open", name)
 	ret0, _ := ret[0].(io.ReadCloser)

@@ -124,7 +124,7 @@ func TestToDomainDance(t *testing.T) {
 		Type:         Active,
 	}
 
-	domainDance := toDomainDance(dto)
+	domainDance, _ := toDomainDance(dto)
 
 	assert.Equal(t, dto.Id, domainDance.Id)
 	assert.Equal(t, dto.NameKey, domainDance.NameKey)

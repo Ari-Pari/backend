@@ -1,17 +1,16 @@
 package parser
 
 import (
-	"io"
 	"os"
 )
 
 type FileReader interface {
-	Open(name string) (io.ReadCloser, error)
+	Open(name string) (*os.File, error)
 }
 
 type osFileReader struct{}
 
-func (osFileReader) Open(name string) (io.ReadCloser, error) {
+func (osFileReader) Open(name string) (*os.File, error) {
 	return os.Open(name)
 }
 

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log"
 	"net/url"
 	"path/filepath"
 	"time"
@@ -15,7 +16,7 @@ import (
 
 // FileStorage описывает поведение нашего хранилища
 type FileStorage interface {
-	UploadImage(ctx context.Context, originalName string, reader io.Reader, fileSize int64, contentType string) (string, error)
+	UploadFile(ctx context.Context, originalName string, reader io.Reader, fileSize int64, contentType string) (string, error)
 	GetFileURL(ctx context.Context, fileKey string, expires time.Duration) (string, error)
 	DeleteFile(ctx context.Context, fileKey string) error
 	GetOriginalName(ctx context.Context, fileKey string) (string, error)
@@ -28,7 +29,7 @@ type minioStorage struct {
 }
 
 // NewMinioStorage возвращает интерфейс FileStorage
-func NewMinioStorage(endpoint, accessKey, secretKey, bucket string, useSSL bool) (FileStorage, error) {
+func NewMinioStorage(ctx context.Context, endpoint, accessKey, secretKey, bucket string, useSSL bool) (FileStorage, error) {
 	client, err := minio.New(endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(accessKey, secretKey, ""),
 		Secure: useSSL,
@@ -37,13 +38,29 @@ func NewMinioStorage(endpoint, accessKey, secretKey, bucket string, useSSL bool)
 		return nil, fmt.Errorf("failed to create minio client: %w", err)
 	}
 
+	exists, err := client.BucketExists(ctx, bucket)
+	if err != nil {
+		return &minioStorage{}, err
+	}
+
+	if !exists {
+		// Создаем бакет
+		err = client.MakeBucket(ctx, bucket, minio.MakeBucketOptions{})
+		if err != nil {
+			return &minioStorage{}, err
+		}
+		log.Printf("Bucket '%s' created successfully", bucket)
+	} else {
+		log.Printf("Bucket '%s' already exists", bucket)
+	}
+
 	return &minioStorage{
 		client:     client,
 		bucketName: bucket,
 	}, nil
 }
 
-func (s *minioStorage) UploadImage(ctx context.Context, originalName string, reader io.Reader, fileSize int64, contentType string) (string, error) {
+func (s *minioStorage) UploadFile(ctx context.Context, originalName string, reader io.Reader, fileSize int64, contentType string) (string, error) {
 	ext := filepath.Ext(originalName)
 	fileKey := uuid.New().String() + ext
 

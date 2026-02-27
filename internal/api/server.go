@@ -11,6 +11,7 @@ import (
 	api "github.com/Ari-Pari/backend/internal/api/generated"
 	"github.com/Ari-Pari/backend/internal/clients/filestorage"
 	db "github.com/Ari-Pari/backend/internal/db/sqlc"
+	"github.com/Ari-Pari/backend/internal/domain"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 )
@@ -260,19 +261,24 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 			Id:        int(song.ID),
 			Name:      song.Name,
 			Link:      songLink,
-			Ensembles:[]api.EnsembleResponse{}, // Если ансамблей пока нет, отдаем пустой массив
+			Ensembles: []api.EnsembleResponse{}, // Если ансамблей пока нет, отдаем пустой массив
 		}
 	}
 
-	src, les, perf :=[]api.VideoResponse{}, []api.VideoResponse{},[]api.VideoResponse{}
+	src, les, perf := []api.VideoResponse{}, []api.VideoResponse{}, []api.VideoResponse{}
 	for _, v := range dbVideos {
-		vid := api.VideoResponse{Id: int(v.ID), Name: v.Name, Link: v.Link}
-		switch v.Type {
-		case "source":
+		vid := api.VideoResponse{
+			Id:   int(v.ID),
+			Name: v.Name,
+			Link: v.Link,
+		}
+
+		switch domain.VideoType(strings.ToUpper(v.Type)) {
+		case domain.Source:
 			src = append(src, vid)
-		case "lesson":
+		case domain.Lesson:
 			les = append(les, vid)
-		case "performance":
+		case domain.Video:
 			perf = append(perf, vid)
 		}
 	}
@@ -289,7 +295,7 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(res); err != nil {
 		s.logger.Printf("json encode error: %v", err)
-		w.WriteHeader(500) 
+		w.WriteHeader(500)
 	}
 }
 

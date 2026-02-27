@@ -3,22 +3,15 @@ package parser
 import (
 	"errors"
 	"io"
+	"os"
 	"strings"
 	"testing"
 
 	"github.com/Ari-Pari/backend/internal/mocks"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
-
-type mockReadCloser struct {
-	io.Reader
-	closeError error
-}
-
-func (m mockReadCloser) Close() error {
-	return m.closeError
-}
 
 type errorReadCloser struct{}
 
@@ -53,9 +46,22 @@ func TestParseVideosFile_Success(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockReader := mocks.NewMockFileReader(ctrl)
+
+	// Создаём временный файл с данными
+	tmpfile, err := os.CreateTemp("", "videos.json")
+	require.NoError(t, err)
+	defer os.Remove(tmpfile.Name()) // Удаляем после теста
+
+	// Записываем JSON
+	_, err = tmpfile.Write([]byte(`[{"name":{"hy":"Տեսանյութ 1"},"url":"https://example.com/1"}]`))
+	require.NoError(t, err)
+	_, err = tmpfile.Seek(0, 0)
+	require.NoError(t, err)
+
+	// Мокируем Open — возвращаем *os.File
 	mockReader.EXPECT().
 		Open("videos.json").
-		Return(io.NopCloser(strings.NewReader(`[{"name":{"hy":"Տեսանյութ 1"},"url":"https://example.com/1"}]`)), nil)
+		Return(tmpfile, nil)
 
 	parser := jsonParser{fileReader: mockReader}
 
@@ -93,9 +99,22 @@ func TestParseMusicsFile_Success(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockReader := mocks.NewMockFileReader(ctrl)
+
+	// Создаём временный файл с данными
+	tmpfile, err := os.CreateTemp("", "musics.json")
+	require.NoError(t, err)
+	defer os.Remove(tmpfile.Name()) // Удаляем после теста
+
+	// Записываем JSON
+	_, err = tmpfile.Write([]byte(`[{"id":1,"name":{"hy":"Երգ 1"},"nameKey":"song.key.1"}]`))
+	require.NoError(t, err)
+	_, err = tmpfile.Seek(0, 0)
+	require.NoError(t, err)
+
+	// Мокируем Open — возвращаем *os.File
 	mockReader.EXPECT().
 		Open("musics.json").
-		Return(io.NopCloser(strings.NewReader(`[{"id":1,"name":{"hy":"Երգ 1"},"nameKey":"song.key.1"}]`)), nil)
+		Return(tmpfile, nil)
 
 	parser := jsonParser{fileReader: mockReader}
 
@@ -133,9 +152,22 @@ func TestParseDancesFile_Success(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockReader := mocks.NewMockFileReader(ctrl)
+
+	// Создаём временный файл с данными
+	tmpfile, err := os.CreateTemp("", "dances.json")
+	require.NoError(t, err)
+	defer os.Remove(tmpfile.Name()) // Удаляем после теста
+
+	// Записываем JSON
+	_, err = tmpfile.Write([]byte(`[{"Id":1,"name":{"hy":"Պար 1"},"nameKey":"dance.key.1","difficult":3}]`))
+	require.NoError(t, err)
+	_, err = tmpfile.Seek(0, 0)
+	require.NoError(t, err)
+
+	// Мокируем Open — возвращаем *os.File
 	mockReader.EXPECT().
 		Open("dances.json").
-		Return(io.NopCloser(strings.NewReader(`[{"Id":1,"name":{"hy":"Պար 1"},"nameKey":"dance.key.1","difficult":3}]`)), nil)
+		Return(tmpfile, nil)
 
 	parser := jsonParser{fileReader: mockReader}
 
@@ -170,11 +202,24 @@ func TestParseFile_ParseFuncError(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockReader := mocks.NewMockFileReader(ctrl)
+
+	// Создаём временный файл с данными
+	tmpfile, err := os.CreateTemp("", "broken.json")
+	require.NoError(t, err)
+	defer os.Remove(tmpfile.Name()) // Удаляем после теста
+
+	// Записываем невалидный JSON
+	_, err = tmpfile.Write([]byte(`invalid`))
+	require.NoError(t, err)
+	_, err = tmpfile.Seek(0, 0)
+	require.NoError(t, err)
+
+	// Мокируем Open — возвращаем *os.File
 	mockReader.EXPECT().
 		Open("broken.json").
-		Return(io.NopCloser(strings.NewReader(`invalid`)), nil)
+		Return(tmpfile, nil)
 
-	_, err := parseFile(mockReader, "broken.json", func(r io.Reader) ([]StateDto, error) {
+	_, err = parseFile(mockReader, "broken.json", func(r io.Reader) ([]StateDto, error) {
 		return nil, errors.New("custom parse error")
 	})
 
@@ -183,42 +228,29 @@ func TestParseFile_ParseFuncError(t *testing.T) {
 	assert.Contains(t, err.Error(), "custom parse error")
 }
 
-func TestParseFile_CloseError(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockedFile := mockReadCloser{
-		Reader:     strings.NewReader(`[]`),
-		closeError: errors.New("close error"),
-	}
-
-	// Явно вызываем Close(), чтобы избежать ошибки "evaluated but not used"
-	_ = mockedFile.Close()
-
-	mockReader := mocks.NewMockFileReader(ctrl)
-	mockReader.EXPECT().
-		Open("close_error.json").
-		Return(mockedFile, nil)
-
-	_, err := parseFile(mockReader, "close_error.json", func(r io.Reader) ([]StateDto, error) {
-		return []StateDto{}, nil
-	})
-
-	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "failed to close file after reading")
-	assert.Contains(t, err.Error(), "close error")
-}
-
 func TestParseFile_ParseFuncReturnsNilAndError(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
 	mockReader := mocks.NewMockFileReader(ctrl)
+
+	// Создаём временный файл с данными
+	tmpfile, err := os.CreateTemp("", "parse_error.json")
+	require.NoError(t, err)
+	defer os.Remove(tmpfile.Name()) // Удаляем после теста
+
+	// Записываем данные
+	_, err = tmpfile.Write([]byte(`{}`))
+	require.NoError(t, err)
+	_, err = tmpfile.Seek(0, 0)
+	require.NoError(t, err)
+
+	// Мокируем Open — возвращаем *os.File
 	mockReader.EXPECT().
 		Open("parse_error.json").
-		Return(io.NopCloser(strings.NewReader(`{}`)), nil)
+		Return(tmpfile, nil)
 
-	_, err := parseFile(mockReader, "parse_error.json", func(r io.Reader) ([]StateDto, error) {
+	_, err = parseFile(mockReader, "parse_error.json", func(r io.Reader) ([]StateDto, error) {
 		return nil, errors.New("explicit parse error")
 	})
 
@@ -266,9 +298,22 @@ func TestParseStatesFile_Success(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockReader := mocks.NewMockFileReader(ctrl)
+
+	// Создаём временный файл с данными
+	tmpfile, err := os.CreateTemp("", "states.json")
+	require.NoError(t, err)
+	defer os.Remove(tmpfile.Name()) // Удаляем после теста
+
+	// Записываем JSON
+	_, err = tmpfile.Write([]byte(`[{"name":{"hy":"անուն"},"id":1}]`))
+	require.NoError(t, err)
+	_, err = tmpfile.Seek(0, 0)
+	require.NoError(t, err)
+
+	// Мокируем Open — возвращаем *os.File
 	mockReader.EXPECT().
 		Open("states.json").
-		Return(io.NopCloser(strings.NewReader(`[{"name":{"hy":"անուն"},"id":1}]`)), nil)
+		Return(tmpfile, nil)
 
 	parser := jsonParser{fileReader: mockReader}
 

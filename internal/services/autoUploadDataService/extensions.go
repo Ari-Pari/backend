@@ -133,7 +133,9 @@ func SongsToDao(songs []domain.SongShort, translationIds []int64) db.InsertSongs
 	for i := range songs {
 		ids[i] = songs[i].Id
 		names[i] = songs[i].NameKey
-		fileKeys[i] = *songs[i].FileKey
+		if songs[i].FileKey != nil {
+			fileKeys[i] = *songs[i].FileKey
+		}
 	}
 
 	return db.InsertSongsParams{

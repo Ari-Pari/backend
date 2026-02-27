@@ -89,9 +89,9 @@ func TestGetDancesId_Integration(t *testing.T) {
 	clearTables(t)
 	ctx := context.Background()
 
-	// 1. СИДИРОВАНИЕ ТАНЦА
+	// танцы
 	var translationID int64
-	err := testDBPool.QueryRow(ctx, "INSERT INTO translations (eng_name) VALUES ('Berd') RETURNING id").Scan(&translationID)
+	err := testDBPool.QueryRow(ctx, "INSERT INTO translations (eng_name, ru_name) VALUES ('Berd', 'Берд') RETURNING id").Scan(&translationID)
 	require.NoError(t, err)
 
 	_, err = testDBPool.Exec(ctx, `
@@ -100,9 +100,9 @@ func TestGetDancesId_Integration(t *testing.T) {
 	`, translationID)
 	require.NoError(t, err)
 
-	// 2. СИДИРОВАНИЕ РЕГИОНА
+	// регионы
 	var regTransID int64
-	err = testDBPool.QueryRow(ctx, "INSERT INTO translations (eng_name) VALUES ('Shirak') RETURNING id").Scan(&regTransID)
+	err = testDBPool.QueryRow(ctx, "INSERT INTO translations (eng_name, ru_name) VALUES ('Shirak', 'Ширак') RETURNING id").Scan(&regTransID)
 	require.NoError(t, err)
 
 	_, err = testDBPool.Exec(ctx, "INSERT INTO regions (id, translation_id, name) VALUES (10, $1, 'Shirak')", regTransID)
@@ -110,15 +110,15 @@ func TestGetDancesId_Integration(t *testing.T) {
 	_, err = testDBPool.Exec(ctx, "INSERT INTO dance_region (dance_id, region_id) VALUES (1, 10)")
 	require.NoError(t, err)
 
-	// 3. СИДИРОВАНИЕ ВИДЕО
+	// видео
 	_, err = testDBPool.Exec(ctx, "INSERT INTO videos (id, name, link, type) VALUES (100, 'Video 1', 'http://yt', 'source')")
 	require.NoError(t, err)
 	_, err = testDBPool.Exec(ctx, "INSERT INTO dance_videos (dance_id, video_id) VALUES (1, 100)")
 	require.NoError(t, err)
 
-	// 4. СИДИРОВАНИЕ ПЕСНИ
+	// песни
 	var songTransID int64
-	err = testDBPool.QueryRow(ctx, "INSERT INTO translations (eng_name) VALUES ('Berd Song') RETURNING id").Scan(&songTransID)
+	err = testDBPool.QueryRow(ctx, "INSERT INTO translations (eng_name, ru_name) VALUES ('Berd Song', 'Песня Берд') RETURNING id").Scan(&songTransID)
 	require.NoError(t, err)
 
 	_, err = testDBPool.Exec(ctx, "INSERT INTO songs (id, translation_id, file_key, name) VALUES (50, $1, 'song.mp3', 'Berd Song')", songTransID)
@@ -130,6 +130,39 @@ func TestGetDancesId_Integration(t *testing.T) {
 	queries := db.New(testDBPool)
 	logger := log.New(io.Discard, "", 0)
 	srv := NewServer(logger, queries, &mockStorage{})
+
+	t.Run("Success 200", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "/api/v1/dances/1", nil)
+		w := httptest.NewRecorder()
+
+		srv.GetDancesId(w, req, 1, api.GetDancesIdParams{})
+
+		assert.Equal(t, http.StatusOK, w.Code)
+
+		var response api.DanceFullResponse
+		err := json.Unmarshal(w.Body.Bytes(), &response)
+		require.NoError(t, err)
+
+		assert.Equal(t, "Berd", response.Name)
+		assert.Equal(t, 3, response.Complexity)
+		assert.Equal(t, "http://minio/photo.jpg", response.PhotoLink)
+		assert.Equal(t,[]int{1, 2}, response.Paces)
+		
+		// Проверка региона
+		require.Len(t, response.Regions, 1)
+		assert.Equal(t, "Shirak", response.Regions[0].Name)
+
+		// Проверка видео
+		require.NotNil(t, response.SourceVideos)
+		require.Len(t, *response.SourceVideos, 1)
+		assert.Equal(t, "Video 1", (*response.SourceVideos)[0].Name)
+
+		// Проверка песни 
+		require.Len(t, response.Songs, 1)
+		assert.Equal(t, "Berd Song", response.Songs[0].Name)
+		assert.Equal(t, "http://minio/song.mp3", response.Songs[0].Link)
+	})
+
 
 	t.Run("Success 200", func(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, "/api/v1/dances/1", nil)

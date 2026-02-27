@@ -52,19 +52,35 @@ func (q *Queries) GetDanceByID(ctx context.Context, arg GetDanceByIDParams) (Get
 }
 
 const getRegionsByDanceID = `-- name: GetRegionsByDanceID :many
-SELECT r.id, r.name 
-FROM regions r 
-JOIN dance_region dr ON dr.region_id = r.id 
+SELECT 
+    r.id,
+    COALESCE(
+        CASE 
+            WHEN $2::text = 'ru' THEN t.ru_name
+            WHEN $2::text = 'en' THEN t.eng_name
+            WHEN $2::text = 'arm' THEN t.arm_name
+            ELSE r.name
+        END, 
+        r.name
+    )::text AS name
+FROM regions r
+LEFT JOIN translations t ON r.translation_id = t.id
+JOIN dance_region dr ON dr.region_id = r.id
 WHERE dr.dance_id = $1
 `
+
+type GetRegionsByDanceIDParams struct {
+	DanceID int64       `json:"dance_id"`
+	Lang    pgtype.Text `json:"lang"`
+}
 
 type GetRegionsByDanceIDRow struct {
 	ID   int64  `json:"id"`
 	Name string `json:"name"`
 }
 
-func (q *Queries) GetRegionsByDanceID(ctx context.Context, danceID int64) ([]GetRegionsByDanceIDRow, error) {
-	rows, err := q.db.Query(ctx, getRegionsByDanceID, danceID)
+func (q *Queries) GetRegionsByDanceID(ctx context.Context, arg GetRegionsByDanceIDParams) ([]GetRegionsByDanceIDRow, error) {
+	rows, err := q.db.Query(ctx, getRegionsByDanceID, arg.DanceID, arg.Lang)
 	if err != nil {
 		return nil, err
 	}

@@ -6,9 +6,20 @@ LEFT JOIN translations t ON d.translation_id = t.id
 WHERE d.id = $1;
 
 -- name: GetRegionsByDanceID :many
-SELECT r.id, r.name 
-FROM regions r 
-JOIN dance_region dr ON dr.region_id = r.id 
+SELECT 
+    r.id,
+    COALESCE(
+        CASE 
+            WHEN sqlc.narg('lang')::text = 'ru' THEN t.ru_name
+            WHEN sqlc.narg('lang')::text = 'en' THEN t.eng_name
+            WHEN sqlc.narg('lang')::text = 'arm' THEN t.arm_name
+            ELSE r.name
+        END, 
+        r.name
+    )::text AS name
+FROM regions r
+LEFT JOIN translations t ON r.translation_id = t.id
+JOIN dance_region dr ON dr.region_id = r.id
 WHERE dr.dance_id = $1;
 
 -- name: GetVideosByDanceID :many

@@ -203,9 +203,29 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 		return
 	}
 
-	dbRegions, _ := s.db.GetRegionsByDanceID(ctx, danceID)
-	dbVideos, _ := s.db.GetVideosByDanceID(ctx, danceID)
-	dbSongs, _ := s.db.GetSongsByDanceID(ctx, danceID)
+	dbRegions, err := s.db.GetRegionsByDanceID(ctx, db.GetRegionsByDanceIDParams{
+		DanceID: danceID,
+		Lang:    argLang,
+	})
+	if err != nil {
+		s.logger.Printf("db error (regions): %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	dbVideos, err := s.db.GetVideosByDanceID(ctx, danceID)
+	if err != nil {
+		s.logger.Printf("db error (videos): %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	dbSongs, err := s.db.GetSongsByDanceID(ctx, danceID)
+	if err != nil {
+		s.logger.Printf("db error (songs): %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 
 	idVal := int(dbDance.ID)
 	res := api.DanceFullResponse{
@@ -230,7 +250,6 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 		res.Regions[i] = api.RegionResponse{Id: int(reg.ID), Name: reg.Name}
 	}
 
-	// Песни (Songs)
 	res.Songs = make([]api.SongResponse, len(dbSongs))
 	for i, song := range dbSongs {
 		songLink := ""

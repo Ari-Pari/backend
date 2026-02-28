@@ -45,10 +45,6 @@ func main() {
 		log.Fatalf("Failed to setup storage: %v", err)
 	}
 
-	res, err := fileStore.GetFileURL(ctx, "50c90485-7435-471e-b559-8112fb11a5d6.jpeg", time.Hour)
-
-	log.Println("URL: ", res)
-
 	logger := log.New(os.Stdout, "API: ", log.LstdFlags|log.Lshortfile)
 
 	server := api.NewServer(logger, queries, fileStore)

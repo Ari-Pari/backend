@@ -80,11 +80,6 @@ func DanceToDao(dances []domain.DanceShort, translationIds []int64) []db.InsertD
 				String: *dance.FileKey,
 				Valid:  true,
 			}
-		} else {
-			photoKey = pgtype.Text{
-				String: "",
-				Valid:  false,
-			}
 		}
 
 		params[i] = db.InsertDanceParams{

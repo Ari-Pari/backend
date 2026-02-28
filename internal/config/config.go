@@ -18,8 +18,10 @@ type MinioConfig struct {
 }
 
 type Config struct {
-	Postgres PostgresConfig
-	Minio    MinioConfig
+	Postgres              PostgresConfig
+	Minio                 MinioConfig
+	MusicFolderPath       string
+	DancePhotosFolderPath string
 }
 
 func Load() (*Config, error) {
@@ -33,9 +35,14 @@ func Load() (*Config, error) {
 		return nil, err
 	}
 
+	musicFolderPath, err := getEnv("MUSIC_FOLDER_PATH")
+	dancePhotosFolderPath, err := getEnv("DANCE_PHOTOS_FOLDER_PATH")
+
 	return &Config{
-		Postgres: *pgConfig,
-		Minio:    *minioConfig,
+		Postgres:              *pgConfig,
+		Minio:                 *minioConfig,
+		MusicFolderPath:       musicFolderPath,
+		DancePhotosFolderPath: dancePhotosFolderPath,
 	}, nil
 }
 

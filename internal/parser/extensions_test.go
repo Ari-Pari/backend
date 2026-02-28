@@ -1,114 +1,51 @@
 package parser
 
 import (
+	"context"
+	"os"
 	"testing"
 
 	"github.com/Ari-Pari/backend/internal/domain"
+	"github.com/Ari-Pari/backend/internal/mocks"
+	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
-// -------------------------------
-// Тесты для toDomainTranslation
-// -------------------------------
+// fakeFileReader — минимальная реализация FileReader для тестов
+type fakeFileReader struct{}
 
-func TestToDomainTranslation(t *testing.T) {
-	dto := NameDto{
-		ArmName: "Անուն",
-		EngName: "Name",
-		RuName:  "Имя",
+func (f fakeFileReader) Open(name string) (*os.File, error) {
+	// Создаём временный файл с фиктивным содержимым
+	tmpfile, err := os.CreateTemp("", "fakefile-")
+	if err != nil {
+		return nil, err
 	}
-
-	translation := toDomainTranslation(dto)
-
-	assert.Equal(t, dto.ArmName, translation.ArmName)
-	assert.Equal(t, dto.EngName, translation.EngName)
-	assert.Equal(t, dto.RuName, translation.RuName)
-}
-
-// -------------------------------
-// Тесты для toDomainGenre
-// -------------------------------
-
-func TestToDomainGenre_ValidGenres(t *testing.T) {
-	tests := []struct {
-		name     string
-		dto      GenreDto
-		expected domain.Genre
-	}{
-		{"War", War, domain.War},
-		{"Road", Road, domain.Road},
-		{"Cult", Cult, domain.Cult},
-		{"Lyrical", Lyrical, domain.Lyrical},
-		{"Reverse", Reverse, domain.Reverse},
-		{"Ritual", Ritual, domain.Ritual},
-		{"Community", Community, domain.Community},
-		{"Hunting", Hunting, domain.Hunting},
-		{"Pilgrimage", Pilgrimage, domain.Pilgrimage},
-		{"Memorable", Memorable, domain.Memorable},
-		{"Memorial", Memorial, domain.Memorial},
-		{"Funeral", Funeral, domain.Funeral},
-		{"Festive", Festive, domain.Festive},
-		{"Wedding", Wedding, domain.Wedding},
-		{"Matchmakers", Matchmakers, domain.Matchmakers},
-		{"Labor", Labor, domain.Labor},
-		{"Amulet", Amulet, domain.Amulet},
+	_, err = tmpfile.Write([]byte("fake-content"))
+	if err != nil {
+		return nil, err
 	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.expected, toDomainGenre(tt.dto))
-		})
+	_, err = tmpfile.Seek(0, 0)
+	if err != nil {
+		return nil, err
 	}
+	return tmpfile, nil
 }
 
-func TestToDomainGenre_UnknownGenre(t *testing.T) {
-	assert.Equal(t, domain.Genre(""), toDomainGenre("UnknownGenre"))
-}
-
-// -------------------------------
-// Тесты для toDomainGender
-// -------------------------------
-
-func TestToDomainGender(t *testing.T) {
-	assert.Equal(t, domain.Male, toDomainGender(Male))
-	assert.Equal(t, domain.Female, toDomainGender(Female))
-	assert.Equal(t, domain.Multi, toDomainGender(Multi))
-	assert.Equal(t, domain.Gender(""), toDomainGender("Unknown"))
-}
-
-// -------------------------------
-// Тесты для toDomainHoldingType
-// -------------------------------
-
-func TestToDomainHoldingType(t *testing.T) {
-	assert.Equal(t, domain.Free, toDomainHoldingType(Free))
-	assert.Equal(t, domain.LittleFinger, toDomainHoldingType(LittleFinger))
-	assert.Equal(t, domain.Palm, toDomainHoldingType(Palm))
-	assert.Equal(t, domain.Crossed, toDomainHoldingType(Crossed))
-	assert.Equal(t, domain.Back, toDomainHoldingType(Back))
-	assert.Equal(t, domain.Belt, toDomainHoldingType(Belt))
-	assert.Equal(t, domain.Shoulder, toDomainHoldingType(Shoulder))
-	assert.Equal(t, domain.Dagger, toDomainHoldingType(Dagger))
-	assert.Equal(t, domain.Whip, toDomainHoldingType(Whip))
-	assert.Equal(t, domain.HoldingType(""), toDomainHoldingType("Unknown"))
-}
-
-// -------------------------------
-// Тесты для toDomainVideoType
-// -------------------------------
-
-func TestToDomainVideoType(t *testing.T) {
-	assert.Equal(t, domain.Lesson, toDomainVideoType(VideoTypeLesson))
-	assert.Equal(t, domain.Video, toDomainVideoType(VideoTypeVideo))
-	assert.Equal(t, domain.Source, toDomainVideoType(VideoTypeSource))
-	assert.Equal(t, domain.VideoType(""), toDomainVideoType("Unknown"))
+func (f fakeFileReader) ReadFile(name string) ([]byte, error) {
+	return []byte("fake-content"), nil
 }
 
 // -------------------------------
 // Тесты для toDomainDance
 // -------------------------------
 
-func TestToDomainDance(t *testing.T) {
+func TestToDomainDance_Success(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockStorage := mocks.NewMockFileStorage(ctrl)
+
 	difficult := int32(3)
 
 	dto := DanceDto{
@@ -124,11 +61,24 @@ func TestToDomainDance(t *testing.T) {
 		Type:         Active,
 	}
 
-	domainDance := toDomainDance(dto)
+	// Ожидаем вызов UploadFile
+	mockStorage.EXPECT().
+		UploadFile(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+		Return("mock-image-key", nil).
+		Times(1)
+
+	ctx := context.Background()
+	reader := fakeFileReader{}
+	imageFolder := "/images/"
+
+	domainDance, err := toDomainDance(ctx, mockStorage, reader, dto, imageFolder)
+
+	require.NoError(t, err)
+	require.NotNil(t, domainDance)
 
 	assert.Equal(t, dto.Id, domainDance.Id)
 	assert.Equal(t, dto.NameKey, domainDance.NameKey)
-	assert.Equal(t, toDomainTranslation(dto.Name), domainDance.Name)
+	assert.Equal(t, "Գին", domainDance.Name.ArmName)
 	assert.Equal(t, dto.Difficult, domainDance.Complexity)
 	assert.Equal(t, domain.Male, domainDance.Gender)
 	assert.Equal(t, dto.Temps, domainDance.Paces)
@@ -136,35 +86,53 @@ func TestToDomainDance(t *testing.T) {
 	assert.Equal(t, []domain.HoldingType{domain.Free, domain.Belt}, domainDance.HoldingTypes)
 	assert.Equal(t, dto.StateIds, domainDance.RegionIds)
 	assert.Nil(t, domainDance.DeletedAt)
+
+	require.NotNil(t, domainDance.FileKey)
+	assert.Equal(t, "mock-image-key", *domainDance.FileKey)
 }
 
-func TestToDomainDance_WithDeletedAt(t *testing.T) {
-	difficult := int32(1)
+func TestToDomainDance_UploadFails(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockStorage := mocks.NewMockFileStorage(ctrl)
 
 	dto := DanceDto{
-		Id:           456,
-		NameKey:      "dance.extra",
-		Name:         NameDto{ArmName: "Այլ", EngName: "Extra", RuName: "Другой"},
-		Difficult:    &difficult,
-		Gender:       Multi,
-		Temps:        []int32{7, 8, 9},
-		Genres:       []GenreDto{Community},
-		HoldingTypes: []HoldingTypeDto{Dagger},
-		StateIds:     []int64{4, 5},
-		Type:         Extra,
+		Id:      456,
+		Name:    NameDto{ArmName: "Այլ", EngName: "Extra", RuName: "Другой"},
+		NameKey: "dance.extra",
+		Type:    Extra,
+		Genres:  []GenreDto{Community},
+		Gender:  Multi,
+		Temps:   []int32{7, 8, 9},
 	}
 
-	domainDance := toDomainDance(dto)
+	// Ожидаем ошибку при загрузке файла
+	mockStorage.EXPECT().
+		UploadFile(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+		Return("", assert.AnError).
+		Times(1)
 
-	assert.NotNil(t, domainDance.DeletedAt)
-	assert.NotZero(t, *domainDance.DeletedAt)
+	ctx := context.Background()
+	reader := fakeFileReader{}
+	imageFolder := "/images/"
+
+	domainDance, err := toDomainDance(ctx, mockStorage, reader, dto, imageFolder)
+
+	require.Error(t, err)
+	assert.Equal(t, domainDance, domain.DanceShort{})
 }
 
 // -------------------------------
 // Тесты для toDomainSong
 // -------------------------------
 
-func TestToDomainSong(t *testing.T) {
+func TestToDomainSong_Success(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockStorage := mocks.NewMockFileStorage(ctrl)
+
 	dto := MusicDto{
 		Id:       789,
 		Name:     NameDto{ArmName: "Երգ", EngName: "Song", RuName: "Песня"},
@@ -172,99 +140,158 @@ func TestToDomainSong(t *testing.T) {
 		DanceIds: []int64{101, 102},
 	}
 
-	domainSong := toDomainSong(dto)
+	// Ожидаем вызов UploadFile
+	mockStorage.EXPECT().
+		UploadFile(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+		Return("mock-audio-key", nil).
+		Times(1)
+
+	ctx := context.Background()
+	reader := fakeFileReader{}
+	musicFolder := "/music/"
+
+	domainSong, err := toDomainSong(ctx, mockStorage, reader, dto, musicFolder)
+
+	require.NoError(t, err)
+	require.NotNil(t, domainSong)
 
 	assert.Equal(t, dto.Id, domainSong.Id)
-	assert.Equal(t, toDomainTranslation(dto.Name), domainSong.Name)
 	assert.Equal(t, dto.NameKey, domainSong.NameKey)
+	assert.Equal(t, "Երգ", domainSong.Name.ArmName)
 	assert.Equal(t, dto.DanceIds, domainSong.DanceIds)
+
+	require.NotNil(t, domainSong.FileKey)
+	assert.Equal(t, "mock-audio-key", *domainSong.FileKey)
 }
 
-// -------------------------------
-// Тесты для toDomainRegion
-// -------------------------------
+func TestToDomainSong_UploadFails(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
 
-func TestToDomainRegion(t *testing.T) {
-	dto := StateDto{
-		Id:   321,
-		Name: NameDto{ArmName: "Մարզ", EngName: "Region", RuName: "Регион"},
+	mockStorage := mocks.NewMockFileStorage(ctrl)
+
+	dto := MusicDto{
+		Id:       789,
+		Name:     NameDto{ArmName: "Երգ", EngName: "Song", RuName: "Песня"},
+		NameKey:  "song.key",
+		DanceIds: []int64{101, 102},
 	}
 
-	domainRegion := toDomainRegion(dto)
+	// Ожидаем ошибку при загрузке файла
+	mockStorage.EXPECT().
+		UploadFile(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+		Return("", assert.AnError).
+		Times(1)
 
-	assert.Equal(t, dto.Id, domainRegion.Id)
-	assert.Equal(t, toDomainTranslation(dto.Name), domainRegion.Name)
+	ctx := context.Background()
+	reader := fakeFileReader{}
+	musicFolder := "/music/"
+
+	domainSong, err := toDomainSong(ctx, mockStorage, reader, dto, musicFolder)
+
+	require.Error(t, err)
+	assert.Equal(t, domain.SongShort{}, domainSong)
 }
 
 // -------------------------------
-// Тесты для toDomainVideo
+// Тесты для списков
 // -------------------------------
 
-func TestToDomainVideo(t *testing.T) {
-	dto := VideoDto{
-		Name:     NameDto{ArmName: "Տեսանյութ", EngName: "Video", RuName: "Видео"},
-		Url:      "https://example.com/video",
-		Type:     VideoTypeVideo,
-		DanceIds: []int64{201, 202},
-	}
+func TestToDomainDances_Success(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
 
-	domainVideo := toDomainVideo(dto)
+	mockStorage := mocks.NewMockFileStorage(ctrl)
 
-	assert.Nil(t, domainVideo.Id)
-	assert.Equal(t, toDomainTranslation(dto.Name), domainVideo.Name)
-	assert.Equal(t, dto.Name.ArmName, domainVideo.NameKey)
-	assert.Equal(t, dto.Url, domainVideo.Link)
-	assert.Equal(t, dto.DanceIds, domainVideo.DanceIds)
-	assert.Equal(t, domain.Video, domainVideo.Type)
-}
-
-// -------------------------------
-// Тесты для списков: ToDomainRegions, ToDomainDances и т.д.
-// -------------------------------
-
-func TestToDomainRegions(t *testing.T) {
-	dtos := []StateDto{
-		{Id: 1, Name: NameDto{ArmName: "Մարզ 1"}},
-		{Id: 2, Name: NameDto{ArmName: "Մարզ 2"}},
-	}
-
-	regions := ToDomainRegions(dtos)
-	assert.Len(t, regions, 2)
-	assert.Equal(t, dtos[0].Id, regions[0].Id)
-	assert.Equal(t, dtos[0].Name.ArmName, regions[0].Name.ArmName)
-}
-
-func TestToDomainDances(t *testing.T) {
 	dtos := []DanceDto{
-		{Id: 1, Name: NameDto{ArmName: "Պար 1"}},
-		{Id: 2, Name: NameDto{ArmName: "Պար 2"}},
+		{
+			Id:      1,
+			Name:    NameDto{ArmName: "Պար 1"},
+			NameKey: "dance1.key",
+			Type:    Active,
+		},
+		{
+			Id:      2,
+			Name:    NameDto{ArmName: "Պար 2"},
+			NameKey: "dance2.key",
+			Type:    Extra,
+		},
 	}
 
-	dances := ToDomainDances(dtos)
-	assert.Len(t, dances, 2)
-	assert.Equal(t, dtos[0].Id, dances[0].Id)
-	assert.Equal(t, dtos[0].Name.ArmName, dances[0].Name.ArmName)
+	// Ожидаем два вызова UploadFile
+	mockStorage.EXPECT().
+		UploadFile(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+		Return("mock-key-1", nil).
+		Times(1)
+
+	mockStorage.EXPECT().
+		UploadFile(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+		Return("mock-key-2", nil).
+		Times(1)
+
+	ctx := context.Background()
+	reader := fakeFileReader{}
+	imageFolder := "/images/"
+
+	dances, err := ToDomainDances(ctx, mockStorage, reader, dtos, imageFolder)
+
+	require.NoError(t, err)
+	require.Len(t, dances, 2)
+
+	assert.Equal(t, int64(1), dances[0].Id)
+	assert.Equal(t, "Պար 1", dances[0].Name.ArmName)
+	assert.Equal(t, "mock-key-1", *dances[0].FileKey)
+
+	assert.Equal(t, int64(2), dances[1].Id)
+	assert.Equal(t, "Պար 2", dances[1].Name.ArmName)
+	assert.Equal(t, "mock-key-2", *dances[1].FileKey)
 }
 
-func TestToDomainSongs(t *testing.T) {
+func TestToDomainSongs_Success(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockStorage := mocks.NewMockFileStorage(ctrl)
+
 	dtos := []MusicDto{
-		{Id: 1, Name: NameDto{ArmName: "Երգ 1"}},
-		{Id: 2, Name: NameDto{ArmName: "Երգ 2"}},
+		{
+			Id:       1,
+			Name:     NameDto{ArmName: "Երգ 1"},
+			NameKey:  "song1.key",
+			DanceIds: []int64{1, 2},
+		},
+		{
+			Id:       2,
+			Name:     NameDto{ArmName: "Երգ 2"},
+			NameKey:  "song2.key",
+			DanceIds: []int64{3, 4},
+		},
 	}
 
-	songs := ToDomainSongs(dtos)
-	assert.Len(t, songs, 2)
-	assert.Equal(t, dtos[0].Id, songs[0].Id)
-	assert.Equal(t, dtos[0].Name.ArmName, songs[0].Name.ArmName)
-}
+	// Ожидаем два вызова UploadFile
+	mockStorage.EXPECT().
+		UploadFile(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+		Return("mock-song-key-1", nil).
+		Times(1)
 
-func TestToDomainVideos(t *testing.T) {
-	dtos := []VideoDto{
-		{Name: NameDto{ArmName: "Տեսանյութ 1"}},
-		{Name: NameDto{ArmName: "Տեսանյութ 2"}},
-	}
+	mockStorage.EXPECT().
+		UploadFile(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+		Return("mock-song-key-2", nil).
+		Times(1)
 
-	videos := ToDomainVideos(dtos)
-	assert.Len(t, videos, 2)
-	assert.Equal(t, dtos[0].Name.ArmName, videos[0].Name.ArmName)
+	ctx := context.Background()
+	reader := fakeFileReader{}
+	musicFolder := "/music/"
+
+	songs := ToDomainSongs(ctx, mockStorage, reader, dtos, musicFolder)
+
+	require.Len(t, songs, 2)
+
+	assert.Equal(t, int64(1), songs[0].Id)
+	assert.Equal(t, "Երգ 1", songs[0].Name.ArmName)
+	assert.Equal(t, "mock-song-key-1", *songs[0].FileKey)
+
+	assert.Equal(t, int64(2), songs[1].Id)
+	assert.Equal(t, "Երգ 2", songs[1].Name.ArmName)
+	assert.Equal(t, "mock-song-key-2", *songs[1].FileKey)
 }

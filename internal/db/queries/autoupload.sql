@@ -51,9 +51,9 @@ SELECT id,
 FROM dances;
 
 -- name: InsertDance :exec
-INSERT INTO dances (id, translation_id, name, complexity, gender,
+INSERT INTO dances (id, translation_id, name, photo_key, complexity, gender,
                     paces, popularity, genres, handshakes, deleted_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);
 
 -- name: GetDanceRegions :many
 SELECT dance_id, region_id

@@ -39,11 +39,15 @@ func main() {
 
 	queries := db.New(dbPool.Pool)
 
-	minioStore := setupMinioStorage(cfg)
+	fileStore, err := setupMinioStorage(ctx, cfg)
+
+	if err != nil {
+		log.Fatalf("Failed to setup storage: %v", err)
+	}
 
 	logger := log.New(os.Stdout, "API: ", log.LstdFlags|log.Lshortfile)
 
-	server := api.NewServer(logger, queries, minioStore)
+	server := api.NewServer(logger, queries, fileStore)
 
 	router := setupRouter(server, logger)
 
@@ -110,12 +114,12 @@ func setupDbStorage(ctx context.Context, cfg *config.Config) *dbstorage.Storage 
 	if err != nil {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
-	log.Println("Successfully connected to the database from akob main!")
+	log.Println("Successfully connected to the database!")
 	return storage
 }
 
-func setupMinioStorage(cfg *config.Config) filestorage.FileStorage {
-	fileStore, err := filestorage.NewMinioStorage(
+func setupMinioStorage(ctx context.Context, cfg *config.Config) (filestorage.FileStorage, error) {
+	fileStore, err := filestorage.NewMinioStorage(ctx,
 		cfg.Minio.Endpoint,
 		cfg.Minio.AccessKey,
 		cfg.Minio.SecretKey,
@@ -123,8 +127,10 @@ func setupMinioStorage(cfg *config.Config) filestorage.FileStorage {
 		false,
 	)
 	if err != nil {
-		log.Fatalf("Failed to initialize file storage: %v", err)
+		log.Printf("Warning: Failed to initialize file storage: %v", err)
+		return nil, err
+	} else {
+		log.Println("Successfully connected to MinIO!")
+		return fileStore, nil
 	}
-	log.Println("Successfully connected to MinIO!")
-	return fileStore
 }

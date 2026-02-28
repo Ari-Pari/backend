@@ -371,15 +371,16 @@ func (q *Queries) InsertArtists(ctx context.Context, arg InsertArtistsParams) er
 }
 
 const insertDance = `-- name: InsertDance :exec
-INSERT INTO dances (id, translation_id, name, complexity, gender,
+INSERT INTO dances (id, translation_id, name, photo_key, complexity, gender,
                     paces, popularity, genres, handshakes, deleted_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
 `
 
 type InsertDanceParams struct {
 	ID            int64              `json:"id"`
 	TranslationID pgtype.Int8        `json:"translation_id"`
 	Name          string             `json:"name"`
+	PhotoKey      pgtype.Text        `json:"photo_key"`
 	Complexity    pgtype.Int4        `json:"complexity"`
 	Gender        string             `json:"gender"`
 	Paces         []int32            `json:"paces"`
@@ -394,6 +395,7 @@ func (q *Queries) InsertDance(ctx context.Context, arg InsertDanceParams) error 
 		arg.ID,
 		arg.TranslationID,
 		arg.Name,
+		arg.PhotoKey,
 		arg.Complexity,
 		arg.Gender,
 		arg.Paces,

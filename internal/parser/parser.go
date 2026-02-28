@@ -1,9 +1,12 @@
 package parser
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
+
+	"github.com/Ari-Pari/backend/internal/clients/filestorage"
 )
 
 type Parser interface {
@@ -100,6 +103,24 @@ func (j jsonParser) parseStatesReader(r io.Reader) ([]StateDto, error) {
 	}
 
 	return states, nil
+}
+
+func parseFileForStorage(ctx context.Context, storage filestorage.FileStorage, fileReader FileReader, filename string, contentType string) (string, error) {
+	reader, err := fileReader.Open(filename)
+
+	if err != nil {
+		return "", nil
+	}
+
+	fileInfo, err := reader.Stat()
+
+	key, err := storage.UploadFile(ctx, filename, reader, fileInfo.Size(), contentType)
+
+	if err != nil {
+		return "", err
+	}
+
+	return key, nil
 }
 
 func parseFile[T any](

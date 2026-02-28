@@ -1,10 +1,16 @@
 package parser
 
 import (
+	"context"
+	"strconv"
 	"time"
 
+	"github.com/Ari-Pari/backend/internal/clients/filestorage"
 	"github.com/Ari-Pari/backend/internal/domain"
 )
+
+const AudioContentType string = "audio/mpeg"
+const ImageContentType string = "image/jpeg"
 
 func ToDomainRegions(states []StateDto) []domain.Region {
 	regions := make([]domain.Region, len(states))
@@ -14,18 +20,26 @@ func ToDomainRegions(states []StateDto) []domain.Region {
 	return regions
 }
 
-func ToDomainDances(dto []DanceDto) []domain.DanceShort {
+func ToDomainDances(ctx context.Context, storage filestorage.FileStorage, fileReader FileReader, dto []DanceDto, photosFolderName string) ([]domain.DanceShort, error) {
 	dances := make([]domain.DanceShort, len(dto))
 	for i, dance := range dto {
-		dances[i] = toDomainDance(dance)
+		var err error
+		dances[i], err = toDomainDance(ctx, storage, fileReader, dance, photosFolderName)
+		if err != nil {
+			return []domain.DanceShort{}, err
+		}
 	}
-	return dances
+	return dances, nil
 }
 
-func ToDomainSongs(dto []MusicDto) []domain.SongShort {
+func ToDomainSongs(ctx context.Context, storage filestorage.FileStorage, fileReader FileReader, dto []MusicDto, musicFolderName string) []domain.SongShort {
 	songs := make([]domain.SongShort, len(dto))
 	for i, song := range dto {
-		songs[i] = toDomainSong(song)
+		var err error
+		songs[i], err = toDomainSong(ctx, storage, fileReader, song, musicFolderName)
+		if err != nil {
+			return []domain.SongShort{}
+		}
 	}
 	return songs
 }
@@ -73,7 +87,7 @@ func toDomainVideo(dto VideoDto) domain.VideoShort {
 	}
 }
 
-func toDomainDance(dto DanceDto) domain.DanceShort {
+func toDomainDance(ctx context.Context, storage filestorage.FileStorage, fileReader FileReader, dto DanceDto, imageFolderName string) (domain.DanceShort, error) {
 	genres := make([]domain.Genre, len(dto.Genres))
 	holdingTypes := make([]domain.HoldingType, len(dto.HoldingTypes))
 
@@ -92,10 +106,17 @@ func toDomainDance(dto DanceDto) domain.DanceShort {
 		holdingTypes[i] = toDomainHoldingType(holdingType)
 	}
 
+	key, err := parseFileForStorage(ctx, storage, fileReader, getImageFileName(imageFolderName, dto.Id), ImageContentType)
+
+	if err != nil {
+		return domain.DanceShort{}, err
+	}
+
 	return domain.DanceShort{
 		Id:           dto.Id,
 		Name:         toDomainTranslation(dto.Name),
 		NameKey:      dto.NameKey,
+		FileKey:      &key,
 		Complexity:   dto.Difficult,
 		Genres:       genres,
 		Gender:       toDomainGender(dto.Gender),
@@ -103,19 +124,33 @@ func toDomainDance(dto DanceDto) domain.DanceShort {
 		HoldingTypes: holdingTypes,
 		RegionIds:    dto.StateIds,
 		DeletedAt:    deletedAt,
-	}
+	}, nil
 }
 
-func toDomainSong(dto MusicDto) domain.SongShort {
+func getImageFileName(folderName string, id int64) string {
+	return folderName + strconv.FormatInt(id, 10) + ".jpeg"
+}
+
+func toDomainSong(ctx context.Context, storage filestorage.FileStorage, fileReader FileReader, dto MusicDto, musicFolderName string) (domain.SongShort, error) {
+	fileKey, err := parseFileForStorage(ctx, storage, fileReader, getAudioFileName(musicFolderName, dto.Name.ArmName), AudioContentType)
+
+	if err != nil {
+		return domain.SongShort{}, err
+	}
+
 	return domain.SongShort{
 		Id:        dto.Id,
 		Name:      toDomainTranslation(dto.Name),
 		NameKey:   dto.NameKey,
+		FileKey:   &fileKey,
 		DanceIds:  dto.DanceIds,
 		ArtistIds: dto.Artists,
-	}
+	}, nil
 }
 
+func getAudioFileName(folderName string, name string) string {
+	return folderName + name + ".mp3"
+}
 func toDomainTranslation(dto NameDto) domain.Translation {
 	return domain.Translation{
 		ArmName: dto.ArmName,

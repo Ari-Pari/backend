@@ -57,5 +57,8 @@ generate:
 			-o $(GENERATED_FILE) \
 			$(SWAGGER_FILE)
 
-mockgen:
-	mockgen -source=$(source) -package=mocks -destination=$(destination)
+mock-querier:
+	mockgen -source=internal/parser/file_reader.go -package=mocks -destination=internal/mocks/mock_file_reader.go
+
+mock-file-storage:
+	mockgen -source=internal/clients/filestorage/minio.go -package=mocks -destination=internal/mocks/filestorage_mock.go

@@ -31,8 +31,10 @@ type mockStorage struct{}
 func (m *mockStorage) GetFileURL(ctx context.Context, key string, exp time.Duration) (string, error) {
 	return "http://minio/" + key, nil
 }
-func (m *mockStorage) UploadImage(context.Context, string, io.Reader, int64, string) (string, error) { return "", nil }
-func (m *mockStorage) DeleteFile(context.Context, string) error { return nil }
+func (m *mockStorage) UploadImage(context.Context, string, io.Reader, int64, string) (string, error) {
+	return "", nil
+}
+func (m *mockStorage) DeleteFile(context.Context, string) error                { return nil }
 func (m *mockStorage) GetOriginalName(context.Context, string) (string, error) { return "", nil }
 
 func TestMain(m *testing.M) {
@@ -146,8 +148,8 @@ func TestGetDancesId_Integration(t *testing.T) {
 		assert.Equal(t, "Berd", response.Name)
 		assert.Equal(t, 3, response.Complexity)
 		assert.Equal(t, "http://minio/photo.jpg", response.PhotoLink)
-		assert.Equal(t,[]int{1, 2}, response.Paces)
-		
+		assert.Equal(t, []int{1, 2}, response.Paces)
+
 		// Проверка региона
 		require.Len(t, response.Regions, 1)
 		assert.Equal(t, "Shirak", response.Regions[0].Name)
@@ -157,12 +159,11 @@ func TestGetDancesId_Integration(t *testing.T) {
 		require.Len(t, *response.SourceVideos, 1)
 		assert.Equal(t, "Video 1", (*response.SourceVideos)[0].Name)
 
-		// Проверка песни 
+		// Проверка песни
 		require.Len(t, response.Songs, 1)
 		assert.Equal(t, "Berd Song", response.Songs[0].Name)
 		assert.Equal(t, "http://minio/song.mp3", response.Songs[0].Link)
 	})
-
 
 	t.Run("Success 200", func(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, "/api/v1/dances/1", nil)
@@ -179,8 +180,8 @@ func TestGetDancesId_Integration(t *testing.T) {
 		assert.Equal(t, "Berd", response.Name)
 		assert.Equal(t, 3, response.Complexity)
 		assert.Equal(t, "http://minio/photo.jpg", response.PhotoLink)
-		assert.Equal(t,[]int{1, 2}, response.Paces)
-		
+		assert.Equal(t, []int{1, 2}, response.Paces)
+
 		// Проверка региона
 		require.Len(t, response.Regions, 1)
 		assert.Equal(t, "Shirak", response.Regions[0].Name)
@@ -190,7 +191,7 @@ func TestGetDancesId_Integration(t *testing.T) {
 		require.Len(t, *response.SourceVideos, 1)
 		assert.Equal(t, "Video 1", (*response.SourceVideos)[0].Name)
 
-		// Проверка песни 
+		// Проверка песни
 		require.Len(t, response.Songs, 1)
 		assert.Equal(t, "Berd Song", response.Songs[0].Name)
 		assert.Equal(t, "http://minio/song.mp3", response.Songs[0].Link)
@@ -205,7 +206,6 @@ func TestGetDancesId_Integration(t *testing.T) {
 		assert.Equal(t, http.StatusNotFound, w.Code)
 	})
 }
-
 
 func TestGetRegions_Integration(t *testing.T) {
 	clearTables(t)

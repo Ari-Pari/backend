@@ -73,6 +73,15 @@ func DanceToDao(dances []domain.DanceShort, translationIds []int64) []db.InsertD
 			deletedAt.Valid = true
 		}
 
+		var photoKey pgtype.Text
+
+		if dance.FileKey != nil {
+			photoKey = pgtype.Text{
+				String: *dance.FileKey,
+				Valid:  true,
+			}
+		}
+
 		params[i] = db.InsertDanceParams{
 			ID: dance.Id,
 			TranslationID: pgtype.Int8{
@@ -80,6 +89,7 @@ func DanceToDao(dances []domain.DanceShort, translationIds []int64) []db.InsertD
 				Valid: true,
 			},
 			Name:       dance.NameKey,
+			PhotoKey:   photoKey,
 			Paces:      dance.Paces,
 			Gender:     string(dance.Gender),
 			Complexity: complexity,
@@ -113,12 +123,14 @@ func DanceRegionsToDao(dances []domain.DanceShort) db.InsertDanceRegionsParams {
 func SongsToDao(songs []domain.SongShort, translationIds []int64) db.InsertSongsParams {
 	ids := make([]int64, len(songs))
 	names := make([]string, len(songs))
-	fileKeys := make([]string, len(songs)) //TODO исправить
+	fileKeys := make([]string, len(songs))
 
 	for i := range songs {
 		ids[i] = songs[i].Id
 		names[i] = songs[i].NameKey
-		fileKeys[i] = ""
+		if songs[i].FileKey != nil {
+			fileKeys[i] = *songs[i].FileKey
+		}
 	}
 
 	return db.InsertSongsParams{

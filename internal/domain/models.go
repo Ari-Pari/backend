@@ -60,6 +60,7 @@ type Region struct {
 type DanceShort struct {
 	Id           int64
 	Name         Translation
+	FileKey      *string
 	NameKey      string
 	Paces        []int32
 	HoldingTypes []HoldingType
@@ -73,6 +74,7 @@ type DanceShort struct {
 type SongShort struct {
 	Id        int64
 	Name      Translation
+	FileKey   *string
 	NameKey   string
 	DanceIds  []int64
 	ArtistIds []int64

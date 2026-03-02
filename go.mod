@@ -5,7 +5,7 @@ go 1.25.3
 require (
 	github.com/go-chi/chi/v5 v5.2.5
 	github.com/oapi-codegen/oapi-codegen/v2 v2.5.1
-	github.com/oapi-codegen/runtime v1.1.2
+	github.com/oapi-codegen/runtime v1.2.0
 )
 
 require (

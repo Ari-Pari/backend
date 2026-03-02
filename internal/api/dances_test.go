@@ -31,7 +31,7 @@ type mockStorage struct{}
 func (m *mockStorage) GetFileURL(ctx context.Context, key string, exp time.Duration) (string, error) {
 	return "http://minio/" + key, nil
 }
-func (m *mockStorage) UploadImage(context.Context, string, io.Reader, int64, string) (string, error) {
+func (m *mockStorage) UploadFile(ctx context.Context, originalName string, reader io.Reader, fileSize int64, contentType string) (string, error) {
 	return "", nil
 }
 func (m *mockStorage) DeleteFile(context.Context, string) error                { return nil }
@@ -98,7 +98,7 @@ func TestGetDancesId_Integration(t *testing.T) {
 
 	_, err = testDBPool.Exec(ctx, `
 		INSERT INTO dances (id, translation_id, name, complexity, photo_key, gender, paces, genres, handshakes) 
-		VALUES (1, $1, 'Berd', 3, 'photo.jpg', 'male', '{1,2}', '{"WAR"}', '{"SHOULDER"}')
+		VALUES (1, $1, 'Berd', 3, 'photo.jpg', 'male', '{1,2}', '{"WAR", "FESTIVE"}', '{"SHOULDER"}')
 	`, translationID)
 	require.NoError(t, err)
 
@@ -163,38 +163,15 @@ func TestGetDancesId_Integration(t *testing.T) {
 		require.Len(t, response.Songs, 1)
 		assert.Equal(t, "Berd Song", response.Songs[0].Name)
 		assert.Equal(t, "http://minio/song.mp3", response.Songs[0].Link)
-	})
-
-	t.Run("Success 200", func(t *testing.T) {
-		req := httptest.NewRequest(http.MethodGet, "/api/v1/dances/1", nil)
-		w := httptest.NewRecorder()
-
-		srv.GetDancesId(w, req, 1, api.GetDancesIdParams{})
-
-		assert.Equal(t, http.StatusOK, w.Code)
-
-		var response api.DanceFullResponse
-		err := json.Unmarshal(w.Body.Bytes(), &response)
-		require.NoError(t, err)
-
-		assert.Equal(t, "Berd", response.Name)
-		assert.Equal(t, 3, response.Complexity)
-		assert.Equal(t, "http://minio/photo.jpg", response.PhotoLink)
-		assert.Equal(t, []int{1, 2}, response.Paces)
-
-		// Проверка региона
-		require.Len(t, response.Regions, 1)
-		assert.Equal(t, "Shirak", response.Regions[0].Name)
-
-		// Проверка видео
-		require.NotNil(t, response.SourceVideos)
-		require.Len(t, *response.SourceVideos, 1)
-		assert.Equal(t, "Video 1", (*response.SourceVideos)[0].Name)
-
-		// Проверка песни
-		require.Len(t, response.Songs, 1)
-		assert.Equal(t, "Berd Song", response.Songs[0].Name)
-		assert.Equal(t, "http://minio/song.mp3", response.Songs[0].Link)
+		// жанры
+		require.NotNil(t, response.Genres)
+		assert.Len(t, response.Genres, 2)
+		assert.Equal(t, api.Genre("WAR"), response.Genres[0])
+		assert.Equal(t, api.Genre("FESTIVE"), response.Genres[1])
+		
+		// хэндшейки
+		assert.Len(t, response.Handshakes, 1)
+		assert.Equal(t, api.Handshake("SHOULDER"), response.Handshakes[0])
 	})
 
 	t.Run("Not Found 404", func(t *testing.T) {

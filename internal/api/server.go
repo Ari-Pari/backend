@@ -284,9 +284,12 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 	}
 	res.SourceVideos, res.LessonVideos, res.PerformanceVideos = &src, &les, &perf
 
-	if len(dbDance.Genres) > 0 {
-		res.Genres = api.Genre(dbDance.Genres[0])
+	res.Genres = make([]api.Genre, len(dbDance.Genres))
+
+	for i, g := range dbDance.Genres {
+		res.Genres[i] = api.Genre(g)
 	}
+
 	res.Handshakes = make([]api.Handshake, len(dbDance.Handshakes))
 	for i, h := range dbDance.Handshakes {
 		res.Handshakes[i] = api.Handshake(h)

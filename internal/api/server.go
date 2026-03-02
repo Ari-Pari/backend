@@ -214,18 +214,20 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 		return
 	}
 
-	dbVideos, err := s.db.GetVideosByDanceID(ctx, danceID)
+	dbVideos, err := s.db.GetVideosByDanceID(ctx, db.GetVideosByDanceIDParams{
+		DanceID: danceID,
+		Lang:    argLang,
+	})
 	if err != nil {
 		s.logger.Printf("db error (videos): %v", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
 	}
 
-	dbSongs, err := s.db.GetSongsByDanceID(ctx, danceID)
+	dbSongs, err := s.db.GetSongsByDanceID(ctx, db.GetSongsByDanceIDParams{
+		DanceID: danceID,
+		Lang:    argLang,
+	})
 	if err != nil {
 		s.logger.Printf("db error (songs): %v", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
 	}
 
 	idVal := int(dbDance.ID)

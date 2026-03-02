@@ -20,10 +20,10 @@ type Querier interface {
 	GetRegions(ctx context.Context) ([]GetRegionsRow, error)
 	GetRegionsByDanceID(ctx context.Context, arg GetRegionsByDanceIDParams) ([]GetRegionsByDanceIDRow, error)
 	GetSongs(ctx context.Context) ([]GetSongsRow, error)
-	GetSongsByDanceID(ctx context.Context, danceID int64) ([]GetSongsByDanceIDRow, error)
+	GetSongsByDanceID(ctx context.Context, arg GetSongsByDanceIDParams) ([]GetSongsByDanceIDRow, error)
 	GetTranslations(ctx context.Context) ([]GetTranslationsRow, error)
 	GetVideos(ctx context.Context) ([]GetVideosRow, error)
-	GetVideosByDanceID(ctx context.Context, danceID int64) ([]GetVideosByDanceIDRow, error)
+	GetVideosByDanceID(ctx context.Context, arg GetVideosByDanceIDParams) ([]GetVideosByDanceIDRow, error)
 	InsertArtists(ctx context.Context, arg InsertArtistsParams) error
 	InsertDance(ctx context.Context, arg InsertDanceParams) error
 	InsertDanceRegions(ctx context.Context, arg InsertDanceRegionsParams) error

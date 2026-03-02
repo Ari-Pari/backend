@@ -18,7 +18,7 @@ SELECT
         CASE 
             WHEN $1::text = 'ru' THEN t.ru_name
             WHEN $1::text = 'en' THEN t.eng_name
-            WHEN $1::text = 'arm' THEN t.arm_name
+            WHEN $1::text = 'hy' THEN t.arm_name
             ELSE r.name
         END, 
         r.name

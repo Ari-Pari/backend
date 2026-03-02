@@ -13,7 +13,7 @@ import (
 
 const getDanceByID = `-- name: GetDanceByID :one
 SELECT d.id, d.complexity, d.photo_key, d.gender, d.paces, d.genres, d.handshakes,
-COALESCE(CASE WHEN $2::text = 'ru' THEN t.ru_name WHEN $2::text = 'en' THEN t.eng_name WHEN $2::text = 'arm' THEN t.arm_name ELSE d.name END, d.name)::text AS name
+COALESCE(CASE WHEN $2::text = 'ru' THEN t.ru_name WHEN $2::text = 'en' THEN t.eng_name WHEN $2::text = 'hy' THEN t.arm_name ELSE d.name END, d.name)::text AS name
 FROM dances d
 LEFT JOIN translations t ON d.translation_id = t.id
 WHERE d.id = $1
@@ -58,7 +58,7 @@ SELECT
         CASE 
             WHEN $2::text = 'ru' THEN t.ru_name
             WHEN $2::text = 'en' THEN t.eng_name
-            WHEN $2::text = 'arm' THEN t.arm_name
+            WHEN $2::text = 'hy' THEN t.arm_name
             ELSE r.name
         END, 
         r.name
@@ -106,7 +106,7 @@ SELECT
         CASE 
             WHEN $2::text = 'ru' THEN t.ru_name
             WHEN $2::text = 'en' THEN t.eng_name
-            WHEN $2::text = 'arm' THEN t.arm_name
+            WHEN $2::text = 'hy' THEN t.arm_name
             ELSE s.name
         END, 
         s.name
@@ -156,7 +156,7 @@ SELECT
         CASE 
             WHEN $2::text = 'ru' THEN t.ru_name
             WHEN $2::text = 'en' THEN t.eng_name
-            WHEN $2::text = 'arm' THEN t.arm_name
+            WHEN $2::text = 'hy' THEN t.arm_name
             ELSE v.name
         END, 
         v.name

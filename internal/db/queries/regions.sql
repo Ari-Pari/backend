@@ -5,7 +5,7 @@ SELECT
         CASE 
             WHEN sqlc.narg('lang')::text = 'ru' THEN t.ru_name
             WHEN sqlc.narg('lang')::text = 'en' THEN t.eng_name
-            WHEN sqlc.narg('lang')::text = 'arm' THEN t.arm_name
+            WHEN sqlc.narg('lang')::text = 'hy' THEN t.arm_name
             ELSE r.name
         END, 
         r.name

@@ -132,6 +132,7 @@ func setupDbStorage(ctx context.Context, cfg *config.Config) *dbstorage.Storage 
 func setupMinioStorage(ctx context.Context, cfg *config.Config) (filestorage.FileStorage, error) {
 	fileStore, err := filestorage.NewMinioStorage(ctx,
 		cfg.Minio.Endpoint,
+		cfg.Minio.ServerURL,
 		cfg.Minio.AccessKey,
 		cfg.Minio.SecretKey,
 		cfg.Minio.Bucket,

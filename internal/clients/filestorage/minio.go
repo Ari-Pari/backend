@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/url"
 	"path/filepath"
-	"time"
 
 	"github.com/google/uuid"
 	"github.com/minio/minio-go/v7"
@@ -17,19 +16,20 @@ import (
 // FileStorage описывает поведение нашего хранилища
 type FileStorage interface {
 	UploadFile(ctx context.Context, originalName string, reader io.Reader, fileSize int64, contentType string) (string, error)
-	GetFileURL(ctx context.Context, fileKey string, expires time.Duration) (string, error)
+	GetFileURL(fileKey string) (string, error)
 	DeleteFile(ctx context.Context, fileKey string) error
 	GetOriginalName(ctx context.Context, fileKey string) (string, error)
 }
 
 // minioStorage — внутренняя реализация интерфейса для MinIO
 type minioStorage struct {
-	client     *minio.Client
-	bucketName string
+	client, publicClient *minio.Client
+	publicURL            string
+	bucketName           string
 }
 
 // NewMinioStorage возвращает интерфейс FileStorage
-func NewMinioStorage(ctx context.Context, endpoint, accessKey, secretKey, bucket string, useSSL bool) (FileStorage, error) {
+func NewMinioStorage(ctx context.Context, endpoint, serverURL, accessKey, secretKey, bucket string, useSSL bool) (FileStorage, error) {
 	client, err := minio.New(endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(accessKey, secretKey, ""),
 		Secure: useSSL,
@@ -53,10 +53,10 @@ func NewMinioStorage(ctx context.Context, endpoint, accessKey, secretKey, bucket
 	} else {
 		log.Printf("Bucket '%s' already exists", bucket)
 	}
-
 	return &minioStorage{
 		client:     client,
 		bucketName: bucket,
+		publicURL:  serverURL,
 	}, nil
 }
 
@@ -79,21 +79,8 @@ func (s *minioStorage) UploadFile(ctx context.Context, originalName string, read
 	return fileKey, nil
 }
 
-func (s *minioStorage) GetFileURL(ctx context.Context, fileKey string, expires time.Duration) (string, error) {
-	reqParams := make(url.Values)
-
-	origName, _ := s.GetOriginalName(ctx, fileKey)
-	if origName != "" {
-		reqParams.Set("response-content-disposition", fmt.Sprintf("inline; filename=\"%s\"", origName))
-	} else {
-		reqParams.Set("response-content-disposition", "inline")
-	}
-
-	presignedURL, err := s.client.PresignedGetObject(ctx, s.bucketName, fileKey, expires, reqParams)
-	if err != nil {
-		return "", err
-	}
-	return presignedURL.String(), nil
+func (s *minioStorage) GetFileURL(fileKey string) (string, error) {
+	return url.JoinPath(s.publicURL, s.bucketName, fileKey)
 }
 
 func (s *minioStorage) GetOriginalName(ctx context.Context, fileKey string) (string, error) {

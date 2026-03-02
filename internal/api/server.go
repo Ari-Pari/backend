@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	"time"
 
 	api "github.com/Ari-Pari/backend/internal/api/generated"
 	"github.com/Ari-Pari/backend/internal/clients/filestorage"
@@ -24,9 +23,7 @@ type Server struct {
 }
 
 func (s *Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params api.PostDancesSearchParams) {
-
 	var req api.DanceSearchRequest
-	ctx := r.Context()
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -158,7 +155,7 @@ func (s *Server) PostDancesSearch(w http.ResponseWriter, r *http.Request, params
 
 		photoURL := ""
 		if d.PhotoLink.Valid && d.PhotoLink.String != "" {
-			url, err := s.storage.GetFileURL(ctx, d.PhotoLink.String, time.Hour)
+			url, err := s.storage.GetFileURL(d.PhotoLink.String)
 			if err == nil {
 				photoURL = url
 			}
@@ -240,7 +237,7 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 	}
 
 	if dbDance.PhotoKey.Valid && dbDance.PhotoKey.String != "" {
-		res.PhotoLink, _ = s.storage.GetFileURL(ctx, dbDance.PhotoKey.String, time.Hour)
+		res.PhotoLink, _ = s.storage.GetFileURL(dbDance.PhotoKey.String)
 	}
 
 	res.Paces = make([]int, len(dbDance.Paces))
@@ -257,7 +254,7 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 	for i, song := range dbSongs {
 		songLink := ""
 		if song.FileKey != "" {
-			songLink, _ = s.storage.GetFileURL(ctx, song.FileKey, time.Hour)
+			songLink, _ = s.storage.GetFileURL(song.FileKey)
 		}
 		res.Songs[i] = api.SongResponse{
 			Id:        int(song.ID),

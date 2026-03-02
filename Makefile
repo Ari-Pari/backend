@@ -1,6 +1,6 @@
 .PHONY: up down build logs logs-db ps status tables restart sqlc help generate
 
-include .env
+#include .env
 export
 
 # Variables

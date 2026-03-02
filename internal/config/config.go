@@ -15,10 +15,12 @@ type MinioConfig struct {
 	SecretKey string
 	Bucket    string
 	UseSSL    bool
+	ServerURL string
 }
 
 type Config struct {
 	Postgres              PostgresConfig
+	PostgresAutoUpload    PostgresConfig
 	Minio                 MinioConfig
 	MusicFolderPath       string
 	DancePhotosFolderPath string
@@ -35,6 +37,10 @@ func Load() (*Config, error) {
 		return nil, err
 	}
 
+	pgConfigAutoUpload, err := loadPostgresAutoUploadConfig()
+	if err != nil {
+		return nil, err
+	}
 	musicFolderPath, err := getEnv("MUSIC_FOLDER_PATH")
 	dancePhotosFolderPath, err := getEnv("DANCE_PHOTOS_FOLDER_PATH")
 
@@ -43,6 +49,7 @@ func Load() (*Config, error) {
 		Minio:                 *minioConfig,
 		MusicFolderPath:       musicFolderPath,
 		DancePhotosFolderPath: dancePhotosFolderPath,
+		PostgresAutoUpload:    *pgConfigAutoUpload,
 	}, nil
 }
 
@@ -58,6 +65,41 @@ func loadPostgresConfig() (*PostgresConfig, error) {
 	}
 
 	host, err := getEnv("POSTGRES_HOST")
+	if err != nil {
+		return nil, err
+	}
+
+	port, err := getEnv("POSTGRES_PORT")
+	if err != nil {
+		return nil, err
+	}
+
+	dbName, err := getEnv("POSTGRES_DB")
+	if err != nil {
+		return nil, err
+	}
+
+	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
+		user, password, host, port, dbName,
+	)
+
+	return &PostgresConfig{
+		DSN: dsn,
+	}, nil
+}
+
+func loadPostgresAutoUploadConfig() (*PostgresConfig, error) {
+	user, err := getEnv("POSTGRES_USER")
+	if err != nil {
+		return nil, err
+	}
+
+	password, err := getEnv("POSTGRES_PASSWORD")
+	if err != nil {
+		return nil, err
+	}
+
+	host, err := getEnv("POSTGRES_HOST_AUTOUPLOAD")
 	if err != nil {
 		return nil, err
 	}
@@ -104,12 +146,18 @@ func loadMinioConfig() (*MinioConfig, error) {
 
 	useSSL := os.Getenv("MINIO_USE_SSL") == "true"
 
+	serverURL, err := getEnv("MINIO_SERVER_URL")
+	if err != nil {
+		return nil, err
+	}
+
 	return &MinioConfig{
 		Endpoint:  endpoint,
 		AccessKey: accessKey,
 		SecretKey: secretKey,
 		Bucket:    bucket,
 		UseSSL:    useSSL,
+		ServerURL: serverURL,
 	}, nil
 }
 

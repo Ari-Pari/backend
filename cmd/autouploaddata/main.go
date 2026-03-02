@@ -19,11 +19,11 @@ func main() {
 	ctx := context.Background()
 	cfg, err := config.Load()
 
-	setupDbStorage(ctx, cfg)
+	setupDbStorage(ctx, cfg.PostgresAutoUpload.DSN)
 
 	fileStore := setupMinioStorage(ctx, cfg)
 
-	conn, err := pgxpool.New(ctx, cfg.Postgres.DSN)
+	conn, err := pgxpool.New(ctx, cfg.PostgresAutoUpload.DSN)
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
 	}
@@ -108,8 +108,8 @@ func main() {
 	}
 }
 
-func setupDbStorage(ctx context.Context, cfg *config.Config) {
-	storage, err := dbstorage.New(ctx, cfg.Postgres.DSN)
+func setupDbStorage(ctx context.Context, dsn string) {
+	storage, err := dbstorage.New(ctx, dsn)
 	if err != nil {
 		log.Fatalf("Failed to initialize storage: %v", err)
 	}
@@ -120,7 +120,8 @@ func setupDbStorage(ctx context.Context, cfg *config.Config) {
 func setupMinioStorage(ctx context.Context, cfg *config.Config) filestorage.FileStorage {
 	fileStore, err := filestorage.NewMinioStorage(
 		ctx,
-		cfg.Minio.Endpoint,
+		cfg.Minio.ServerURL,
+		cfg.Minio.ServerURL,
 		cfg.Minio.AccessKey,
 		cfg.Minio.SecretKey,
 		cfg.Minio.Bucket,

@@ -23,13 +23,38 @@ JOIN dance_region dr ON dr.region_id = r.id
 WHERE dr.dance_id = $1;
 
 -- name: GetVideosByDanceID :many
-SELECT v.id, v.name, v.link, v.type 
+SELECT 
+    v.id, 
+    COALESCE(
+        CASE 
+            WHEN sqlc.narg('lang')::text = 'ru' THEN t.ru_name
+            WHEN sqlc.narg('lang')::text = 'en' THEN t.eng_name
+            WHEN sqlc.narg('lang')::text = 'arm' THEN t.arm_name
+            ELSE v.name
+        END, 
+        v.name
+    )::text AS name,
+    v.link, 
+    v.type 
 FROM videos v 
+LEFT JOIN translations t ON v.translation_id = t.id
 JOIN dance_videos dv ON dv.video_id = v.id 
 WHERE dv.dance_id = $1;
 
 -- name: GetSongsByDanceID :many
-SELECT s.id, s.name, s.file_key 
+SELECT 
+    s.id, 
+    COALESCE(
+        CASE 
+            WHEN sqlc.narg('lang')::text = 'ru' THEN t.ru_name
+            WHEN sqlc.narg('lang')::text = 'en' THEN t.eng_name
+            WHEN sqlc.narg('lang')::text = 'arm' THEN t.arm_name
+            ELSE s.name
+        END, 
+        s.name
+    )::text AS name,
+    s.file_key 
 FROM songs s 
+LEFT JOIN translations t ON s.translation_id = t.id
 JOIN dance_song ds ON ds.song_id = s.id 
 WHERE ds.dance_id = $1;

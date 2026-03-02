@@ -214,18 +214,20 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 		return
 	}
 
-	dbVideos, err := s.db.GetVideosByDanceID(ctx, danceID)
+	dbVideos, err := s.db.GetVideosByDanceID(ctx, db.GetVideosByDanceIDParams{
+		DanceID: danceID,
+		Lang:    argLang,
+	})
 	if err != nil {
 		s.logger.Printf("db error (videos): %v", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
 	}
 
-	dbSongs, err := s.db.GetSongsByDanceID(ctx, danceID)
+	dbSongs, err := s.db.GetSongsByDanceID(ctx, db.GetSongsByDanceIDParams{
+		DanceID: danceID,
+		Lang:    argLang,
+	})
 	if err != nil {
 		s.logger.Printf("db error (songs): %v", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
 	}
 
 	idVal := int(dbDance.ID)
@@ -284,9 +286,12 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 	}
 	res.SourceVideos, res.LessonVideos, res.PerformanceVideos = &src, &les, &perf
 
-	if len(dbDance.Genres) > 0 {
-		res.Genres = api.Genre(dbDance.Genres[0])
+	res.Genres = make([]api.Genre, len(dbDance.Genres))
+
+	for i, g := range dbDance.Genres {
+		res.Genres[i] = api.Genre(g)
 	}
+
 	res.Handshakes = make([]api.Handshake, len(dbDance.Handshakes))
 	for i, h := range dbDance.Handshakes {
 		res.Handshakes[i] = api.Handshake(h)

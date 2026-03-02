@@ -273,7 +273,10 @@
             }
           },
           "genres": {
-            "$ref": "#/components/schemas/Genre"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Genre"
+            }
           },
           "handshakes": {
             "type": "array",

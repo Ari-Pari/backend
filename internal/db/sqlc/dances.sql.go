@@ -100,11 +100,28 @@ func (q *Queries) GetRegionsByDanceID(ctx context.Context, arg GetRegionsByDance
 }
 
 const getSongsByDanceID = `-- name: GetSongsByDanceID :many
-SELECT s.id, s.name, s.file_key 
+SELECT 
+    s.id, 
+    COALESCE(
+        CASE 
+            WHEN $2::text = 'ru' THEN t.ru_name
+            WHEN $2::text = 'en' THEN t.eng_name
+            WHEN $2::text = 'arm' THEN t.arm_name
+            ELSE s.name
+        END, 
+        s.name
+    )::text AS name,
+    s.file_key 
 FROM songs s 
+LEFT JOIN translations t ON s.translation_id = t.id
 JOIN dance_song ds ON ds.song_id = s.id 
 WHERE ds.dance_id = $1
 `
+
+type GetSongsByDanceIDParams struct {
+	DanceID int64       `json:"dance_id"`
+	Lang    pgtype.Text `json:"lang"`
+}
 
 type GetSongsByDanceIDRow struct {
 	ID      int64  `json:"id"`
@@ -112,8 +129,8 @@ type GetSongsByDanceIDRow struct {
 	FileKey string `json:"file_key"`
 }
 
-func (q *Queries) GetSongsByDanceID(ctx context.Context, danceID int64) ([]GetSongsByDanceIDRow, error) {
-	rows, err := q.db.Query(ctx, getSongsByDanceID, danceID)
+func (q *Queries) GetSongsByDanceID(ctx context.Context, arg GetSongsByDanceIDParams) ([]GetSongsByDanceIDRow, error) {
+	rows, err := q.db.Query(ctx, getSongsByDanceID, arg.DanceID, arg.Lang)
 	if err != nil {
 		return nil, err
 	}
@@ -133,11 +150,29 @@ func (q *Queries) GetSongsByDanceID(ctx context.Context, danceID int64) ([]GetSo
 }
 
 const getVideosByDanceID = `-- name: GetVideosByDanceID :many
-SELECT v.id, v.name, v.link, v.type 
+SELECT 
+    v.id, 
+    COALESCE(
+        CASE 
+            WHEN $2::text = 'ru' THEN t.ru_name
+            WHEN $2::text = 'en' THEN t.eng_name
+            WHEN $2::text = 'arm' THEN t.arm_name
+            ELSE v.name
+        END, 
+        v.name
+    )::text AS name,
+    v.link, 
+    v.type 
 FROM videos v 
+LEFT JOIN translations t ON v.translation_id = t.id
 JOIN dance_videos dv ON dv.video_id = v.id 
 WHERE dv.dance_id = $1
 `
+
+type GetVideosByDanceIDParams struct {
+	DanceID int64       `json:"dance_id"`
+	Lang    pgtype.Text `json:"lang"`
+}
 
 type GetVideosByDanceIDRow struct {
 	ID   int64  `json:"id"`
@@ -146,8 +181,8 @@ type GetVideosByDanceIDRow struct {
 	Type string `json:"type"`
 }
 
-func (q *Queries) GetVideosByDanceID(ctx context.Context, danceID int64) ([]GetVideosByDanceIDRow, error) {
-	rows, err := q.db.Query(ctx, getVideosByDanceID, danceID)
+func (q *Queries) GetVideosByDanceID(ctx context.Context, arg GetVideosByDanceIDParams) ([]GetVideosByDanceIDRow, error) {
+	rows, err := q.db.Query(ctx, getVideosByDanceID, arg.DanceID, arg.Lang)
 	if err != nil {
 		return nil, err
 	}

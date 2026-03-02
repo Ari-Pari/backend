@@ -219,7 +219,7 @@ func (e Handshake) Valid() bool {
 type DanceFullResponse struct {
 	Complexity        int                     `json:"complexity"`
 	Gender            DanceFullResponseGender `json:"gender"`
-	Genres            Genre                   `json:"genres"`
+	Genres            []Genre                 `json:"genres"`
 	Handshakes        []Handshake             `json:"handshakes"`
 	Id                *int                    `json:"id,omitempty"`
 	LessonVideos      *[]VideoResponse        `json:"lessonVideos,omitempty"`

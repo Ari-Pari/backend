@@ -188,9 +188,9 @@
           "gender": {
             "type": "string",
             "enum": [
-              "male",
-              "female",
-              "multi"
+              "MALE",
+              "FEMALE",
+              "MULTI"
             ]
           },
           "paces": {

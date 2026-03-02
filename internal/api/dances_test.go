@@ -150,7 +150,7 @@ func TestGetDancesId_Integration(t *testing.T) {
 		assert.Equal(t, "Shirak_def", response.Regions[0].Name)
 	})
 
-	// русский язык 
+	// русский язык
 	t.Run("Success 200 - Russian Lang", func(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, "/api/v1/dances/1?lang=ru", nil)
 		w := httptest.NewRecorder()

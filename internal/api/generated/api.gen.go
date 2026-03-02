@@ -94,19 +94,19 @@ func (e DanceSearchRequestSortedBy) Valid() bool {
 
 // Defines values for DanceShortResponseGender.
 const (
-	Female DanceShortResponseGender = "female"
-	Male   DanceShortResponseGender = "male"
-	Multi  DanceShortResponseGender = "multi"
+	FEMALE DanceShortResponseGender = "FEMALE"
+	MALE   DanceShortResponseGender = "MALE"
+	MULTI  DanceShortResponseGender = "MULTI"
 )
 
 // Valid indicates whether the value is a known member of the DanceShortResponseGender enum.
 func (e DanceShortResponseGender) Valid() bool {
 	switch e {
-	case Female:
+	case FEMALE:
 		return true
-	case Male:
+	case MALE:
 		return true
-	case Multi:
+	case MULTI:
 		return true
 	default:
 		return false

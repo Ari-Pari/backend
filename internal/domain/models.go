@@ -49,7 +49,7 @@ type Gender string
 const (
 	Male   Gender = "MALE"
 	Female Gender = "FEMALE"
-	Multi  Gender = "MULTI"
+	Multi  Gender = "MULTY"
 )
 
 type Region struct {

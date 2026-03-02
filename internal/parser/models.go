@@ -30,7 +30,7 @@ type GenderDto string
 const (
 	Male   GenderDto = "BOY"
 	Female GenderDto = "GIRL"
-	Multi  GenderDto = "MULTI"
+	Multi  GenderDto = "MULTY"
 )
 
 type TypeDto string

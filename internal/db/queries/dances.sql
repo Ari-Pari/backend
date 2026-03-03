@@ -58,3 +58,24 @@ FROM songs s
 LEFT JOIN translations t ON s.translation_id = t.id
 JOIN dance_song ds ON ds.song_id = s.id 
 WHERE ds.dance_id = $1;
+
+
+
+
+-- name: GetEnsemblesBySongID :many
+SELECT 
+    a.id, 
+    COALESCE(
+        CASE 
+            WHEN sqlc.narg('lang')::text = 'ru' THEN t.ru_name
+            WHEN sqlc.narg('lang')::text = 'en' THEN t.eng_name
+            WHEN sqlc.narg('lang')::text = 'hy' THEN t.arm_name
+            ELSE a.name
+        END, 
+        a.name
+    )::text AS name,
+    a.link
+FROM artists a
+LEFT JOIN translations t ON a.translation_id = t.id
+JOIN song_artist sa ON sa.artist_id = a.id
+WHERE sa.song_id = $1;

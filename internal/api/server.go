@@ -252,15 +252,33 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 
 	res.Songs = make([]api.SongResponse, len(dbSongs))
 	for i, song := range dbSongs {
+		dbEnsembles, err := s.db.GetEnsemblesBySongID(ctx, db.GetEnsemblesBySongIDParams{
+			SongID: int64(song.ID),
+			Lang:   argLang,
+		})
+		if err != nil {
+			s.logger.Printf("db error (ensembles for song %d): %v", song.ID, err)
+		}
+
+		ensembles := make([]api.EnsembleResponse, len(dbEnsembles))
+		for j, ens := range dbEnsembles {
+			ensembles[j] = api.EnsembleResponse{
+				Id:   int(ens.ID),
+				Name: ens.Name,
+				Link: ens.Link,
+			}
+		}
+
 		songLink := ""
 		if song.FileKey != "" {
 			songLink, _ = s.storage.GetFileURL(song.FileKey)
 		}
+
 		res.Songs[i] = api.SongResponse{
 			Id:        int(song.ID),
 			Name:      song.Name,
 			Link:      songLink,
-			Ensembles: []api.EnsembleResponse{}, // Если ансамблей пока нет, отдаем пустой массив
+			Ensembles: ensembles,
 		}
 	}
 

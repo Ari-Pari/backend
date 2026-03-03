@@ -127,6 +127,12 @@ func TestGetDancesId_Integration(t *testing.T) {
 	_, err = testDBPool.Exec(ctx, "INSERT INTO dance_song (dance_id, song_id) VALUES (1, 50)")
 	require.NoError(t, err)
 
+	var artistTransID int64
+	testDBPool.QueryRow(ctx, "INSERT INTO translations (eng_name, ru_name) VALUES ('Ensemble A', 'Ансамбль А') RETURNING id").Scan(&artistTransID)
+	
+	testDBPool.Exec(ctx, "INSERT INTO artists (id, translation_id, name, link) VALUES (200, $1, 'Ens_def', 'http://ens.com')", artistTransID)
+	testDBPool.Exec(ctx, "INSERT INTO song_artist (song_id, artist_id) VALUES (50, 200)")
+
 	// запуск теста
 	queries := db.New(testDBPool)
 	logger := log.New(io.Discard, "", 0)
@@ -178,6 +184,9 @@ func TestGetDancesId_Integration(t *testing.T) {
 		// Проверка песни
 		require.Len(t, response.Songs, 1)
 		assert.Equal(t, "Песня Берд", response.Songs[0].Name)
+
+		require.Len(t, response.Songs[0].Ensembles, 1)
+    	assert.Equal(t, "Ансамбль А", response.Songs[0].Ensembles[0].Name)
 	})
 
 	// ТЕСТ 3: НЕ НАЙДЕНО

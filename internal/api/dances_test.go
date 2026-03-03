@@ -9,7 +9,6 @@ import (
 	"net/http/httptest"
 	"os"
 	"testing"
-	"time"
 
 	api "github.com/Ari-Pari/backend/internal/api/generated"
 	"github.com/Ari-Pari/backend/internal/db/sqlc"
@@ -28,7 +27,7 @@ var testDBPool *pgxpool.Pool
 
 type mockStorage struct{}
 
-func (m *mockStorage) GetFileURL(ctx context.Context, key string, exp time.Duration) (string, error) {
+func (m *mockStorage) GetFileURL(key string) (string, error) {
 	return "http://minio/" + key, nil
 }
 func (m *mockStorage) UploadFile(ctx context.Context, originalName string, reader io.Reader, fileSize int64, contentType string) (string, error) {

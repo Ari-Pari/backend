@@ -129,12 +129,12 @@ func loadMinioConfig() (*MinioConfig, error) {
 		return nil, err
 	}
 
-	accessKey, err := getEnv("MINIO_ACCESS_KEY")
+	accessKey, err := getEnv("MINIO_ROOT_USER")
 	if err != nil {
 		return nil, err
 	}
 
-	secretKey, err := getEnv("MINIO_SECRET_KEY")
+	secretKey, err := getEnv("MINIO_ROOT_PASSWORD")
 	if err != nil {
 		return nil, err
 	}

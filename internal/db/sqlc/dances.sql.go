@@ -255,3 +255,14 @@ func (q *Queries) GetVideosByDanceID(ctx context.Context, arg GetVideosByDanceID
 	}
 	return items, nil
 }
+
+const incrementDancePopularity = `-- name: IncrementDancePopularity :exec
+UPDATE dances
+SET popularity = popularity + 1
+WHERE id = $1
+`
+
+func (q *Queries) IncrementDancePopularity(ctx context.Context, id int64) error {
+	_, err := q.db.Exec(ctx, incrementDancePopularity, id)
+	return err
+}

@@ -198,6 +198,35 @@ func TestGetDancesId_Integration(t *testing.T) {
 
 		assert.Equal(t, http.StatusNotFound, w.Code)
 	})
+
+	t.Run("Success 200 - Popularity Increment Check", func(t *testing.T) {
+		danceID := 1
+		ctx := context.Background()
+
+		var initialPop int
+		err := testDBPool.QueryRow(ctx, "SELECT popularity FROM dances WHERE id = $1", danceID).Scan(&initialPop)
+		require.NoError(t, err)
+
+		req := httptest.NewRequest(http.MethodGet, "/api/v1/dances/1", nil)
+		w1 := httptest.NewRecorder()
+		srv.GetDancesId(w1, req, danceID, api.GetDancesIdParams{})
+		assert.Equal(t, http.StatusOK, w1.Code)
+
+		var firstPop int
+		err = testDBPool.QueryRow(ctx, "SELECT popularity FROM dances WHERE id = $1", danceID).Scan(&firstPop)
+		require.NoError(t, err)
+		assert.Equal(t, initialPop+1, firstPop, "Popularity should increment by 1 after first call")
+
+
+		w2 := httptest.NewRecorder()
+		srv.GetDancesId(w2, req, danceID, api.GetDancesIdParams{})
+		assert.Equal(t, http.StatusOK, w2.Code)
+
+		var secondPop int
+		err = testDBPool.QueryRow(ctx, "SELECT popularity FROM dances WHERE id = $1", danceID).Scan(&secondPop)
+		require.NoError(t, err)
+		assert.Equal(t, initialPop+2, secondPop, "Popularity should increment again after second call")
+	})
 }
 
 func TestGetRegions_Integration(t *testing.T) {

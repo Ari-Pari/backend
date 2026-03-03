@@ -79,3 +79,8 @@ FROM artists a
 LEFT JOIN translations t ON a.translation_id = t.id
 JOIN song_artist sa ON sa.artist_id = a.id
 WHERE sa.song_id = $1;
+
+-- name: IncrementDancePopularity :exec
+UPDATE dances
+SET popularity = popularity + 1
+WHERE id = $1;

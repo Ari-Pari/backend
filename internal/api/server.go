@@ -185,6 +185,10 @@ func (s *Server) GetDancesId(w http.ResponseWriter, r *http.Request, id int, par
 	ctx := r.Context()
 	danceID := int64(id)
 
+	if err := s.db.IncrementDancePopularity(ctx, danceID); err != nil {
+		s.logger.Printf("failed to increment popularity for dance %d: %v", danceID, err)
+	}
+
 	var argLang pgtype.Text
 	if params.Lang != nil {
 		argLang = pgtype.Text{String: *params.Lang, Valid: true}

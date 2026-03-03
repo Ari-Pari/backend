@@ -8,9 +8,9 @@ import (
 	"testing"
 
 	"github.com/Ari-Pari/backend/internal/mocks"
-	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"go.uber.org/mock/gomock"
 )
 
 type errorReadCloser struct{}

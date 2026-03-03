@@ -9,7 +9,6 @@ import (
 	"net/http/httptest"
 	"os"
 	"testing"
-	"time"
 
 	api "github.com/Ari-Pari/backend/internal/api/generated"
 	"github.com/Ari-Pari/backend/internal/db/sqlc"
@@ -28,7 +27,7 @@ var testDBPool *pgxpool.Pool
 
 type mockStorage struct{}
 
-func (m *mockStorage) GetFileURL(ctx context.Context, key string, exp time.Duration) (string, error) {
+func (m *mockStorage) GetFileURL(key string) (string, error) {
 	return "http://minio/" + key, nil
 }
 func (m *mockStorage) UploadFile(ctx context.Context, originalName string, reader io.Reader, fileSize int64, contentType string) (string, error) {
@@ -128,6 +127,12 @@ func TestGetDancesId_Integration(t *testing.T) {
 	_, err = testDBPool.Exec(ctx, "INSERT INTO dance_song (dance_id, song_id) VALUES (1, 50)")
 	require.NoError(t, err)
 
+	var artistTransID int64
+	testDBPool.QueryRow(ctx, "INSERT INTO translations (eng_name, ru_name) VALUES ('Ensemble A', 'Ансамбль А') RETURNING id").Scan(&artistTransID)
+	
+	testDBPool.Exec(ctx, "INSERT INTO artists (id, translation_id, name, link) VALUES (200, $1, 'Ens_def', 'http://ens.com')", artistTransID)
+	testDBPool.Exec(ctx, "INSERT INTO song_artist (song_id, artist_id) VALUES (50, 200)")
+
 	// запуск теста
 	queries := db.New(testDBPool)
 	logger := log.New(io.Discard, "", 0)
@@ -179,6 +184,9 @@ func TestGetDancesId_Integration(t *testing.T) {
 		// Проверка песни
 		require.Len(t, response.Songs, 1)
 		assert.Equal(t, "Песня Берд", response.Songs[0].Name)
+
+		require.Len(t, response.Songs[0].Ensembles, 1)
+    	assert.Equal(t, "Ансамбль А", response.Songs[0].Ensembles[0].Name)
 	})
 
 	// ТЕСТ 3: НЕ НАЙДЕНО
@@ -189,6 +197,35 @@ func TestGetDancesId_Integration(t *testing.T) {
 		srv.GetDancesId(w, req, 999, api.GetDancesIdParams{})
 
 		assert.Equal(t, http.StatusNotFound, w.Code)
+	})
+
+	t.Run("Success 200 - Popularity Increment Check", func(t *testing.T) {
+		danceID := 1
+		ctx := context.Background()
+
+		var initialPop int
+		err := testDBPool.QueryRow(ctx, "SELECT popularity FROM dances WHERE id = $1", danceID).Scan(&initialPop)
+		require.NoError(t, err)
+
+		req := httptest.NewRequest(http.MethodGet, "/api/v1/dances/1", nil)
+		w1 := httptest.NewRecorder()
+		srv.GetDancesId(w1, req, danceID, api.GetDancesIdParams{})
+		assert.Equal(t, http.StatusOK, w1.Code)
+
+		var firstPop int
+		err = testDBPool.QueryRow(ctx, "SELECT popularity FROM dances WHERE id = $1", danceID).Scan(&firstPop)
+		require.NoError(t, err)
+		assert.Equal(t, initialPop+1, firstPop, "Popularity should increment by 1 after first call")
+
+
+		w2 := httptest.NewRecorder()
+		srv.GetDancesId(w2, req, danceID, api.GetDancesIdParams{})
+		assert.Equal(t, http.StatusOK, w2.Code)
+
+		var secondPop int
+		err = testDBPool.QueryRow(ctx, "SELECT popularity FROM dances WHERE id = $1", danceID).Scan(&secondPop)
+		require.NoError(t, err)
+		assert.Equal(t, initialPop+2, secondPop, "Popularity should increment again after second call")
 	})
 }
 

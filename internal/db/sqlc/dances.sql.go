@@ -51,6 +51,56 @@ func (q *Queries) GetDanceByID(ctx context.Context, arg GetDanceByIDParams) (Get
 	return i, err
 }
 
+const getEnsemblesBySongID = `-- name: GetEnsemblesBySongID :many
+SELECT 
+    a.id, 
+    COALESCE(
+        CASE 
+            WHEN $2::text = 'ru' THEN t.ru_name
+            WHEN $2::text = 'en' THEN t.eng_name
+            WHEN $2::text = 'hy' THEN t.arm_name
+            ELSE a.name
+        END, 
+        a.name
+    )::text AS name,
+    a.link
+FROM artists a
+LEFT JOIN translations t ON a.translation_id = t.id
+JOIN song_artist sa ON sa.artist_id = a.id
+WHERE sa.song_id = $1
+`
+
+type GetEnsemblesBySongIDParams struct {
+	SongID int64       `json:"song_id"`
+	Lang   pgtype.Text `json:"lang"`
+}
+
+type GetEnsemblesBySongIDRow struct {
+	ID   int64  `json:"id"`
+	Name string `json:"name"`
+	Link string `json:"link"`
+}
+
+func (q *Queries) GetEnsemblesBySongID(ctx context.Context, arg GetEnsemblesBySongIDParams) ([]GetEnsemblesBySongIDRow, error) {
+	rows, err := q.db.Query(ctx, getEnsemblesBySongID, arg.SongID, arg.Lang)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []GetEnsemblesBySongIDRow{}
+	for rows.Next() {
+		var i GetEnsemblesBySongIDRow
+		if err := rows.Scan(&i.ID, &i.Name, &i.Link); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getRegionsByDanceID = `-- name: GetRegionsByDanceID :many
 SELECT 
     r.id,
@@ -204,4 +254,15 @@ func (q *Queries) GetVideosByDanceID(ctx context.Context, arg GetVideosByDanceID
 		return nil, err
 	}
 	return items, nil
+}
+
+const incrementDancePopularity = `-- name: IncrementDancePopularity :exec
+UPDATE dances
+SET popularity = popularity + 1
+WHERE id = $1
+`
+
+func (q *Queries) IncrementDancePopularity(ctx context.Context, id int64) error {
+	_, err := q.db.Exec(ctx, incrementDancePopularity, id)
+	return err
 }

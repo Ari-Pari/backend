@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/url"
 	"path/filepath"
+	"strings"
 
 	"github.com/google/uuid"
 	"github.com/minio/minio-go/v7"
@@ -30,6 +31,8 @@ type minioStorage struct {
 
 // NewMinioStorage возвращает интерфейс FileStorage
 func NewMinioStorage(ctx context.Context, endpoint, serverURL, accessKey, secretKey, bucket string, useSSL bool) (FileStorage, error) {
+	endpoint = strings.TrimPrefix(endpoint, "http://")
+	endpoint = strings.TrimPrefix(endpoint, "https://")
 	client, err := minio.New(endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(accessKey, secretKey, ""),
 		Secure: useSSL,

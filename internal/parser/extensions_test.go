@@ -58,7 +58,7 @@ func TestToDomainDance_Success(t *testing.T) {
 		Genres:       []GenreDto{War, Ritual},
 		HoldingTypes: []HoldingTypeDto{Free, Belt},
 		StateIds:     []int64{1, 2, 3},
-		Type:         Active,
+		Type:         Main,
 	}
 
 	// Ожидаем вызов UploadFile
@@ -208,7 +208,7 @@ func TestToDomainDances_Success(t *testing.T) {
 			Id:      1,
 			Name:    NameDto{ArmName: "Պար 1"},
 			NameKey: "dance1.key",
-			Type:    Active,
+			Type:    Main,
 		},
 		{
 			Id:      2,

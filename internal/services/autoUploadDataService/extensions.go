@@ -124,6 +124,7 @@ func SongsToDao(songs []domain.SongShort, translationIds []int64) db.InsertSongs
 	ids := make([]int64, len(songs))
 	names := make([]string, len(songs))
 	fileKeys := make([]string, len(songs))
+	songTypes := make([]string, len(songs))
 
 	for i := range songs {
 		ids[i] = songs[i].Id
@@ -131,6 +132,7 @@ func SongsToDao(songs []domain.SongShort, translationIds []int64) db.InsertSongs
 		if songs[i].FileKey != nil {
 			fileKeys[i] = *songs[i].FileKey
 		}
+		songTypes[i] = string(songs[i].SongType)
 	}
 
 	return db.InsertSongsParams{
@@ -138,6 +140,7 @@ func SongsToDao(songs []domain.SongShort, translationIds []int64) db.InsertSongs
 		TranslationIds: translationIds,
 		Names:          names,
 		FileKeys:       fileKeys,
+		Types:          songTypes,
 	}
 }
 

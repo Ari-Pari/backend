@@ -8,6 +8,13 @@ type Translation struct {
 	ArmName string `json:"armName"`
 }
 
+type SongType string
+
+const (
+	Extra SongType = "EXTRA"
+	Main  SongType = "MAIN"
+)
+
 type Genre string
 
 const (
@@ -74,6 +81,7 @@ type DanceShort struct {
 type SongShort struct {
 	Id        int64
 	Name      Translation
+	SongType  SongType
 	FileKey   *string
 	NameKey   string
 	DanceIds  []int64

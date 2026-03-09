@@ -131,6 +131,13 @@ func getImageFileName(folderName string, id int64) string {
 	return folderName + strconv.FormatInt(id, 10) + ".jpeg"
 }
 
+func toDomainSongType(songType SongTypeDto) domain.SongType {
+	if songType == Main {
+		return domain.Main
+	}
+	return domain.Extra
+}
+
 func toDomainSong(ctx context.Context, storage filestorage.FileStorage, fileReader FileReader, dto MusicDto, musicFolderName string) (domain.SongShort, error) {
 	fileKey, err := parseFileForStorage(ctx, storage, fileReader, getAudioFileName(musicFolderName, dto.Name.ArmName), AudioContentType)
 
@@ -145,6 +152,7 @@ func toDomainSong(ctx context.Context, storage filestorage.FileStorage, fileRead
 		FileKey:   &fileKey,
 		DanceIds:  dto.DanceIds,
 		ArtistIds: dto.Artists,
+		SongType:  toDomainSongType(dto.Type),
 	}, nil
 }
 

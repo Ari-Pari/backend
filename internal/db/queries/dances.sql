@@ -57,7 +57,8 @@ SELECT
 FROM songs s 
 LEFT JOIN translations t ON s.translation_id = t.id
 JOIN dance_song ds ON ds.song_id = s.id 
-WHERE ds.dance_id = $1;
+WHERE ds.dance_id = $1
+ORDER BY s.type DESC;
 
 
 

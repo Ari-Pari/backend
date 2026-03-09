@@ -3,7 +3,7 @@ SELECT d.id, d.complexity, d.photo_key, d.gender, d.paces, d.genres, d.handshake
 COALESCE(CASE WHEN sqlc.narg('lang')::text = 'ru' THEN t.ru_name WHEN sqlc.narg('lang')::text = 'en' THEN t.eng_name WHEN sqlc.narg('lang')::text = 'hy' THEN t.arm_name ELSE d.name END, d.name)::text AS name
 FROM dances d
 LEFT JOIN translations t ON d.translation_id = t.id
-WHERE d.id = $1;
+WHERE d.id = $1 and d.deleted_at is null;
 
 -- name: GetRegionsByDanceID :many
 SELECT 

@@ -69,11 +69,12 @@ SELECT id, translation_id, name, file_key
 FROM songs;
 
 -- name: InsertSongs :exec
-INSERT INTO songs (id, translation_id, name, file_key)
+INSERT INTO songs (id, translation_id, name, file_key, type)
 SELECT unnest(@ids::bigint[])             as id,
        unnest(@translation_ids::bigint[]) as translation_id,
        unnest(@names::text[])             as name,
-       unnest(@file_keys::text[])         as file_key;
+       unnest(@file_keys::text[])         as file_key,
+       unnest(@types::text[])             as type;
 
 -- name: GetDanceSongs :many
 SELECT dance_id, song_id

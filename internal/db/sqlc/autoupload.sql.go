@@ -490,11 +490,12 @@ func (q *Queries) InsertSongArtists(ctx context.Context, arg InsertSongArtistsPa
 }
 
 const insertSongs = `-- name: InsertSongs :exec
-INSERT INTO songs (id, translation_id, name, file_key)
+INSERT INTO songs (id, translation_id, name, file_key, type)
 SELECT unnest($1::bigint[])             as id,
        unnest($2::bigint[]) as translation_id,
        unnest($3::text[])             as name,
-       unnest($4::text[])         as file_key
+       unnest($4::text[])         as file_key,
+       unnest($5::text[])             as type
 `
 
 type InsertSongsParams struct {
@@ -502,6 +503,7 @@ type InsertSongsParams struct {
 	TranslationIds []int64  `json:"translation_ids"`
 	Names          []string `json:"names"`
 	FileKeys       []string `json:"file_keys"`
+	Types          []string `json:"types"`
 }
 
 func (q *Queries) InsertSongs(ctx context.Context, arg InsertSongsParams) error {
@@ -510,6 +512,7 @@ func (q *Queries) InsertSongs(ctx context.Context, arg InsertSongsParams) error 
 		arg.TranslationIds,
 		arg.Names,
 		arg.FileKeys,
+		arg.Types,
 	)
 	return err
 }

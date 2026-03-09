@@ -33,11 +33,11 @@ const (
 	Multi  GenderDto = "MULTY"
 )
 
-type TypeDto string
+type SongTypeDto string
 
 const (
-	Active TypeDto = "ACTIVE"
-	Extra  TypeDto = "EXTRA"
+	Main  SongTypeDto = "MAIN"
+	Extra SongTypeDto = "EXTRA"
 )
 
 type GenreDto string
@@ -65,7 +65,7 @@ const (
 type DanceDto struct {
 	Id           int64            `json:"id"`
 	Name         NameDto          `json:"name"`
-	Type         TypeDto          `json:"type"`
+	Type         SongTypeDto      `json:"type"`
 	NameKey      string           `json:"nameKey"`
 	Temps        []int32          `json:"temps"`
 	HoldingTypes []HoldingTypeDto `json:"holdingTypes"`
@@ -76,12 +76,12 @@ type DanceDto struct {
 }
 
 type MusicDto struct {
-	Id       int64   `json:"id"`
-	Name     NameDto `json:"name"`
-	NameKey  string  `json:"nameKey"`
-	DanceIds []int64 `json:"danceIds"`
-	Type     TypeDto `json:"type"`
-	Artists  []int64 `json:"groupIds"`
+	Id       int64       `json:"id"`
+	Name     NameDto     `json:"name"`
+	NameKey  string      `json:"nameKey"`
+	DanceIds []int64     `json:"danceIds"`
+	Type     SongTypeDto `json:"type"`
+	Artists  []int64     `json:"groupIds"`
 }
 
 type VideoTypeDto string
@@ -100,8 +100,8 @@ type VideoDto struct {
 }
 
 type ArtistDto struct {
-	Id   int64   `json:"id"`
-	Name NameDto `json:"name"`
-	Type TypeDto `json:"type"`
-	Url  string  `json:"urlInsta"`
+	Id   int64       `json:"id"`
+	Name NameDto     `json:"name"`
+	Type SongTypeDto `json:"type"`
+	Url  string      `json:"urlInsta"`
 }

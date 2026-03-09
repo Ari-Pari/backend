@@ -73,6 +73,7 @@ type Song struct {
 	Name          string             `json:"name"`
 	CreatedAt     pgtype.Timestamptz `json:"created_at"`
 	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`
+	Type          string             `json:"type"`
 }
 
 type SongArtist struct {
